@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+		 More info: h5bp.com/i/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<!-- Our site title and description -->
+	<title>TransforMap</title>
+	<meta name="description" content="TransforMap works towards an online platform for you to visualize the myriads of alternatives to the dominant economic thinking on a single mapping system." />
+	<meta name="keywords" content="openstreetmap, OSM, open street map, open source, mapping, leaflet, linked data, mapping taxonomy, open data, solidarity economy, alternative economy" />
+	<meta name="author" content="TransforMap Community" />
+
+	<meta property="og:title" content="TransforMap" />
+	<meta property="og:type" content="website" />
+	<meta property="og:description" content="TransforMap works towards an online platform for you to visualize the myriads of alternatives to the dominant economic thinking on a single mapping system." />
+	<meta property="og:url" content="http://transformap.co" />
+
+	<!-- Output DocPad produced meta elements -->
+	<meta name="generator" content="DocPad v6.78.4" />
+
+	<!-- Mobile viewport optimized: h5bp.com/viewport -->
+	<meta name="viewport" content="width=device-width" />
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href="http://transformap.co/images/favicon.png">
+
+	<!-- Shims: IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		<script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Styles -->
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin,latin-ext" /><link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic&subset=latin,latin-ext" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"><link  rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" /><link rel="stylesheet" href="styles/style.css" />
+</head>
+<body id="map">
+
+	<!-- Content -->
+	<script type='template' id='mapFiltersTemplate'>
+	<li class="list-group-item category">
+		<%- itemLabel.value %>
+		<ul id="<%- id %>" class="subcategories">
+		</ul>
+	</li>
+	</script>
+
+	<script type='template' id='mapTemplate'>
+	  <div id="map-tiles"></div>
+	</script>
+
+	<script type='template' id='popUpTemplate'>
+		<div class="popup-heading">
+			<a href="<%- properties.url %>" target="_blank"><%- properties.name %></a>
+		</div>
+		<% if (properties['image']) { %>
+			<p>
+				<img src="<%- properties.image %>">
+				<br>
+				<em><%- properties['image:license'] %> <%- properties['image:credit'] %></em>
+			</p>
+		<% } %>
+		<p>
+			<%- properties.description  %>
+		</p>
+		<p>
+
+			<strong>Address</strong>
+			<br>
+			<%- properties['addr:housenumber'] %> <%- properties['addr:street'] %><br><%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
+		</p>
+
+		<% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone'])) { %>
+		<p>
+			<strong>Contact</strong><br>
+		 	<% if (properties['contact:email']) { %>
+			<a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
+			<br>
+			<% } %>
+		 	<% if (properties['contact:website']) { %>
+			<a href="<%- properties['contact:website'] %>"><%- properties['contact:website'] %></a>
+			<br>
+			<% } %>
+		 	<% if (properties['contact:phone']) { %>
+			<%- properties['contact:phone'] %>
+			<% } %>
+		</p>
+		<% } %>
+
+
+		<% if (properties['opening_hours:url']) { %>
+			<p>
+				<strong>Opening hours</strong><br>
+				<a href="<%- properties['opening_hours:url'] %>"><%- properties['opening_hours:url'] %></a>
+			</p>
+		<% } %>
+	</script>
+
+	<div id='map-template'></div>
+
+	<div id="map-filters-container">
+		<ul id="map-filters" class="list-group">
+
+		</ul>
+	</div>
+
+	<!-- Scripts -->
+	<script defer="defer"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script><script defer="defer"  src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script><script defer="defer" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script><script defer="defer"  src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script><script defer="defer"  src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script><script defer="defer"  src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script></script>
+	<script defer="defer" type="text/javascript" src="scripts/map.js"></script>
+	<!-- Piwik -->
+	<script type="text/javascript">
+		var _paq = _paq || [];
+		_paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+		_paq.push(["setCookieDomain", "*.webplatform.org"]);
+		_paq.push(['trackPageView']);
+		_paq.push(['enableLinkTracking']);
+		(function() {
+		  var u="https://piwik.allmende.io/";
+		  _paq.push(['setTrackerUrl', u+'piwik.php']);
+		  _paq.push(['setSiteId', 7]);
+		  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+		  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+		})();
+	</script>
+	<noscript><p><img src="https://piwik.allmende.io/piwik.php?idsite=7" style="border:0;" alt="" /></p></noscript>
+	<!-- End Piwik Code -->
+</body>
+</html>
