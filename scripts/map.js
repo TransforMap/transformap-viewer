@@ -67,9 +67,9 @@ var FilterData = Backbone.Collection.extend({
 var categories = [];
 var subcategories = [];
 
-var FilterView = Backbone.View.extend({
-    el: '#map-filters',
-    template: _.template($('#mapFiltersTemplate').html()),
+var MenuView = Backbone.View.extend({
+    el: '#map-menu',
+    template: _.template($('#mapMenuTemplate').html()),
     initialize: function(){
         this.listenTo(this.collection,"add", this.renderItem);
         this.collection.fetch();   
@@ -82,6 +82,72 @@ var FilterView = Backbone.View.extend({
             }
         }, this);        
         return this;
+    },
+    events: {
+        "click .toggle": "clicked",
+        "click .subcategory": "displayTypes"
+    },
+    clicked: function(e){
+        e.preventDefault();
+       // $("#map-menu").find(".type-of-initiative").hide();
+        $(e.currentTarget).parent().find('ul.subcategories').slideToggle(400);
+    },
+    displayTypes: function(e){
+        e.preventDefault();
+        $( "ul.type-of-initiative" ).each(function() {
+          $( this ).hide( );
+        });
+        $( ".subcategory" ).each(function() {
+          $( this ).removeClass("active-filter");
+        });
+        $(e.currentTarget).addClass("active-filter");
+        $(e.currentTarget).find('ul.type-of-initiative').slideToggle(400).addClass("active-filter");
+    },
+    renderItem: function(model) {
+        var filter = model.toJSON();
+        if(filter.subclass_of) {
+            if(filter.subclass_of.value == 'https://base.transformap.co/entity/Q1234#SSEDAS_TAX_UUID') {
+                var str = filter.item.value;
+                var category = str.split('/');
+                category = category[category.length - 1].split('#');
+                categories.push(category[0]);
+                filter.id = category[0];
+                this.$el.append(this.template(filter));
+            }
+        }
+        for(i = 0; i < categories.length; i++) {
+            if(filter.subclass_of.value == baseTaxonomyUrl + categories[i]) {
+                var catId = '#' + categories[i];
+                var str = filter.item.value;
+                var subcategory = str.split('/');
+                subcategory = subcategory[subcategory.length - 1];
+                subcategories.push(subcategory);
+                $(catId).append('<li class="subcategory list-group-item"><span class="toggle-subcategories">' + filter.itemLabel.value + '</span><ul id="' + subcategory + '" class="type-of-initiative"></ul></li>');
+            }
+        }
+        for(i = 0; i < subcategories.length; i++) {
+            var catId = '#' + subcategories[i];
+            if(filter.subclass_of.value == baseTaxonomyUrl + subcategories[i]) {
+                var str = filter.item.value;
+                var typeOfInitiative = str.split('/');
+                typeOfInitiative = typeOfInitiative[typeOfInitiative.length - 1];
+                $(catId).append('<li class="list-group-item">' + filter.itemLabel.value + '</li>');
+            }
+            else{
+                //$(catId).remove();
+            }
+        }
+    }
+});
+/*
+var SubmenuView = Backbone.View.extend({
+    el: '#map-submenu',
+    template: _.template($('#mapSubmenuTemplate').html()),
+    initialize: function(){
+        this.listenTo(this.collection,"add", this.renderItem);
+        this.collection.fetch();   
+    },
+    render: function () {
     },
     events: {
         "click .category": "clicked",
@@ -128,8 +194,8 @@ var FilterView = Backbone.View.extend({
             }
         }
     }
-});
+});*/
 
 var filterData = new FilterData();
-var filterView = new FilterView({ collection: filterData });
+var filterView = new MenuView({ collection: filterData });
 filterView.render();
