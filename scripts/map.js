@@ -25,26 +25,46 @@ var MapView = Backbone.View.extend({
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
         }).addTo(map);
+        map.searchCtrl = L.control.fuseSearch({
+            position: 'topleft',
+            showResultFct: function(feature, container) {
+              props = feature.properties;
+              var name = L.DomUtil.create('b', null, container);
+              name.innerHTML = props.name;
+              container.appendChild(L.DomUtil.create('br', null, container));
+            }
+        }).addTo(map);
 
-        this.listenTo(this.collection, 'reset add change remove', this.renderItem);
+        //this.listenTo(this.collection, 'reset add change remove', this.renderItem);
+        this.listenToOnce(this.collection, 'add', this.renderAll);
+        this.listenTo(this.collection, 'update', this.renderAll);
         this.collection.fetch();
     },
-    renderItem: function (model) {
-        var feature = model.toJSON();
+    renderAll: function () {
+        if (map.dataLayer) map.removeLayer(map.dataLayer);
 
-        var marker = L.circleMarker(new L.LatLng(feature.geometry.coordinates[1],feature.geometry.coordinates[0]), {
-            color: theme_colors[(Math.floor(Math.random() * 6) + 1)],
-            radius: 8,
-            weight: 7,
-            opacity: .5,
-            fillOpacity: 1,
+        var features = this.collection.map(function(model) {
+            return model.toJSON();
         });
 
-        model.marker = marker;
+        map.searchCtrl.indexFeatures(features, ['name', 'free_keywords', 'description']);
 
-        marker.bindPopup(this.templatePopUp(feature));
-
-        map.addLayer(marker);
+        map.dataLayer = L.geoJson(features, {
+            pointToLayer: function(feature, latlng) {
+                return L.circleMarker(latlng, {
+                    color: theme_colors[(Math.floor(Math.random() * 6) + 1)],
+                    radius: 8,
+                    weight: 7,
+                    opacity: .5,
+                    fillOpacity: 1,
+                });
+            },
+            onEachFeature: (function(feature, layer) {
+                layer.bindPopup(this.templatePopUp(feature));
+                layer.getPopup = function() { return layer._popup }; // circlemarker doesn't have getPopup().. hmm
+                feature.layer = layer; // needed for leaflet-fusesearch
+            }).bind(this)
+        }).addTo(map);
     },
 });
 
