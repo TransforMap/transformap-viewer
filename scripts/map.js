@@ -13,18 +13,16 @@ var MapData = Backbone.Collection.extend({
     }
  });
 
+var map = L.map('map-tiles').setView ([51.1657, 10.4515], 6);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+}).addTo(map);
+
 /* Creates map and popup template */
 var MapView = Backbone.View.extend({
     el: '#map-template',
-    template: _.template($('#mapTemplate').html()),
     templatePopUp: _.template($('#popUpTemplate').html()),
     initialize: function(){
-        this.$el.html(this.template());
-
-        map = L.map(this.$('#map-tiles')[0], { scrollWheelZoom: false }).setView ([51.1657, 10.4515], 6);
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-        }).addTo(map);
 
         this.listenTo(this.collection, 'reset add change remove', this.renderItem);
         this.collection.fetch();
