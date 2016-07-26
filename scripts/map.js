@@ -47,7 +47,7 @@ var MapView = Backbone.View.extend({
             return model.toJSON();
         });
 
-        map.searchCtrl.indexFeatures(features, ['name', 'free_keywords', 'description']);
+        map.searchCtrl.indexFeatures(features, ['name', 'free_keywords', 'description', 'addr:city']);
 
         map.dataLayer = L.geoJson(features, {
             pointToLayer: function(feature, latlng) {
