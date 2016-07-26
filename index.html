@@ -50,6 +50,20 @@
 	</li>
 	</script>
 
+	<script type='template' id='menuCategoryTemplate'>
+  <li class="list-group-item category" id="<%- id %>">
+    <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %></span>
+		<ul class="subcategories"></ul>
+		<ul class="type-of-initiative"></ul>
+	</li>
+	</script>
+
+	<script type='template' id='menuTypeOfInitiativeTemplate'>
+  <li class="list-group-item" onClick="clickOnInitiative('<%- id %>')">
+    <%- itemLabel %>
+	</li>
+	</script>
+
 	<script type='template' id='popUpTemplate'>
 		<div class="popup-heading">
 			<a href="<%- properties.url %>" target="_blank"><%- properties.name %></a>

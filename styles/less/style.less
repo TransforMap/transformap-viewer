@@ -182,8 +182,11 @@ body {
         border-top: 0;
     }
     /* These elements are spans inside list group items, to toggle subcategories */
-    .toggle {
+    span.toggle {
         padding-left: 10px;
+        display:block;
+        width:100%;
+        height:100%;
     }
     .toggle-subcategories {
         padding-left: 20px;
@@ -202,26 +205,26 @@ body {
             border-bottom: none;
             border-left: none;
             border-right: none;
-            ul.type-of-initiative {
-                text-align: left;
-                display: none;
-                background: #fcec74;
-                position: absolute;
-                left: 100%;
-                min-width: 200px;
-                top: 0;
-                z-index: 10;
-                -webkit-padding-start: 0px;
-                padding: 0px 15px;
-                border-top-right-radius: 5px;
-                border-bottom-right-radius: 5px;
-                .list-group-item {
-                    background: #fcec74;
-                    color: #000;
-                }
-
-            }
         }
+    }
+    ul.type-of-initiative {
+        text-align: left;
+        display: none;
+        background: #fcec74;
+        position: fixed;
+        left: 16.7%;
+        min-width: 200px;
+        top: 0;
+        z-index: 10;
+        -webkit-padding-start: 0px;
+        padding: 0px 15px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        .list-group-item {
+            background: #fcec74;
+            color: #000;
+        }
+
     }
 }
 /* QUICK HACK */

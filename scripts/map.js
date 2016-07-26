@@ -132,5 +132,194 @@ var MenuView = Backbone.View.extend({
 });
 
 // Initializes templates and fetches data
-var filterData = new FilterData();
-var filterView = new MenuView({ collection: filterData });
+//var filterData = new FilterData();
+//var filterView = new MenuView({ collection: filterData });
+
+
+function convert_tax_to_tree(flatjson) {
+  var treejson = {
+    "xml:lang": "en",
+    "elements": []
+  };
+
+  var flat_elements = flatjson.results.bindings;
+
+  var flat_category_entries = []; //cats and subcats
+  var flat_type_of_initiatives = [];
+
+  var cats_that_hold_type_of_initiatives = [];
+
+  var root_id = "";
+
+  //sort entries into 2 arrays for faster search
+  flat_elements.forEach(function(entry){
+    if(entry["instance_of"]) {
+      if (entry["instance_of"].value == "https://base.transformap.co/entity/Q6") {
+        flat_type_of_initiatives.push(entry);
+      } else if (entry["instance_of"].value == "https://base.transformap.co/entity/Q5") {
+        flat_category_entries.push(entry);
+      } else if(entry["instance_of"].value == "https://base.transformap.co/entity/Q3") {
+        root_id = entry.item.value;
+      }
+    }
+  });
+
+  //console.log("flat_category_entries");
+  //console.log(flat_category_entries);
+  //console.log("flat_type_of_initiatives");
+  //console.log(flat_type_of_initiatives);
+
+  // get all 'childs' for this root (main categories)
+  flat_category_entries.forEach(function(entry){
+    if(entry["subclass_of"]) {
+      if(entry["subclass_of"].value == root_id) {
+        treejson.elements.push(
+            {
+              "type": "category",
+              "UUID": entry.item.value,
+              "itemLabel": entry.itemLabel.value,
+              "elements" : []
+            }
+        );
+      }
+    }
+  });
+  //console.log("main cats");
+  //console.log(treejson.elements);
+
+  // get all child categories for the main categories
+  treejson.elements.forEach(function(category_item){ //iterate over categories
+
+    var uuid_of_category = category_item.UUID;
+    //console.log(uuid_of_category);
+
+    flat_category_entries.forEach(function(entry){
+      if(entry["subclass_of"]) {
+
+        if(entry["subclass_of"].value == uuid_of_category) {
+          //console.log("add subcat " + entry.itemLabel.value + " to category " + category_item.itemLabel );
+          var new_subcat = 
+            {
+              "type": "subcategory",
+              "UUID": entry.item.value,
+              "itemLabel": entry.itemLabel.value,
+              "elements" : []
+            }
+          category_item.elements.push(new_subcat);
+          cats_that_hold_type_of_initiatives.push(new_subcat);
+        }
+      }
+    });
+
+    if(category_item.elements.length == 0) {
+      cats_that_hold_type_of_initiatives.push(category_item);
+    }
+  });
+  //console.log("cats_that_hold_type_of_initiatives");
+  //console.log(cats_that_hold_type_of_initiatives);
+
+  // get all type of initiatives and hang them to their parent category
+  // remember: objects are called by reference, so this updates the whole treejson structure!
+  flat_type_of_initiatives.forEach(function(flat_type_of_initiative) {
+    var parent_uuid = flat_type_of_initiative.subclass_of.value;
+
+    cats_that_hold_type_of_initiatives.forEach(function(cat){
+      if(cat.UUID == parent_uuid) {
+        var type_of_initiative = 
+          {
+            "type": "type_of_initiative",
+            "UUID": flat_type_of_initiative.item.value,
+            "itemLabel": flat_type_of_initiative.itemLabel.value,
+            "type_of_initiative_tag": flat_type_of_initiative.type_of_initiative_tag.value
+          }
+        cat.elements.push(type_of_initiative);
+      }
+    });
+  });
+
+  return treejson;
+}
+
+// fetch JSON
+
+var taxonomy_url = "http://transformap.co/transformap-viewer/taxonomy.json"
+
+function buildTreeMenu(tree_json) {
+  // returns "Q12" of https://base.transformap.co/entity/Q12#taxonomy
+  function getQNR(uri_string) {
+    var slashsplit_array = uri_string.split('/');
+    var after_last_slash = slashsplit_array[slashsplit_array.length -1];
+    var before_hash = after_last_slash.split('#')[0];
+    return before_hash;
+  }
+
+  function appendTypeOfInitiative(toi,parent_element) {
+    var toi_data = 
+        {
+          id: getQNR(toi.UUID),
+          itemLabel: toi.itemLabel
+        }
+    parent_element.append( toiTemplate( toi_data  ) );
+  }
+
+  function appendCategory(cat, parent_element) {
+    //console.log(cat);
+    //console.log(parent_element);
+
+    var cat_data = 
+        {
+          id: getQNR(cat.UUID),
+          itemLabel: cat.itemLabel
+        }
+    parent_element.append( catTemplate( cat_data  ) );
+
+    if(cat.elements.length != 0) {
+      cat.elements.forEach(function(entry) {
+        if(entry.type == "subcategory") {
+          appendCategory(entry, $('#' + cat_data.id + ' > ul.subcategories'));
+        }
+        if(entry.type == "type_of_initiative") {
+          appendTypeOfInitiative(entry, $('#' + cat_data.id + ' > ul.type-of-initiative'));
+        }
+      });
+    }
+  }
+
+  var menu_root = $('#map-menu');
+  var catTemplate = _.template($('#menuCategoryTemplate').html());
+  var toiTemplate = _.template($('#menuTypeOfInitiativeTemplate').html());
+
+  tree_json.elements.forEach(function(cat){
+    appendCategory(cat,menu_root);
+
+  });
+
+}
+
+function clickOnCat(id) {
+  console.log("clickOnCat: "+ id);
+  
+  //close all other cats on the same level
+  //close all parent->li->ul's
+  $("#" + id).parent().children().children("ul").hide();
+  $("ul.type-of-initiative").hide();
+
+
+  $("#" + id + " > ul").show();
+}
+
+
+function clickOnInitiative(id) {
+  console.log("clickOnInitiative: "+ id);
+}
+
+$.getJSON(taxonomy_url, function(returned_data){
+
+  var tree_menu_json = convert_tax_to_tree(returned_data);
+
+  buildTreeMenu(tree_menu_json);
+
+});
+
+// create tree-tax
+// walk the tree, create menue
