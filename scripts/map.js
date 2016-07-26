@@ -20,34 +20,31 @@ var MapView = Backbone.View.extend({
     templatePopUp: _.template($('#popUpTemplate').html()),
     initialize: function(){
         this.$el.html(this.template());
-        this.listenTo(this.collection, 'reset add change remove', this.render);
-        this.collection.fetch();
-    },
-    render: function () {
+
         map = L.map(this.$('#map-tiles')[0], { scrollWheelZoom: false }).setView ([51.1657, 10.4515], 6);
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
         }).addTo(map);
 
-        this.collection.each(function(model){
-            var feature = model.toJSON();
+        this.listenTo(this.collection, 'reset add change remove', this.renderItem);
+        this.collection.fetch();
+    },
+    renderItem: function (model) {
+        var feature = model.toJSON();
 
-            var marker = L.circleMarker(new L.LatLng(feature.geometry.coordinates[1],feature.geometry.coordinates[0]), {
-                color: theme_colors[(Math.floor(Math.random() * 6) + 1)],
-                radius: 8,
-                weight: 7,
-                opacity: .5,
-                fillOpacity: 1,
-            });
+        var marker = L.circleMarker(new L.LatLng(feature.geometry.coordinates[1],feature.geometry.coordinates[0]), {
+            color: theme_colors[(Math.floor(Math.random() * 6) + 1)],
+            radius: 8,
+            weight: 7,
+            opacity: .5,
+            fillOpacity: 1,
+        });
 
-            model.marker = marker;
+        model.marker = marker;
 
-            marker.bindPopup(this.templatePopUp(feature));
+        marker.bindPopup(this.templatePopUp(feature));
 
-            map.addLayer(marker);
-        }, this); 
-        
-        return this;
+        map.addLayer(marker);
     },
 });
 
@@ -75,16 +72,7 @@ var MenuView = Backbone.View.extend({
     template: _.template($('#mapMenuTemplate').html()),
     initialize: function(){
         this.listenTo(this.collection,"add", this.renderItem);
-        this.collection.fetch();   
-    },
-    render: function () {
-        this.collection.each(function(model){
-            var filter = model.toJSON();
-            if(filter.subclass_of.value == 'https://base.transformap.co/entity/Q1234#SSEDAS_TAX_UUID') {
-                this.$el.append(this.template(filter));
-            }
-        }, this);        
-        return this;
+        this.collection.fetch();
     },
     events: {
         "click .toggle": "clicked",
@@ -148,5 +136,3 @@ var MenuView = Backbone.View.extend({
 // Initializes templates and fetches data
 var filterData = new FilterData();
 var filterView = new MenuView({ collection: filterData });
-filterView.render();
-
