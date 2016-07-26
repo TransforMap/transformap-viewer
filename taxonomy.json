@@ -1,0 +1,2907 @@
+{
+  "head": {
+    "vars": [
+      "item",
+      "itemLabel",
+      "subclass_of",
+      "instance_of",
+      "type_of_initiative_tag"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "SSEDAS Taxonomy"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q3"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food & Agriculture"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Fair Trade"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Reduce, reuse, repair, recycle"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Housing & habitat"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Infrastructure & Resources"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Social inclusion"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Education & Training"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Finance"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10009"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Active Citizenship"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100100"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Self-Organization & mutuality"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100111"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "SUSY-map partner network"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100122"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q1234"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Grow it yourself & together"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10001"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Buy local"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10001"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food Rescue"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10001"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Education & Policy"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10001"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Reduce"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10003"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Share & Reuse"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10003"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Repair"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10003"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Recycle & Upcycle"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10003"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Political engagement"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10009"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Participation"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10009"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Communities / Networks"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q5"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10009"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Community Gardening"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "community_garden"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Community Supported Agriculture"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "communitysupported_agriculture"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Edible Town / City"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "edible_town"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food Buying Circle"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "foodpurchasing_combine"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Guerilla gardening"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "guerilla_garden"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Seed Saving Initiatives"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "seed_saving"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Self harvest"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "self_harvest"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12008"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_growyourself"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12009"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Direct purchasing / Farm Shop"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "farm_shop"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12010"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Community Supported Agriculture"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "communitysupported_agriculture"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12011"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Local Farmers Market"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "local_farmersmarket"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12012"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Vegetable Box scheme"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "vegetable_box"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12013"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food Buying Circle"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "foodpurchasing_combine"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12014"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Virtual direct purchase"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "virtual_directpurchase"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12015"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food Cooperative"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "food_cooperative"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12016"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_buylocal"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12017"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Foodsharing Groups"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "foodrescue"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12018"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Foodsharing Distribution Points"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "foodrescue_distribution"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12019"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food Rescue Cuisine"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "foodrescue_cuisine"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12020"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Recycling food waste"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "recycling_foodwaste"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12021"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_foodrescue"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12022"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Agricultural Empowerment"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "agro_empowerment"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12023"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Agro ecology Education"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "agroecology_education"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12024"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Farm succession network"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "agro_sucessionnetwork"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12025"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food policy councils"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "foodpolicy_council"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12026"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Food sovereignity initiatives"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "food_souvereignity"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12027"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Permaculture education"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "permaculture_education"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12028"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "School gardens"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "schoolgarden"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12029"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Seed Saving Initiatives"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "seed_saving"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12030"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Slowfood"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "slowfood"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q12031"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q30004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_foodedunpolicy"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q13001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Fair Trade Shops"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "fairtrade_shop"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q13002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Fair Trade Schools"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "fairtrade_school"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q13003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Fair Trade Towns"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "fairtrade_town"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q13004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Fair Trade Wholesalers"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "fairtrade_wholesaler"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q13005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Direct Trade"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "directtrade"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q13006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Development Cooperation"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "development_cooperation"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q13007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_fairtrade"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Waste Awareness Raising"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "waste_awareness"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "No-packaging shops and initiatives"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "nopacking_shop"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_wastereduction"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Used Goods Sales"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "used_goods"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Flea Market"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "fleamarket"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Garment Rental"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "garment_rental"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Give-Away-Shop"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "giveaway_shop"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14008"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Lending Central "
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "lending_central"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14009"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Swap Markets"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "swap_market"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14010"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_sharing"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14011"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Maintenance and repair"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "repairing"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14012"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Repair Cafes"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "repair_cafe"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14013"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Resell or repaired goods"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "repair_resale"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14014"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_repair"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14015"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Recycling"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "recycling"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14016"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Upcycling"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "upcycling"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14017"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Eco applied art "
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "eco_art"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q14018"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q40004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_reupcycle"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q15001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Cohousing"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "cohousing"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q15002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Communes"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "commune"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q15003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Ecovillages"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "ecovillage"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q15004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Squatting"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "squatted_place"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q15005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10004"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_habitat"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Free Space / Shared Space"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "freespace"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Sustainable Mobility Initiative"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "sustainable_mobility"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Bicycle Self Repair"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "bicycle_selfrepair"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Bicycle Awareness NGO"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "bicycle_awareness"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Local Collective Energy Ownership"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "collective_energy"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Local Collective Ressource Ownership"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "localcollective_ressources"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Community forestry"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "community_forestry"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q16008"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10005"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_infraressources"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q17001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Social Inclusion through employment"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10006"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "socialinclusion_employment"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q17002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Empowerement Initiatives"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10006"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "socialinclusion_empowerment"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q17003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Social Shops (Social Supermarket)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10006"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "lowincome_supermarket"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q17004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Foodbank"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10006"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "foodbank"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q17005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Homeless Shelter"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10006"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "homeless_shelter"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q17006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10006"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_socialinclusion"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q18001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Coworking"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "coworking"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q18002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Enterprise Centers & Incubators"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "business_incubators"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q18003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Entrepreneurship Education"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "entrepreneurship_education"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q18004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Social Business Incubator"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "social_incubators"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q18005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Sustainable & Solidarity Education"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "sse_education"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q18006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Sustainable & Solidarity Research"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "sse_research"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q18007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10007"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_education"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q19001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Community currency"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "communitycurrency"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q19002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Microfinance "
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "microfinance"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q19003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Mutual Insurance"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "mutual_insurance"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q19004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Promoting ethical financing"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "ethicalfinance_education"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q19005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Solidarity Lending"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "solidarity_lending"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q19006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Time Banking"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "timebanking"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q19007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q10008"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_finance"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Direct Democracy Initiatives"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "directdemocracy"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Consumerism Awareness Raising"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "consumerism_awareness"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50001"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_political"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Participatory Public Funds"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "participatory_budgeting"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20005"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Citizen Council"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "citizen_council"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20006"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Youth Council"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "youth_council"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20007"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50002"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_participation"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20008"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "CSOs / NGOs"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "ngo"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20009"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Community Groups"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "community_group"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20010"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Networking Initiatives"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "networking_initiative"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q20011"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q50003"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_communities"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q21001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Mutual Societies Art"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100100"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "mutualsociety_art"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q21002"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Mutual Societies Aid"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100100"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "mutualsociety_aid"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q21003"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Mutual Insurance"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100100"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "mutual_insurance"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q21004"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other (open category)"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100100"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other_mutualsociety"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q22000"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "SSEDAS partners"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100111"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "ssedas_partner"
+        }
+      },
+      {
+        "item": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q22001"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "Other"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q6"
+        },
+        "subclass_of": {
+          "type": "uri",
+          "value": "https://base.transformap.co/entity/Q100122"
+        },
+        "type_of_initiative_tag": {
+          "type": "literal",
+          "value": "other"
+        }
+      }
+    ]
+  }
+}
+
+
