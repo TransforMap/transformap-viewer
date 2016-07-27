@@ -24,7 +24,10 @@ var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 /* Creates map and popup template */
 var MapView = Backbone.View.extend({
     el: '#map-template',
-    templatePopUp: _.template($('#popUpTemplate').html()),
+    livePopup: function(data,category) { // is run every time the marker gets visible again
+      var templatePopUpFunction = _.template($('#popUpTemplate').html());
+      return templatePopUpFunction(data);
+    },
     initialize: function(){
 
         this.listenTo(this.collection, 'reset add change remove', this.renderItem);
@@ -35,8 +38,9 @@ var MapView = Backbone.View.extend({
 
         var pdata = {
           icon:  new L.divIcon({className: 'my-div-icon',iconSize:30}),
-          popup: this.templatePopUp(feature),
-          tags: feature.properties
+          popup: this.livePopup,
+          tags: feature.properties,
+          properties: feature.properties // is used by _ template
         }
         var pmarker = new PruneCluster.Marker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], pdata);
         pruneClusterLayer.RegisterMarker(pmarker);
