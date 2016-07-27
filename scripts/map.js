@@ -49,91 +49,6 @@ var MapView = Backbone.View.extend({
 /* Initialises map */
 var mapData = new MapData();
 var mapView = new MapView({ collection: mapData });
-var baseTaxonomyUrl = 'https://base.transformap.co/entity/';
-
-// Collects taxonomy data
-var FilterData = Backbone.Collection.extend({
-    url:"http://transformap.co/json/susy-taxonomy.json",
-    parse: function(response){
-        return response.results.bindings;
-    },
-    toJSON : function() {
-      return this.map(function(model){ return model.toJSON(); });
-    }
- });
-
-var categories = [];
-var subcategories = [];
-
-var MenuView = Backbone.View.extend({
-    el: '#map-menu',
-    template: _.template($('#mapMenuTemplate').html()),
-    initialize: function(){
-        this.listenTo(this.collection,"add", this.renderItem);
-        this.collection.fetch();
-    },
-    events: {
-        "click .toggle": "clicked",
-        "click .subcategory": "displayTypes"
-    },
-    clicked: function(e){
-        // Shows subcategories
-        e.preventDefault();
-        $(e.currentTarget).parent().find('ul.subcategories').slideToggle(400);
-    },
-    displayTypes: function(e){
-        // Hides previously open types of initiatives
-        e.preventDefault();
-        $( "ul.type-of-initiative" ).each(function() {
-          $( this ).hide( );
-        });
-        $( ".subcategory" ).each(function() {
-          $( this ).removeClass("active-filter");
-        });
-        // Shows type of intiatives below this subcategory
-        $(e.currentTarget).addClass("active-filter");
-        $(e.currentTarget).find('ul.type-of-initiative').slideToggle(400).addClass("active-filter");
-    },
-    renderItem: function(model) {
-        var filter = model.toJSON();
-        // Finds categories
-        if(filter.subclass_of) {
-            if(filter.subclass_of.value == 'https://base.transformap.co/entity/Q1234#SSEDAS_TAX_UUID') {
-                var str = filter.item.value;
-                var category = str.split('/');
-                category = category[category.length - 1].split('#');
-                categories.push(category[0]);
-                filter.id = category[0];
-                this.$el.append(this.template(filter));
-            }
-        }
-        // Finds categories' subcategories
-        for(i = 0; i < categories.length; i++) {
-            if(filter.subclass_of.value == baseTaxonomyUrl + categories[i]) {
-                var catId = '#' + categories[i];
-                var str = filter.item.value;
-                var subcategory = str.split('/');
-                subcategory = subcategory[subcategory.length - 1];
-                subcategories.push(subcategory);
-                $(catId).append('<li class="subcategory list-group-item"><span class="toggle-subcategories">' + filter.itemLabel.value + '</span><ul id="' + subcategory + '" class="type-of-initiative"></ul></li>');
-            }
-        }
-        // Finds subcategories' types of initiatives
-        for(i = 0; i < subcategories.length; i++) {
-            if(filter.subclass_of.value == baseTaxonomyUrl + subcategories[i]) {
-                var catId = '#' + subcategories[i];
-                var str = filter.item.value;
-                var typeOfInitiative = str.split('/');
-                typeOfInitiative = typeOfInitiative[typeOfInitiative.length - 1];
-                $(catId).append('<li class="list-group-item">' + filter.itemLabel.value + '</li>');
-            }
-        }
-    }
-});
-
-// Initializes templates and fetches data
-//var filterData = new FilterData();
-//var filterView = new MenuView({ collection: filterData });
 
 
 function convert_tax_to_tree(flatjson) {
@@ -164,11 +79,6 @@ function convert_tax_to_tree(flatjson) {
     }
   });
 
-  //console.log("flat_category_entries");
-  //console.log(flat_category_entries);
-  //console.log("flat_type_of_initiatives");
-  //console.log(flat_type_of_initiatives);
-
   // get all 'childs' for this root (main categories)
   flat_category_entries.forEach(function(entry){
     if(entry["subclass_of"]) {
@@ -184,8 +94,6 @@ function convert_tax_to_tree(flatjson) {
       }
     }
   });
-  //console.log("main cats");
-  //console.log(treejson.elements);
 
   // get all child categories for the main categories
   treejson.elements.forEach(function(category_item){ //iterate over categories
@@ -215,8 +123,6 @@ function convert_tax_to_tree(flatjson) {
       cats_that_hold_type_of_initiatives.push(category_item);
     }
   });
-  //console.log("cats_that_hold_type_of_initiatives");
-  //console.log(cats_that_hold_type_of_initiatives);
 
   // get all type of initiatives and hang them to their parent category
   // remember: objects are called by reference, so this updates the whole treejson structure!
@@ -240,7 +146,6 @@ function convert_tax_to_tree(flatjson) {
   return treejson;
 }
 
-// fetch JSON
 
 var taxonomy_url = "http://transformap.co/transformap-viewer/taxonomy.json"
 
@@ -263,8 +168,6 @@ function buildTreeMenu(tree_json) {
   }
 
   function appendCategory(cat, parent_element) {
-    //console.log(cat);
-    //console.log(parent_element);
 
     var cat_data = 
         {
@@ -321,5 +224,3 @@ $.getJSON(taxonomy_url, function(returned_data){
 
 });
 
-// create tree-tax
-// walk the tree, create menue
