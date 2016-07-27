@@ -42,6 +42,6 @@ body{background:#1f3050}
 #map-menu-container ul.type-of-initiative .list-group-item.empty{color:#808080}
 .subcategory.has-submenu ul{visibility:visible !important}
 .active-filter{background:#fcec74 !important;color:#000 !important}
-.my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px}
+.my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px;margin-top:-15px}
 .my-div-icon:before{width:20px;height:20px;content:"";display:block;background:#1f3050;position:relative;border-radius:10px;top:5px;left:5px}
 @media screen and (min-width:768px){.row-eq-height{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex} #about-get-involved{min-height:100%} #about-who-we-are{min-height:100%}}@media screen and (max-width:980px){.container{width:80%} section#maps .map-card h1{font-size:14px} section#maps .map-card p{font-size:12px}}@media screen and (max-width:768px){.featured{padding-bottom:10px}}@media screen and (max-width:800px){.container{width:90%}}@media screen and (max-width:540px){.container{width:95%} .map-card{display:block;margin:25px auto;width:80%}}@media screen and (max-width:360px){.map-card{display:block;margin:25px auto;width:70%}}
