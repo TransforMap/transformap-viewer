@@ -33,7 +33,8 @@ var MapView = Backbone.View.extend({
 
         var pdata = {
           icon:  new L.divIcon({className: 'my-div-icon',iconSize:30}),
-          popup: this.templatePopUp(feature)
+          popup: this.templatePopUp(feature),
+          tags: feature.properties
         }
         var pmarker = new PruneCluster.Marker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], pdata);
         pruneClusterLayer.RegisterMarker(pmarker);
@@ -144,14 +145,15 @@ function convert_tax_to_tree(flatjson) {
 
 var taxonomy_url = "http://transformap.co/transformap-viewer/taxonomy.json"
 
+// returns "Q12" of https://base.transformap.co/entity/Q12#taxonomy
+function getQNR(uri_string) {
+  var slashsplit_array = uri_string.split('/');
+  var after_last_slash = slashsplit_array[slashsplit_array.length -1];
+  var before_hash = after_last_slash.split('#')[0];
+  return before_hash;
+}
+
 function buildTreeMenu(tree_json) {
-  // returns "Q12" of https://base.transformap.co/entity/Q12#taxonomy
-  function getQNR(uri_string) {
-    var slashsplit_array = uri_string.split('/');
-    var after_last_slash = slashsplit_array[slashsplit_array.length -1];
-    var before_hash = after_last_slash.split('#')[0];
-    return before_hash;
-  }
 
   function appendTypeOfInitiative(toi,parent_element) {
     var toi_data =
@@ -220,12 +222,90 @@ function clickOnInitiative(id) {
   console.log("clickOnInitiative: "+ id);
   $("#" + id).parent("ul").children("li").removeClass("selected");
   $("#" + id).addClass("selected");
+  trigger_Filter(id);
 }
+
+var flat_taxonomy_array;
 
 $.getJSON(taxonomy_url, function(returned_data){
 
+  flat_taxonomy_array = returned_data.results.bindings;
+
   var tree_menu_json = convert_tax_to_tree(returned_data);
 
+  fill_tax_hashtable();
   buildTreeMenu(tree_menu_json);
 
 });
+
+/*
+ * filters
+ *
+ * user clicks on a cat/subcat/toi - all others not matching should be hidden.
+ * @param filter_UUID  string  "Q-Nr" of filter object, e.g. a cat or type of initative.
+ */
+
+function trigger_Filter(filter_UUID) {
+
+  var marker_array = pruneClusterLayer.GetMarkers();
+  for(var i = 0; i < marker_array.length; i++) {
+    var marker = marker_array[i];
+    var attributes = marker.data.tags;
+    marker.filtered = ! filterMatches(attributes,filter_UUID);
+  }
+  pruneClusterLayer.ProcessView();
+
+}
+
+function filterMatches(attributes,filter_UUID) {
+  if(!attributes) {
+    console.log("error in filter, no attributes");
+    return false;
+  }
+  if(!attributes.type_of_initiative) {
+    console.log("error in filter, no type_of_initiative attribute");
+    return false;
+  }
+
+  console.log("filter called with filter: " + filter_UUID + " and toi: " + attributes.type_of_initiative);
+
+  //if attribute == filter_UUID; true
+  //if attribute == subclass of (and subclass of...) true
+
+  var type_of_initiative_QNR = getToiQnr(attributes.type_of_initiative);
+
+  return (Math.random() > 0.5);
+
+
+  return true;
+}
+
+var tax_hashtable = {
+  toistr_to_qnr: {},
+  qnr_to_toistr: {},
+  toi_qindex: {},
+  cat_qindex: {},
+  all_qindex: {},
+  root_qnr: undefined
+}
+
+function fill_tax_hashtable() {
+  flat_taxonomy_array.forEach(function(entry){
+
+    var qnr = getQNR(entry.item.value);
+
+    if (entry["instance_of"].value == "https://base.transformap.co/entity/Q6") {
+      tax_hashtable.toistr_to_qnr[entry.type_of_initiative_tag.value] = qnr;
+      tax_hashtable.qnr_to_toistr[qnr] = entry.type_of_initiative_tag.value;
+      tax_hashtable.toi_qindex[qnr] = entry;
+      tax_hashtable.all_qindex[qnr] = entry;
+
+    } else if (entry["instance_of"].value == "https://base.transformap.co/entity/Q5") {
+      tax_hashtable.all_qindex[qnr] = entry;
+      tax_hashtable.cat_qindex[qnr] = entry;
+
+    } else if(entry["instance_of"].value == "https://base.transformap.co/entity/Q3") {
+      tax_hashtable.root_qnr = qnr;
+    }
+  })
+}
