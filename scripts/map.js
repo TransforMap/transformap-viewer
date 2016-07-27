@@ -206,6 +206,14 @@ function clickOnCat(id) {
   updateToiEmptyStatusInFilterMenu();
 }
 
+function resetFilter () {
+  $("#map-menu li").removeClass("selected");
+  $("#map-menu li > span").removeClass("selected");
+  $("ul.type-of-initiative").hide();
+  $("ul.subcategories").hide();
+  trigger_Filter("*");
+  $('#resetfilters').hide();
+}
 
 function clickOnInitiative(id) {
   console.log("clickOnInitiative: "+ id);
@@ -243,6 +251,7 @@ function trigger_Filter(filter_UUID) {
     marker.filtered = ! filterMatches(attributes,filter_UUID);
   }
   pruneClusterLayer.ProcessView();
+  $('#resetfilters').show();
 }
 
 function createToiArray(toi_string) {
@@ -264,6 +273,8 @@ function filterMatches(attributes,filter_UUID) {
     console.log("error in filter, no type_of_initiative attribute");
     return false;
   }
+  if(filter_UUID == "*")
+    return true;
 
   //console.log("filter called with filter: " + filter_UUID + " and toi: " + attributes.type_of_initiative);
 
