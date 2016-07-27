@@ -68,8 +68,12 @@ Basic map and pop up styles
 
 #map-tiles {
     height: 100vh;
-    width: 100%;
-    position: fixed;
+    width:100%;
+ /*   right:0;
+    bottom:0;
+    top:0;
+    width:83.3%;
+    position: fixed;*/
 }
 
 .attribution {
@@ -204,6 +208,18 @@ body {
     ul.subcategories {
         padding-left: 10px;
     }
+    ul#map-menu {
+        border-top: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
+    }
+    div#resetfilters {
+      color:white;
+      padding:5px;
+      margin:10px;
+      display:none;
+      border:1px solid white;
+      cursor:pointer;
+    }
     ul.type-of-initiative {
         text-align: left;
         display: none;
@@ -233,21 +249,11 @@ body {
             background:#F2BD0B;
             font-style:italic;
         }
+        .list-group-item.empty {
+            color:gray;
+        }
 
     }
-}
-/* QUICK HACK */
-/* Since the backbone template creates a type of initiative list for all subcategories, but only populates the list if subcategories have corresponding types of initiatives, this hack works on the visibility, rather than the display, property of the CSS items to hide the types of initiatives list if it hasn't been given the has-submenu class in the backbone event 'displayTypes'. */
-.subcategory ul {
-    //visibility: hidden !important;
-}
-.subcategory.has-submenu ul {
-   visibility: visible !important;
-}
-/*On click styling */
-.active-filter {
-        background: #fcec74 !important;
-        color: #000 !important;
 }
 
 .my-div-icon {
@@ -255,6 +261,7 @@ body {
   height:30px;
   background:rgba(31,48,80,0.5);
   border-radius:15px;
+  margin-top:-15px;
 }
 .my-div-icon:before {
   width:20px;
@@ -271,62 +278,15 @@ body {
 /*******************
 MEDIA
 *******************/
-
-@media screen and (min-width:768px) {
-    .row-eq-height {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex
-    }
-    #about-get-involved {
-        min-height: 100%
-    }
-    #about-who-we-are {
-        min-height: 100%
+@media screen and (max-width:1200px) {
+    #map-menu-container ul.type-of-initiative {
+      left:25%;
     }
 }
-
-@media screen and (max-width:980px) {
-    .container {
-        width: 80%
-    }
-    section#maps .map-card h1 {
-        font-size: 14px
-    }
-    section#maps .map-card p {
-        font-size: 12px
-    }
-}
-
 @media screen and (max-width:768px) {
-    .featured {
-        padding-bottom: 10px
-    }
-}
-
-@media screen and (max-width:800px) {
-    .container {
-        width: 90%
-    }
-}
-
-@media screen and (max-width:540px) {
-    .container {
-        width: 95%
-    }
-    .map-card {
-        display: block;
-        margin: 25px auto;
-        width: 80%
-    }
-}
-
-@media screen and (max-width:360px) {
-    .map-card {
-        display: block;
-        margin: 25px auto;
-        width: 70%
+    #map-menu-container ul.type-of-initiative {
+      position:relative;
+      left:0;
     }
 }
 

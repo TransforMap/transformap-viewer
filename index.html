@@ -53,7 +53,7 @@
 	</script>
 
 	<script type='template' id='menuTypeOfInitiativeTemplate'>
-    <li class="list-group-item" onClick="clickOnInitiative('<%- id %>')" id="<%- id %>">
+    <li class="list-group-item empty" onClick="clickOnInitiative('<%- id %>')" id="<%- id %>">
       <%- itemLabel %>
     </li>
 	</script>
@@ -103,12 +103,23 @@
 				<a href="<%- properties['opening_hours:url'] %>"><%- properties['opening_hours:url'] %></a>
 			</p>
 		<% } %>
+      <p>
+        <strong>Type Of Initiative</strong><br>
+        <% var tois_array = createToiArray(properties['type_of_initiative']);
+           var trans_array = tois_array.map(function(obj){
+             var qnr = tax_hashtable.toistr_to_qnr[obj];
+             return (qnr) ? tax_hashtable.toi_qindex[qnr].itemLabel.value : obj;
+           });
+           var trans_str = trans_array.join(', '); %>
+        <%- trans_str %>
+      </p>
 	</script>
 
 	<div id="map-menu-container" class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
 		<ul id="map-menu" class="list-group">
 
 		</ul>
+    <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
 	</div>
 
 	<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
@@ -125,7 +136,8 @@
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
   <script defer="defer" src="bower_components/leaflet/dist/leaflet.js"></script>
-	<script defer="defer" src="bower_components/PruneCluster/dist/PruneCluster.js"></script>
+  <script defer="defer" src="scripts/leaflet-hash.js"></script>
+	<script defer="defer" src="bower_components/PruneCluster/dist/PruneCluster.min.js"></script>
 	<script defer="defer" src="scripts/map.js"></script>
 </body>
 </html>
