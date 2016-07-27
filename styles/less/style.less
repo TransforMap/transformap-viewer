@@ -255,19 +255,6 @@ body {
 
     }
 }
-/* QUICK HACK */
-/* Since the backbone template creates a type of initiative list for all subcategories, but only populates the list if subcategories have corresponding types of initiatives, this hack works on the visibility, rather than the display, property of the CSS items to hide the types of initiatives list if it hasn't been given the has-submenu class in the backbone event 'displayTypes'. */
-.subcategory ul {
-    //visibility: hidden !important;
-}
-.subcategory.has-submenu ul {
-   visibility: visible !important;
-}
-/*On click styling */
-.active-filter {
-        background: #fcec74 !important;
-        color: #000 !important;
-}
 
 .my-div-icon {
   width:30px;
@@ -300,64 +287,6 @@ MEDIA
     #map-menu-container ul.type-of-initiative {
       position:relative;
       left:0;
-    }
-}
-
-@media screen and (min-width:768px) {
-    .row-eq-height {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex
-    }
-    #about-get-involved {
-        min-height: 100%
-    }
-    #about-who-we-are {
-        min-height: 100%
-    }
-}
-
-@media screen and (max-width:980px) {
-    .container {
-        width: 80%
-    }
-    section#maps .map-card h1 {
-        font-size: 14px
-    }
-    section#maps .map-card p {
-        font-size: 12px
-    }
-}
-
-@media screen and (max-width:768px) {
-    .featured {
-        padding-bottom: 10px
-    }
-}
-
-@media screen and (max-width:800px) {
-    .container {
-        width: 90%
-    }
-}
-
-@media screen and (max-width:540px) {
-    .container {
-        width: 95%
-    }
-    .map-card {
-        display: block;
-        margin: 25px auto;
-        width: 80%
-    }
-}
-
-@media screen and (max-width:360px) {
-    .map-card {
-        display: block;
-        margin: 25px auto;
-        width: 70%
     }
 }
 
