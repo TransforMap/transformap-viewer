@@ -20,6 +20,10 @@ Install *bower* from npm:
 
     [sudo] npm install -g bower
 
+Debian: install npm:
+
+    [sudo] aptitude install npm nodejs-legacy
+
 Fetch external dependencies:
 
     bower install
