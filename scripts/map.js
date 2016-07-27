@@ -12,10 +12,11 @@ var MapData = Backbone.Collection.extend({
     }
  });
 
-var map = L.map('map-tiles').setView ([51.1657, 10.4515], 5);
+var map = L.map('map-tiles',{ zoomControl: false }).setView ([51.1657, 10.4515], 5);
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 }).addTo(map);
+new L.Control.Zoom({ position: 'topright' }).addTo(map);
 var pruneClusterLayer = new PruneClusterForLeaflet(60,20);
 map.addLayer(pruneClusterLayer);
 var hash = new L.Hash(map); // Leaflet persistent Url Hash function
