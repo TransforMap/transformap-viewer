@@ -68,8 +68,12 @@ Basic map and pop up styles
 
 #map-tiles {
     height: 100vh;
-    width: 100%;
-    position: fixed;
+    width:100%;
+ /*   right:0;
+    bottom:0;
+    top:0;
+    width:83.3%;
+    position: fixed;*/
 }
 
 .attribution {
@@ -287,6 +291,17 @@ body {
 /*******************
 MEDIA
 *******************/
+@media screen and (max-width:1200px) {
+    #map-menu-container ul.type-of-initiative {
+      left:25%;
+    }
+}
+@media screen and (max-width:768px) {
+    #map-menu-container ul.type-of-initiative {
+      position:relative;
+      left:0;
+    }
+}
 
 @media screen and (min-width:768px) {
     .row-eq-height {
