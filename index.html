@@ -105,7 +105,13 @@
 		<% } %>
       <p>
         <strong>Type Of Initiative</strong><br>
-        <%- properties['type_of_initiative'] %>
+        <% var tois_array = createToiArray(properties['type_of_initiative']);
+           var trans_array = tois_array.map(function(obj){
+             var qnr = tax_hashtable.toistr_to_qnr[obj];
+             return (qnr) ? tax_hashtable.toi_qindex[qnr].itemLabel.value : obj;
+           });
+           var trans_str = trans_array.join(', '); %>
+        <%- trans_str %>
       </p>
 	</script>
 
