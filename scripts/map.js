@@ -1,4 +1,3 @@
-var map;
 var theme_colors = ["#fcec74", "#f7df05", "#f2bd0b", "#fff030", "#95D5D2", "#1F3050"];
 
 var MapModel = Backbone.Model.extend({});
@@ -17,6 +16,8 @@ var map = L.map('map-tiles').setView ([51.1657, 10.4515], 5);
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 }).addTo(map);
+var pruneClusterLayer = new PruneClusterForLeaflet(60,20);
+map.addLayer(pruneClusterLayer);
 
 /* Creates map and popup template */
 var MapView = Backbone.View.extend({
@@ -30,19 +31,13 @@ var MapView = Backbone.View.extend({
     renderItem: function (model) {
         var feature = model.toJSON();
 
-        var marker = L.circleMarker(new L.LatLng(feature.geometry.coordinates[1],feature.geometry.coordinates[0]), {
-            color: theme_colors[(Math.floor(Math.random() * 6) + 1)],
-            radius: 8,
-            weight: 7,
-            opacity: .5,
-            fillOpacity: 1,
-        });
-
-        model.marker = marker;
-
-        marker.bindPopup(this.templatePopUp(feature));
-
-        map.addLayer(marker);
+        var pdata = {
+          icon:  new L.divIcon({className: 'my-div-icon',iconSize:30}),
+          popup: this.templatePopUp(feature)
+        }
+        var pmarker = new PruneCluster.Marker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], pdata);
+        pruneClusterLayer.RegisterMarker(pmarker);
+        pruneClusterLayer.ProcessView();
     },
 });
 
