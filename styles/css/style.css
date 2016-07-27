@@ -39,6 +39,7 @@ body{background:#1f3050}
 #map-menu-container ul.type-of-initiative .list-group-item:hover{cursor:pointer}
 #map-menu-container ul.type-of-initiative .list-group-item:first-child{border-top:0}
 #map-menu-container ul.type-of-initiative .list-group-item.selected{background:#f2bd0b;font-style:italic}
+#map-menu-container ul.type-of-initiative .list-group-item.empty{color:#808080}
 .subcategory.has-submenu ul{visibility:visible !important}
 .active-filter{background:#fcec74 !important;color:#000 !important}
 .my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px}

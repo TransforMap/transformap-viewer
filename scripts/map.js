@@ -202,6 +202,8 @@ function clickOnCat(id) {
 
   $("#" + id + " > ul").show();
   trigger_Filter(id);
+
+  updateToiEmptyStatusInFilterMenu();
 }
 
 
@@ -241,7 +243,16 @@ function trigger_Filter(filter_UUID) {
     marker.filtered = ! filterMatches(attributes,filter_UUID);
   }
   pruneClusterLayer.ProcessView();
+}
 
+function createToiArray(toi_string) {
+  if(typeof(toi_string) !== 'string')
+    return [];
+  var toi_array = toi_string.split(';');
+  for(var i=0;i<toi_array.length;i++){
+    toi_array[i] = toi_array[i].trim();
+  }
+  return toi_array;
 }
 
 function filterMatches(attributes,filter_UUID) {
@@ -256,13 +267,8 @@ function filterMatches(attributes,filter_UUID) {
 
   //console.log("filter called with filter: " + filter_UUID + " and toi: " + attributes.type_of_initiative);
 
-
   //attributes.type_of_initiative can be ;-separated...
-  var toi_array = attributes.type_of_initiative.split(';');
-  for(var i=0;i<toi_array.length;i++){
-    toi_array[i] = toi_array[i].trim();
-  }
-  //console.log(toi_array);
+  var toi_array = createToiArray(attributes.type_of_initiative);
 
   for(var i=0;i<toi_array.length;i++){
     var type_of_initiative_QNR = tax_hashtable.toistr_to_qnr[toi_array[i]];
@@ -286,9 +292,6 @@ function filterMatches(attributes,filter_UUID) {
 
   }
 
-  //return (Math.random() > 0.5);
-
-
   return false;
 }
 
@@ -298,6 +301,7 @@ var tax_hashtable = {
   toi_qindex: {},
   cat_qindex: {},
   all_qindex: {},
+  toi_count: {},
   root_qnr: undefined
 }
 
@@ -320,4 +324,28 @@ function fill_tax_hashtable() {
       tax_hashtable.root_qnr = qnr;
     }
   })
+}
+
+var toi_count_out_of_date = 1;
+function updateToiEmptyStatusInFilterMenu () {
+  if(! toi_count_out_of_date)
+    return;
+
+  var marker_array = pruneClusterLayer.GetMarkers();
+  for(var i = 0; i < marker_array.length; i++) {
+    var marker = marker_array[i];
+
+    var toi_array = createToiArray(marker.data.tags.type_of_initiative);
+    toi_array.forEach(function(e) {
+      if(! tax_hashtable.toi_count[e]) {
+        tax_hashtable.toi_count[e]=1;
+        var qnr = tax_hashtable.toistr_to_qnr[e];
+        if(qnr) // only works lateron when menu is loaded
+          $('#' + qnr).removeClass('empty');
+      } else {
+        tax_hashtable.toi_count[e]++
+      }
+    });
+  }
+  toi_count_out_of_date = 0;
 }
