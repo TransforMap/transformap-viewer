@@ -14,3 +14,6 @@ Compile it via :
 
 * lessc -x styles/less/style.less styles/css/style.css
 
+## Dependencies
+
+Use `bower install` to fetch external dependencies.

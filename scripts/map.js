@@ -106,7 +106,7 @@ function convert_tax_to_tree(flatjson) {
 
         if(entry["subclass_of"].value == uuid_of_category) {
           //console.log("add subcat " + entry.itemLabel.value + " to category " + category_item.itemLabel );
-          var new_subcat = 
+          var new_subcat =
             {
               "type": "subcategory",
               "UUID": entry.item.value,
@@ -131,7 +131,7 @@ function convert_tax_to_tree(flatjson) {
 
     cats_that_hold_type_of_initiatives.forEach(function(cat){
       if(cat.UUID == parent_uuid) {
-        var type_of_initiative = 
+        var type_of_initiative =
           {
             "type": "type_of_initiative",
             "UUID": flat_type_of_initiative.item.value,
@@ -159,7 +159,7 @@ function buildTreeMenu(tree_json) {
   }
 
   function appendTypeOfInitiative(toi,parent_element) {
-    var toi_data = 
+    var toi_data =
         {
           id: getQNR(toi.UUID),
           itemLabel: toi.itemLabel
@@ -169,7 +169,7 @@ function buildTreeMenu(tree_json) {
 
   function appendCategory(cat, parent_element) {
 
-    var cat_data = 
+    var cat_data =
         {
           id: getQNR(cat.UUID),
           itemLabel: cat.itemLabel
@@ -201,7 +201,7 @@ function buildTreeMenu(tree_json) {
 
 function clickOnCat(id) {
   console.log("clickOnCat: "+ id);
-  
+
   //close all other cats on the same level
   $("#" + id).parent("ul").children("li").children("ul").hide();
   $("ul.type-of-initiative").hide();
@@ -234,4 +234,3 @@ $.getJSON(taxonomy_url, function(returned_data){
   buildTreeMenu(tree_menu_json);
 
 });
-

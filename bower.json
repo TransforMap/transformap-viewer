@@ -1,0 +1,20 @@
+{
+  "name": "transformap-viewer",
+  "homepage": "https://transformap.co/transformap-viewer",
+  "authors": [],
+  "description": "",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "PruneCluster": "^1.1.0"
+  }
+}
