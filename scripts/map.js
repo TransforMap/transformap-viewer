@@ -46,39 +46,20 @@ var MapView = Backbone.View.extend({
 var mapData = new MapData();
 var mapView = new MapView({ collection: mapData });
 
-
-function convert_tax_to_tree(flatjson) {
+// note: can only handle 3 tiers (cats, subcats, toi) at the moment.
+function convert_tax_to_tree() {
   var treejson = {
     "xml:lang": "en",
     "elements": []
   };
 
-  var flat_elements = flatjson.results.bindings;
-
-  var flat_category_entries = []; //cats and subcats
-  var flat_type_of_initiatives = [];
-
   var cats_that_hold_type_of_initiatives = [];
 
-  var root_id = "";
-
-  //sort entries into 2 arrays for faster search
-  flat_elements.forEach(function(entry){
-    if(entry["instance_of"]) {
-      if (entry["instance_of"].value == "https://base.transformap.co/entity/Q6") {
-        flat_type_of_initiatives.push(entry);
-      } else if (entry["instance_of"].value == "https://base.transformap.co/entity/Q5") {
-        flat_category_entries.push(entry);
-      } else if(entry["instance_of"].value == "https://base.transformap.co/entity/Q3") {
-        root_id = entry.item.value;
-      }
-    }
-  });
-
   // get all 'childs' for this root (main categories)
-  flat_category_entries.forEach(function(entry){
+  for( i in tax_hashtable.cat_qindex) {
+    var entry = tax_hashtable.cat_qindex[i];
     if(entry["subclass_of"]) {
-      if(entry["subclass_of"].value == root_id) {
+      if(getQNR(entry["subclass_of"].value) == tax_hashtable.root_qnr) {
         treejson.elements.push(
             {
               "type": "category",
@@ -89,7 +70,7 @@ function convert_tax_to_tree(flatjson) {
         );
       }
     }
-  });
+  }
 
   // get all child categories for the main categories
   treejson.elements.forEach(function(category_item){ //iterate over categories
@@ -97,9 +78,10 @@ function convert_tax_to_tree(flatjson) {
     var uuid_of_category = category_item.UUID;
     //console.log(uuid_of_category);
 
-    flat_category_entries.forEach(function(entry){
-      if(entry["subclass_of"]) {
+    for( i in tax_hashtable.cat_qindex) {
+      var entry = tax_hashtable.cat_qindex[i];
 
+      if(entry["subclass_of"]) {
         if(entry["subclass_of"].value == uuid_of_category) {
           //console.log("add subcat " + entry.itemLabel.value + " to category " + category_item.itemLabel );
           var new_subcat =
@@ -113,7 +95,7 @@ function convert_tax_to_tree(flatjson) {
           cats_that_hold_type_of_initiatives.push(new_subcat);
         }
       }
-    });
+    }
 
     if(category_item.elements.length == 0) {
       cats_that_hold_type_of_initiatives.push(category_item);
@@ -122,7 +104,9 @@ function convert_tax_to_tree(flatjson) {
 
   // get all type of initiatives and hang them to their parent category
   // remember: objects are called by reference, so this updates the whole treejson structure!
-  flat_type_of_initiatives.forEach(function(flat_type_of_initiative) {
+  for( i in tax_hashtable.toi_qindex) {
+    var flat_type_of_initiative = tax_hashtable.toi_qindex[i];
+
     var parent_uuid = flat_type_of_initiative.subclass_of.value;
 
     cats_that_hold_type_of_initiatives.forEach(function(cat){
@@ -137,7 +121,7 @@ function convert_tax_to_tree(flatjson) {
         cat.elements.push(type_of_initiative);
       }
     });
-  });
+  };
 
   return treejson;
 }
@@ -234,9 +218,9 @@ $.getJSON(taxonomy_url, function(returned_data){
 
   flat_taxonomy_array = returned_data.results.bindings;
 
-  var tree_menu_json = convert_tax_to_tree(returned_data);
-
   fill_tax_hashtable();
+  var tree_menu_json = convert_tax_to_tree();
+
   buildTreeMenu(tree_menu_json);
 
 });
