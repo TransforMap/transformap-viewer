@@ -18,6 +18,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 var pruneClusterLayer = new PruneClusterForLeaflet(60,20);
 map.addLayer(pruneClusterLayer);
+var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
 /* Creates map and popup template */
 var MapView = Backbone.View.extend({
