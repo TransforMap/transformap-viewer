@@ -4,7 +4,7 @@ var theme_colors = ["#fcec74", "#f7df05", "#f2bd0b", "#fff030", "#95D5D2", "#1F3
 var MapModel = Backbone.Model.extend({});
 
 var MapData = Backbone.Collection.extend({
-    url:"http://transformap.co/json/sample-data.json",
+    url:"https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3",
     parse: function(response){
         return response.features;
     },
@@ -13,7 +13,7 @@ var MapData = Backbone.Collection.extend({
     }
  });
 
-var map = L.map('map-tiles').setView ([51.1657, 10.4515], 6);
+var map = L.map('map-tiles').setView ([51.1657, 10.4515], 5);
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 }).addTo(map);
