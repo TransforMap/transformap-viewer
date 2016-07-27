@@ -42,26 +42,19 @@
 <body id="map">
 
 	<!-- Content -->
-	<script type='template' id='mapMenuTemplate'>
-	<li class="list-group-item category">
-		<span class="toggle"><%- itemLabel.value %></span>
-		<ul id="<%- id %>" class="subcategories">
-		</ul>
-	</li>
-	</script>
 
 	<script type='template' id='menuCategoryTemplate'>
-  <li class="list-group-item category" id="<%- id %>">
-    <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %></span>
-		<ul class="subcategories"></ul>
-		<ul class="type-of-initiative"></ul>
-	</li>
+    <li class="list-group-item category" id="<%- id %>">
+      <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %></span>
+      <ul class="subcategories"></ul>
+      <ul class="type-of-initiative"></ul>
+    </li>
 	</script>
 
 	<script type='template' id='menuTypeOfInitiativeTemplate'>
-  <li class="list-group-item" onClick="clickOnInitiative('<%- id %>')">
-    <%- itemLabel %>
-	</li>
+    <li class="list-group-item" onClick="clickOnInitiative('<%- id %>')" id="<%- id %>">
+      <%- itemLabel %>
+    </li>
 	</script>
 
 	<script type='template' id='popUpTemplate'>

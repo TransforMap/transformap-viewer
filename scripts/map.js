@@ -203,10 +203,19 @@ function clickOnCat(id) {
   console.log("clickOnCat: "+ id);
   
   //close all other cats on the same level
-  //close all parent->li->ul's
-  $("#" + id).parent().children().children("ul").hide();
+  $("#" + id).parent("ul").children("li").children("ul").hide();
   $("ul.type-of-initiative").hide();
 
+  //toggle "selected" on the current level
+  $("#" + id).parent("ul").children("li").children("span").removeClass("selected");
+
+  //remove all "selected" on all child levels
+  $("#" + id + " .selected").removeClass("selected");
+
+  //remove "selected" on the parent level
+  $("#" + id).parent("ul").parent("li").children("span").removeClass("selected");
+
+  $("#" + id + " > span").addClass("selected");
 
   $("#" + id + " > ul").show();
 }
@@ -214,6 +223,8 @@ function clickOnCat(id) {
 
 function clickOnInitiative(id) {
   console.log("clickOnInitiative: "+ id);
+  $("#" + id).parent("ul").children("li").removeClass("selected");
+  $("#" + id).addClass("selected");
 }
 
 $.getJSON(taxonomy_url, function(returned_data){
