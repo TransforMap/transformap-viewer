@@ -147,6 +147,8 @@ var taxonomy_url = "http://transformap.co/transformap-viewer/taxonomy.json"
 
 // returns "Q12" of https://base.transformap.co/entity/Q12#taxonomy
 function getQNR(uri_string) {
+  if(typeof(uri_string) !== 'string')
+    return false;
   var slashsplit_array = uri_string.split('/');
   var after_last_slash = slashsplit_array[slashsplit_array.length -1];
   var before_hash = after_last_slash.split('#')[0];
@@ -215,6 +217,7 @@ function clickOnCat(id) {
   $("#" + id + " > span").addClass("selected");
 
   $("#" + id + " > ul").show();
+  trigger_Filter(id);
 }
 
 
@@ -267,17 +270,42 @@ function filterMatches(attributes,filter_UUID) {
     return false;
   }
 
-  console.log("filter called with filter: " + filter_UUID + " and toi: " + attributes.type_of_initiative);
-
-  //if attribute == filter_UUID; true
-  //if attribute == subclass of (and subclass of...) true
-
-  var type_of_initiative_QNR = getToiQnr(attributes.type_of_initiative);
-
-  return (Math.random() > 0.5);
+  //console.log("filter called with filter: " + filter_UUID + " and toi: " + attributes.type_of_initiative);
 
 
-  return true;
+  //attributes.type_of_initiative can be ;-separated...
+  var toi_array = attributes.type_of_initiative.split(';');
+  for(var i=0;i<toi_array.length;i++){
+    toi_array[i] = toi_array[i].trim();
+  }
+  //console.log(toi_array);
+
+  for(var i=0;i<toi_array.length;i++){
+    var type_of_initiative_QNR = tax_hashtable.toistr_to_qnr[toi_array[i]];
+
+    if(type_of_initiative_QNR == filter_UUID)
+      return true;
+
+    //if attribute == subclass of (and subclass of...) true
+    //get next higher element
+
+    //recursive!!
+    var parent_cat_qnr = false;
+    var to_check_qnr = type_of_initiative_QNR;
+    while(tax_hashtable.all_qindex[to_check_qnr] && tax_hashtable.all_qindex[to_check_qnr].subclass_of) {
+      parent_cat_qnr = getQNR(tax_hashtable.all_qindex[to_check_qnr].subclass_of.value);
+
+      if(parent_cat_qnr == filter_UUID)
+        return true;
+      to_check_qnr = parent_cat_qnr;
+    }
+
+  }
+
+  //return (Math.random() > 0.5);
+
+
+  return false;
 }
 
 var tax_hashtable = {
