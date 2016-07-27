@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "PruneCluster": "^1.1.0"
+    "PruneCluster": "^1.1.0",
+    "leaflet": "^0.7.7"
   }
 }
