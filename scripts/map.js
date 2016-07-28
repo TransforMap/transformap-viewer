@@ -377,3 +377,16 @@ function updateToiEmptyStatusInFilterMenu () {
   }
   toi_count_out_of_date = 0;
 }
+
+var popup_image_width = "270px";
+/*
+ * checks if a image link points to a Mediawiki and if, returns link to thumbnail version of image
+ */
+function checkForMWimages(image_uri) {
+  var retval = image_uri;
+  if(image_uri.match(/\/wiki\/File:/)) {
+    retval = image_uri.replace(/ /,"_")
+      .replace(/\/File:/,'/Special:Redirect/file/') + "?width=" + popup_image_width;
+  }
+  return retval;
+}

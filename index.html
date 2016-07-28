@@ -64,7 +64,7 @@
 		</div>
 		<% if (properties['image']) { %>
 			<p>
-				<img src="<%- properties.image %>">
+        <img src="<%- checkForMWimages(properties.image) %>">
 				<br>
 				<em><%- properties['image:license'] %> <%- properties['image:credit'] %></em>
 			</p>
