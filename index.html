@@ -1,108 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Meta -->
-	<meta charset="utf-8" />
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <!-- Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
-		 More info: h5bp.com/i/378 -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+     More info: h5bp.com/i/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<!-- Our site title and description -->
-	<title>TransforMap-Viewer</title>
-	<meta name="description" content="TransforMap Viewer allows you to visualize the myriads of alternatives to the dominant economic system." />
-	<meta name="keywords" content="openstreetmap, OSM, Free Software, Open Source, mapping, leaflet, linked data, mapping taxonomy, open data, solidarity economy, alternative economy" />
-	<meta name="author" content="TransforMap Community" />
+  <!-- Our site title and description -->
+  <title>TransforMap-Viewer</title>
+  <meta name="description" content="TransforMap Viewer allows you to visualize the myriads of alternatives to the dominant economic system." />
+  <meta name="keywords" content="openstreetmap, OSM, Free Software, Open Source, mapping, leaflet, linked data, mapping taxonomy, open data, solidarity economy, alternative economy" />
+  <meta name="author" content="TransforMap Community" />
 
-	<meta property="og:title" content="TransforMap-Viewer" />
-	<meta property="og:type" content="website" />
-	<meta property="og:description" content="TransforMap Viewer allows you to visualize the myriads of alternatives to the dominant economic system." />
-	<meta property="og:url" content="https://github.com/TransforMap/transformap-viewer" />
+  <meta property="og:title" content="TransforMap-Viewer" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="TransforMap Viewer allows you to visualize the myriads of alternatives to the dominant economic system." />
+  <meta property="og:url" content="https://github.com/TransforMap/transformap-viewer" />
 
-	<!-- Mobile viewport optimized: h5bp.com/viewport -->
-	<meta name="viewport" content="width=device-width" />
+  <!-- Mobile viewport optimized: h5bp.com/viewport -->
+  <meta name="viewport" content="width=device-width" />
 
-	<!-- Icons -->
-	<link rel="shortcut icon" href="http://transformap.co/images/favicon.png">
+  <!-- Icons -->
+  <link rel="shortcut icon" href="http://transformap.co/images/favicon.png">
 
-	<!-- Shims: IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-		<script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+  <!-- Shims: IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
 
-	<!-- Styles -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin,latin-ext" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin,latin-ext" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic&subset=latin,latin-ext" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
-	<link rel="stylesheet" href="bower_components/PruneCluster/dist/LeafletStyleSheet.css" />
+  <link rel="stylesheet" href="bower_components/PruneCluster/dist/LeafletStyleSheet.css" />
   <link rel="stylesheet" href="styles/css/style.css" />
 </head>
 
 <body id="map">
 
-	<!-- Content -->
+  <!-- Content -->
 
-	<script type='template' id='menuCategoryTemplate'>
+  <script type='template' id='menuCategoryTemplate'>
     <li class="list-group-item category" id="<%- id %>">
       <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %></span>
       <ul class="subcategories"></ul>
       <ul class="type-of-initiative"></ul>
     </li>
-	</script>
+  </script>
 
-	<script type='template' id='menuTypeOfInitiativeTemplate'>
+  <script type='template' id='menuTypeOfInitiativeTemplate'>
     <li class="list-group-item empty" onClick="clickOnInitiative('<%- id %>')" id="<%- id %>">
       <%- itemLabel %>
     </li>
-	</script>
+  </script>
 
-	<script type='template' id='popUpTemplate'>
-		<div class="popup-heading">
-			<a href="<%- properties.url %>" target="_blank"><%- properties.name %></a>
-		</div>
-		<% if (properties['image']) { %>
-			<p>
-				<img src="<%- properties.image %>">
-				<br>
-				<em><%- properties['image:license'] %> <%- properties['image:credit'] %></em>
-			</p>
-		<% } %>
-		<p>
-			<%- properties.description  %>
-		</p>
-		<p>
+  <script type='template' id='popUpTemplate'>
+    <div class="popup-heading">
+      <a href="<%- properties.url %>" target="_blank"><%- properties.name %></a>
+    </div>
+    <% if (properties['image']) { %>
+      <p>
+        <a href="<%- properties.image %>" target=_blank>
+          <img src="<%- checkForMWimages(properties.image) %>">
+        </a>
+        <br>
+        <em><%- properties['image:license'] %> <%- properties['image:credit'] %></em>
+      </p>
+    <% } %>
+    <p>
+      <%- properties.description  %>
+    </p>
+    <p>
 
-			<strong>Address</strong>
-			<br>
-			<%- properties['addr:housenumber'] %> <%- properties['addr:street'] %><br><%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
-		</p>
+      <strong>Address</strong>
+      <br>
+      <%- properties['addr:housenumber'] %> <%- properties['addr:street'] %><br><%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
+    </p>
 
-		<% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone'])) { %>
-		<p>
-			<strong>Contact</strong><br>
-		 	<% if (properties['contact:email']) { %>
-			<a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
-			<br>
-			<% } %>
-		 	<% if (properties['contact:website']) { %>
-			<a href="<%- properties['contact:website'] %>"><%- properties['contact:website'] %></a>
-			<br>
-			<% } %>
-		 	<% if (properties['contact:phone']) { %>
-			<%- properties['contact:phone'] %>
-			<% } %>
-		</p>
-		<% } %>
+    <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone'])) { %>
+    <p>
+      <strong>Contact</strong><br>
+       <% if (properties['contact:email']) { %>
+      <a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
+      <br>
+      <% } %>
+       <% if (properties['contact:website']) { %>
+      <a href="<%- properties['contact:website'] %>"><%- properties['contact:website'] %></a>
+      <br>
+      <% } %>
+       <% if (properties['contact:phone']) { %>
+      <%- properties['contact:phone'] %>
+      <% } %>
+    </p>
+    <% } %>
 
 
-		<% if (properties['opening_hours:url']) { %>
-			<p>
-				<strong>Opening hours</strong><br>
-				<a href="<%- properties['opening_hours:url'] %>"><%- properties['opening_hours:url'] %></a>
-			</p>
-		<% } %>
+    <% if (properties['opening_hours:url']) { %>
+      <p>
+        <strong>Opening hours</strong><br>
+        <a href="<%- properties['opening_hours:url'] %>"><%- properties['opening_hours:url'] %></a>
+      </p>
+    <% } %>
       <p>
         <strong>Type Of Initiative</strong><br>
         <% var tois_array = createToiArray(properties['type_of_initiative']);
@@ -113,31 +115,31 @@
            var trans_str = trans_array.join(', '); %>
         <%- trans_str %>
       </p>
-	</script>
+  </script>
 
-	<div id="map-menu-container" class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-		<ul id="map-menu" class="list-group">
+  <div id="map-menu-container" class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+    <ul id="map-menu" class="list-group">
 
-		</ul>
+    </ul>
     <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
-	</div>
+  </div>
 
-	<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
-		<div id='map-template'>
+  <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+    <div id='map-template'>
       <div id="map-tiles"></div>
     </div>
-	</div>
+  </div>
 
 
-	<!-- Scripts -->
-	<script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+  <!-- Scripts -->
+  <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
   <script defer="defer" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
   <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
   <script defer="defer" src="bower_components/leaflet/dist/leaflet.js"></script>
   <script defer="defer" src="scripts/leaflet-hash.js"></script>
-	<script defer="defer" src="bower_components/PruneCluster/dist/PruneCluster.min.js"></script>
-	<script defer="defer" src="scripts/map.js"></script>
+  <script defer="defer" src="bower_components/PruneCluster/dist/PruneCluster.min.js"></script>
+  <script defer="defer" src="scripts/map.js"></script>
 </body>
 </html>

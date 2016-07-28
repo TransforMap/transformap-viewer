@@ -18,13 +18,24 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 new L.Control.Zoom({ position: 'topright' }).addTo(map);
 var pruneClusterLayer = new PruneClusterForLeaflet(60,20);
+pruneClusterLayer.PrepareLeafletMarker = function(leafletMarker, data) {
+  leafletMarker.setIcon(data.icon);
+  //listeners can be applied to markers in this function
+  leafletMarker.on('click', function(e){
+    // bind popup and open immediately
+    if (!leafletMarker.getPopup()) {
+      leafletMarker.bindPopup(data.popup(data));
+      leafletMarker.openPopup();
+    }
+  });
+};
 map.addLayer(pruneClusterLayer);
 var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
 /* Creates map and popup template */
 var MapView = Backbone.View.extend({
     el: '#map-template',
-    livePopup: function(data,category) { // is run every time the marker gets visible again
+    livePopup: function(data) { // gets popup content for a marker
       var templatePopUpFunction = _.template($('#popUpTemplate').html());
       return templatePopUpFunction(data);
     },
@@ -37,7 +48,7 @@ var MapView = Backbone.View.extend({
         var feature = model.toJSON();
 
         var pdata = {
-          icon:  new L.divIcon({className: 'my-div-icon',iconSize:30}),
+          icon:  new L.divIcon({className: 'my-div-icon',iconSize:30,html:"<div>" + feature.properties.name + "</div>"}),
           popup: this.livePopup,
           tags: feature.properties,
           properties: feature.properties // is used by _ template
@@ -365,4 +376,23 @@ function updateToiEmptyStatusInFilterMenu () {
     });
   }
   toi_count_out_of_date = 0;
+}
+
+var popup_image_width = "270px";
+/*
+ * checks if a image link points to a Mediawiki and if, returns link to thumbnail version of image
+ */
+function checkForMWimages(image_uri) {
+  var retval = image_uri;
+  if(image_uri.match(/\/wiki\/File:/)) { // guess it is any Mediawiki instance
+    retval = image_uri.replace(/ /,"_")
+      .replace(/\/File:/,'/Special:Redirect/file/')
+      + "?width=" + popup_image_width;
+  } else if (image_uri.match(/^File:/)) { // take File: for hosted at Wikimedia Commons
+    retval = image_uri.replace(/ /,"_")
+      .replace(/^File:/,'https://commons.wikimedia.org/wiki/Special:Redirect/file/')
+      + "?width=" + popup_image_width;
+  }
+
+  return retval;
 }

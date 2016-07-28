@@ -42,6 +42,7 @@ body{background:#1f3050}
 #map-menu-container ul.type-of-initiative .list-group-item:first-child{border-top:0}
 #map-menu-container ul.type-of-initiative .list-group-item.selected{background:#f2bd0b;font-style:italic}
 #map-menu-container ul.type-of-initiative .list-group-item.empty{color:#808080}
-.my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px;margin-top:-15px}
+.my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px;margin-top:-15px}.my-div-icon div{display:none}
 .my-div-icon:before{width:20px;height:20px;content:"";display:block;background:#1f3050;position:relative;border-radius:10px;top:5px;left:5px}
+.my-div-icon:hover div{display:inline-block;background:rgba(255,255,255,0.5);position:absolute;right:-80px;bottom:35px;z-index:15000;width:200px;text-align:center;border:1px solid #1f3050;border-radius:5px;padding:5px}
 @media screen and (max-width:1200px){#map-menu-container ul.type-of-initiative{left:25%}}@media screen and (max-width:768px){#map-menu-container ul.type-of-initiative{position:relative;left:0}}
