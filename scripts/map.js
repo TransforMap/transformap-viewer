@@ -384,9 +384,15 @@ var popup_image_width = "270px";
  */
 function checkForMWimages(image_uri) {
   var retval = image_uri;
-  if(image_uri.match(/\/wiki\/File:/)) {
+  if(image_uri.match(/\/wiki\/File:/)) { // guess it is any Mediawiki instance
     retval = image_uri.replace(/ /,"_")
-      .replace(/\/File:/,'/Special:Redirect/file/') + "?width=" + popup_image_width;
+      .replace(/\/File:/,'/Special:Redirect/file/')
+      + "?width=" + popup_image_width;
+  } else if (image_uri.match(/^File:/)) { // take File: for hosted at Wikimedia Commons
+    retval = image_uri.replace(/ /,"_")
+      .replace(/^File:/,'https://commons.wikimedia.org/wiki/Special:Redirect/file/')
+      + "?width=" + popup_image_width;
   }
+
   return retval;
 }
