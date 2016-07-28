@@ -48,7 +48,7 @@ var MapView = Backbone.View.extend({
         var feature = model.toJSON();
 
         var pdata = {
-          icon:  new L.divIcon({className: 'my-div-icon',iconSize:30}),
+          icon:  new L.divIcon({className: 'my-div-icon',iconSize:30,html:"<div>" + feature.properties.name + "</div>"}),
           popup: this.livePopup,
           tags: feature.properties,
           properties: feature.properties // is used by _ template
