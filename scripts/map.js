@@ -23,10 +23,10 @@ pruneClusterLayer.PrepareLeafletMarker = function(leafletMarker, data) {
   //listeners can be applied to markers in this function
   leafletMarker.on('click', function(e){
     // bind popup and open immediately
-    if (!leafletMarker.getPopup())
+    if (!leafletMarker.getPopup()) {
       leafletMarker.bindPopup(data.popup(data));
-    leafletMarker.openPopup();
-    e.preventDefault();
+      leafletMarker.openPopup();
+    }
   });
 };
 map.addLayer(pruneClusterLayer);
@@ -36,7 +36,6 @@ var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 var MapView = Backbone.View.extend({
     el: '#map-template',
     livePopup: function(data) { // gets popup content for a marker
-      console.log("contr popup")
       var templatePopUpFunction = _.template($('#popUpTemplate').html());
       return templatePopUpFunction(data);
     },
