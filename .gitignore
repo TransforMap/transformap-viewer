@@ -1,1 +1,15 @@
-bower_components/
+bower_components/*
+
+!bower_components/leaflet
+bower_components/leaflet/*
+!bower_components/leaflet/dist
+bower_components/leaflet/dist/*
+!bower_components/leaflet/dist/leaflet.css
+!bower_components/leaflet/dist/leaflet.js
+
+!bower_components/PruneCluster
+bower_components/PruneCluster/*
+!bower_components/PruneCluster/dist
+bower_components/PruneCluster/dist/*
+!bower_components/PruneCluster/dist/PruneCluster.min.js
+!bower_components/PruneCluster/dist/LeafletStyleSheet.css
