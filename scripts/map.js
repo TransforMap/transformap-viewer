@@ -18,13 +18,22 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 new L.Control.Zoom({ position: 'topright' }).addTo(map);
 var pruneClusterLayer = new PruneClusterForLeaflet(60,20);
+pruneClusterLayer.PrepareLeafletMarker = function(leafletMarker, data) {
+  leafletMarker.setIcon(data.icon);
+  //listeners can be applied to markers in this function
+  leafletMarker.on('click', function(){
+    // bind popup and open immediately
+    leafletMarker.bindPopup(data.popup(data));
+    leafletMarker.openPopup();
+  });
+};
 map.addLayer(pruneClusterLayer);
 var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
 /* Creates map and popup template */
 var MapView = Backbone.View.extend({
     el: '#map-template',
-    livePopup: function(data,category) { // is run every time the marker gets visible again
+    livePopup: function(data) { // gets popup content for a marker
       var templatePopUpFunction = _.template($('#popUpTemplate').html());
       return templatePopUpFunction(data);
     },
