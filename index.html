@@ -64,7 +64,9 @@
 		</div>
 		<% if (properties['image']) { %>
 			<p>
-        <img src="<%- checkForMWimages(properties.image) %>">
+        <a href="<%- properties.image %>" target=_blank>
+          <img src="<%- checkForMWimages(properties.image) %>">
+        </a>
 				<br>
 				<em><%- properties['image:license'] %> <%- properties['image:credit'] %></em>
 			</p>
