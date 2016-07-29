@@ -43,6 +43,9 @@ var MapView = Backbone.View.extend({
 
         this.listenTo(this.collection, 'reset add change remove', this.renderItem);
         this.collection.fetch();
+        if($('body').width() < 768) {
+          setTimeout(scrollDown,100);
+        }
     },
     renderItem: function (model) {
         var feature = model.toJSON();
@@ -406,6 +409,6 @@ $('#backtotop').on('click', function(event){
     );
   });
 
-if($('body').width() < 768) {
+function scrollDown() {
   $('body,html').animate({scrollTop: $('#map-menu-container').height()},100);
 }
