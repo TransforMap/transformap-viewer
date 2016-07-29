@@ -13,12 +13,16 @@ table td{vertical-align:top;padding-right:1em}
 #map-tiles{height:100vh;width:100%;}
 .attribution{font-size:11px;margin-top:20px}
 #map p{font-family:'Open Sans',sans-serif}
-#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;width:250;text-align:left !important}
+#map-tiles .leaflet-control-container .leaflet-top.leaflet-right{z-index:7}
+#map-tiles .leaflet-popup-pane{z-index:8}
+#map-tiles .leaflet-popup .leaflet-popup-close-button{font-size:23px;width:35px;height:35px;padding:8px 0 0 0;vertical-align:center}
+#map-tiles .leaflet-popup .leaflet-popup-close-button:hover{background:#c3c3c3}
+#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;width:250;text-align:left !important;z-index:1500}
 #map-tiles .leaflet-popup p{font-size:12px;text-align:left;padding:5px}
 #map-tiles .leaflet-popup img{display:block;margin:auto;width:100%;max-width:270px}
 #map-tiles .leaflet-popup-content-wrapper{border-radius:0;padding:0;margin:0;max-width:300px}
 #map-tiles .leaflet-popup-content{padding-bottom:15px;margin:0}
-#map-tiles .leaflet-popup-content h1{text-align:left;padding:15px;border-bottom:1px solid #eee;margin-bottom:15px margin: 0;color:#1f3050;font-weight:700;font-size:16px}
+#map-tiles .leaflet-popup-content h1{text-align:left;padding:15px;border-bottom:1px solid #eee;margin-bottom:15px;margin-top:0;color:#1f3050;font-weight:700;font-size:16px}
 #map-tiles .leaflet-popup-content a{text-align:left !important;color:#000}
 #map-tiles .leaflet-popup-content p{margin:0;padding:5px 15px}
 body{background:#1f3050}
