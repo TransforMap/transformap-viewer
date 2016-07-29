@@ -18,8 +18,7 @@ table td{vertical-align:top;padding-right:1em}
 #map-tiles .leaflet-popup img{display:block;margin:auto;width:100%;max-width:270px}
 #map-tiles .leaflet-popup-content-wrapper{border-radius:0;padding:0;margin:0;max-width:300px}
 #map-tiles .leaflet-popup-content{padding-bottom:15px;margin:0}
-#map-tiles .leaflet-popup-content .popup-heading{text-align:left;padding:15px;border-bottom:1px solid #eee;margin-bottom:15px}
-#map-tiles .leaflet-popup-content .popup-heading a{margin:0;color:#1f3050;font-weight:700;font-size:16px}
+#map-tiles .leaflet-popup-content h1{text-align:left;padding:15px;border-bottom:1px solid #eee;margin-bottom:15px margin: 0;color:#1f3050;font-weight:700;font-size:16px}
 #map-tiles .leaflet-popup-content a{text-align:left !important;color:#000}
 #map-tiles .leaflet-popup-content p{margin:0;padding:5px 15px}
 body{background:#1f3050}
