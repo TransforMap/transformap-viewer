@@ -1,4 +1,5 @@
 bower_components/*
+*.swp
 
 !bower_components/leaflet
 bower_components/leaflet/*
