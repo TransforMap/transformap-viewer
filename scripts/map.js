@@ -405,3 +405,7 @@ $('#backtotop').on('click', function(event){
       }, 700
     );
   });
+
+if($('body').width() < 768) {
+  $('body,html').animate({scrollTop: $('#map-menu-container').height()},100);
+}
