@@ -26,7 +26,7 @@ table td{vertical-align:top;padding-right:1em}
 body{background:#1f3050}
 [class*="col-"]{margin:0;padding:0}
 .list-group-item:first-child,.list-group-item:last-child{border-top-right-radius:0 !important;border-top-left-radius:0 !important;border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important}
-#map-menu-container{background:#1f3050;height:100vh;}#map-menu-container .list-group{border:none}
+#map-menu-container{background:#1f3050;height:100vh;overflow:auto;}#map-menu-container .list-group{border:none}
 #map-menu-container .list-group-item{padding:0;background:#1f3050;color:#fff;font-size:12px;border:none;border-radius:none}
 #map-menu-container li.list-group-item.category{border-left:0;border-right:0;border-radius:0;border-top:1px solid #aaa}
 #map-menu-container li.list-group-item:first-child{border-top:0}
