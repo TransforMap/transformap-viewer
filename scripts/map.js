@@ -396,3 +396,12 @@ function checkForMWimages(image_uri) {
 
   return retval;
 }
+
+/* add scroll to top functionality for small screens */
+$('#backtotop').on('click', function(event){
+    event.preventDefault();
+    $('body,html').animate({
+      scrollTop: 0 ,
+      }, 700
+    );
+  });
