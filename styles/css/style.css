@@ -15,7 +15,7 @@ table td{vertical-align:top;padding-right:1em}
 #map p{font-family:'Open Sans',sans-serif}
 #map-tiles .leaflet-popup .leaflet-popup-close-button{font-size:23px;width:35px;height:35px;padding:8px 0 0 0;vertical-align:center}
 #map-tiles .leaflet-popup .leaflet-popup-close-button:hover{background:#c3c3c3}
-#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;width:250;text-align:left !important}
+#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;text-align:left !important}
 #map-tiles .leaflet-popup p{font-size:12px;text-align:left;padding:5px}
 #map-tiles .leaflet-popup img{display:block;margin:auto;width:100%;max-width:270px}
 #map-tiles .leaflet-popup-content-wrapper{border-radius:0;padding:0;margin:0;max-width:300px}
