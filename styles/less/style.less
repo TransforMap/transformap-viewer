@@ -221,15 +221,13 @@ body {
     }
     div#resetfilters,
     div#mobileShowMap{
+      display:none;
       width:fit-content;
       color:white;
       padding:5px;
       margin:10px;
       border:1px solid white;
       cursor:pointer;
-    }
-    div#resetfilters {
-      display:none;
     }
     ul.type-of-initiative {
         text-align: left;
@@ -327,6 +325,9 @@ MEDIA
       width:100%;
       ul.type-of-initiative {
         position:static;
+      }
+      div#resetfilters {
+        display:block;
       }
     }
     #map-tiles .leaflet-popup-pane   {

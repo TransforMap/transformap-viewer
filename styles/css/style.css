@@ -36,8 +36,7 @@ body{background:#1f3050}
 #map-menu-container .category ul{display:none}
 #map-menu-container ul.subcategories{padding-left:10px}
 #map-menu-container ul#map-menu{border-top:1px solid #aaa;border-bottom:1px solid #aaa;padding:0;margin:0}
-#map-menu-container div#resetfilters,#map-menu-container div#mobileShowMap{width:fit-content;color:#fff;padding:5px;margin:10px;border:1px solid #fff;cursor:pointer}
-#map-menu-container div#resetfilters{display:none}
+#map-menu-container div#resetfilters,#map-menu-container div#mobileShowMap{display:none;width:fit-content;color:#fff;padding:5px;margin:10px;border:1px solid #fff;cursor:pointer}
 #map-menu-container ul.type-of-initiative{text-align:left;display:none;background:#fcec74;position:fixed;left:20em;top:0;z-index:10;-webkit-padding-start:0;padding:0 15px;border-top-right-radius:5px;border-bottom-right-radius:5px}#map-menu-container ul.type-of-initiative .list-group-item{background:#fcec74;padding:5px 0 5px 10px;color:#000;border-top:1px solid #fff}
 #map-menu-container ul.type-of-initiative .list-group-item:hover{cursor:pointer}
 #map-menu-container ul.type-of-initiative .list-group-item:first-child{border-top:0}
@@ -47,4 +46,4 @@ body{background:#1f3050}
 .my-div-icon:before{width:20px;height:20px;content:"";display:block;background:#1f3050;position:relative;border-radius:10px;top:5px;left:5px}
 .my-div-icon:hover div{display:inline-block;background:rgba(255,255,255,0.5);position:absolute;right:-80px;bottom:35px;z-index:15000;width:200px;text-align:center;border:1px solid #1f3050;border-radius:5px;padding:5px}
 #backtotop{display:none;position:absolute;top:50px;left:10px;border-radius:4px;width:26px;height:26px;background:#fff url(../../assets/icon-filter-24.png) 50% 50% no-repeat;box-shadow:0 1px 5px rgba(0,0,0,0.65);cursor:pointer}
-@media screen and (max-width:768px){#map-menu-container{position:absolute;top:0;left:0;width:100%}#map-menu-container ul.type-of-initiative{position:static} #map-tiles .leaflet-popup-pane{bottom:0;right:0} #map-tiles{left:0;} #backtotop{display:block} .leaflet-top{top:40px}}
+@media screen and (max-width:768px){#map-menu-container{position:absolute;top:0;left:0;width:100%}#map-menu-container ul.type-of-initiative{position:static} #map-menu-container div#resetfilters{display:block} #map-tiles .leaflet-popup-pane{bottom:0;right:0} #map-tiles{left:0;} #backtotop{display:block} .leaflet-top{top:40px}}
