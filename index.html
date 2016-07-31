@@ -44,7 +44,7 @@
   <!-- Content -->
 
   <script type='template' id='menuCategoryTemplate'>
-    <li class="list-group-item category" id="<%- id %>">
+    <li class="list-group-item category <%- id %>">
       <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %></span>
       <ul class="subcategories"></ul>
       <ul class="type-of-initiative"></ul>
@@ -52,7 +52,7 @@
   </script>
 
   <script type='template' id='menuTypeOfInitiativeTemplate'>
-    <li class="list-group-item empty" onClick="clickOnInitiative('<%- id %>')" id="<%- id %>">
+    <li class="list-group-item empty <%- id %>" onClick="clickOnInitiative('<%- id %>')">
       <%- itemLabel %>
     </li>
   </script>
