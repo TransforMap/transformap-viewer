@@ -5,12 +5,8 @@ a:link {
 }
 
 body {
-    padding-top: 50px;
-    font-family: 'PT Sans', sans-serif
-}
-
-body#map {
-    padding-top: 0
+  margin:0;
+  font-family: 'PT Sans', sans-serif
 }
 
 section {
@@ -21,6 +17,10 @@ p {
     font-family: 'PT Sans', sans-serif;
     font-size: 16px;
     text-align: center
+}
+
+li {
+  list-style-type: none;
 }
 
 h1,
@@ -55,12 +55,6 @@ table td {
     padding-right: 1em
 }
 
-.container {
-    display: block;
-    margin: 0 auto;
-    width: 70%
-}
-
 /**************************
 Basic map and pop up styles
 **************************/
@@ -68,12 +62,11 @@ Basic map and pop up styles
 
 #map-tiles {
     height: 100vh;
-    width:100%;
- /*   right:0;
-    bottom:0;
+    position:absolute;
     top:0;
-    width:83.3%;
-    position: fixed;*/
+    bottom:0;
+    right:0;
+    left:20em;
 }
 
 .attribution {
@@ -116,9 +109,11 @@ Basic map and pop up styles
 
 #map-tiles .leaflet-popup-content-wrapper {
     border-radius: 0;
-    padding: 0px;
+    padding: 0px 2px 0 0; /*20px for scrollbar*/
     margin: 0;
-    max-width: 300px
+    max-width: 300px;
+    max-height: 90vh;
+    overflow:auto;
 }
 
 #map-tiles .leaflet-popup-content {
@@ -171,6 +166,7 @@ body {
     background: #1F3050;
     height: 100vh;
     overflow:auto;
+    width:20em;
     /* Main categories */
     .list-group {
         border: none;
@@ -220,22 +216,27 @@ body {
     ul#map-menu {
         border-top: 1px solid #aaa;
         border-bottom: 1px solid #aaa;
+        padding:0;
+        margin:0;
     }
-    div#resetfilters {
+    div#resetfilters,
+    div#mobileShowMap{
+      width:fit-content;
       color:white;
       padding:5px;
       margin:10px;
-      display:none;
       border:1px solid white;
       cursor:pointer;
+    }
+    div#resetfilters {
+      display:none;
     }
     ul.type-of-initiative {
         text-align: left;
         display: none;
         background: #fcec74;
         position: fixed;
-        left: 16.7%;
-        min-width: 200px;
+        left: 20em;
         top: 0;
         z-index: 10;
         -webkit-padding-start: 0px;
@@ -308,7 +309,6 @@ body {
   top:50px;
   left:10px;
   border-radius:4px;
-  z-index:200;
   width:26px;
   height:26px;
   background:white url(../../assets/icon-filter-24.png) 50% 50% no-repeat;
@@ -319,15 +319,33 @@ body {
 /*******************
 MEDIA
 *******************/
-@media screen and (max-width:1200px) {
-    #map-menu-container ul.type-of-initiative {
-      left:25%;
-    }
-}
 @media screen and (max-width:768px) {
-    #map-menu-container ul.type-of-initiative {
-      position:relative;
+    #map-menu-container {
+      position:absolute;
+      top:0;
       left:0;
+      width:100%;
+      ul.type-of-initiative {
+        position:static;
+      }
+    }
+    #map-tiles .leaflet-popup-pane   {
+      bottom:0;
+      right:0;
+    }
+    #map-tiles {
+      left:0;
+   /*   .leaflet-popup {
+        position:fixed !important;
+        transform:none !important;
+        margin:0px;
+        width:100vw;
+        height:100vh;
+        top:0px !important;
+        left:0px !important;
+        bottom:0px !important;
+        right:0px !important;
+      } */
     }
     #backtotop {
       display:block;

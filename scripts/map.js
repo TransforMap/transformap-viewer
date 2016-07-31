@@ -43,9 +43,6 @@ var MapView = Backbone.View.extend({
 
         this.listenTo(this.collection, 'reset add change remove', this.renderItem);
         this.collection.fetch();
-        if($('body').width() < 768) {
-          setTimeout(scrollDown,100);
-        }
     },
     renderItem: function (model) {
         var feature = model.toJSON();
@@ -402,17 +399,4 @@ function checkForMWimages(image_uri) {
   }
 
   return retval;
-}
-
-/* add scroll to top functionality for small screens */
-$('#backtotop').on('click', function(event){
-    event.preventDefault();
-    $('body,html').animate({
-      scrollTop: 0 ,
-      }, 700
-    );
-  });
-
-function scrollDown() {
-  $('body,html').animate({scrollTop: $('#map-menu-container').height()},100);
 }
