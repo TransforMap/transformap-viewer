@@ -1109,7 +1109,7 @@
       {
         "item": {
           "type": "uri",
-          "value": "https://base.transformap.co/entity/Q12029"
+          "value": "https://base.transformap.co/entity/Q12006"
         },
         "itemLabel": {
           "xml:lang": "en",
@@ -2811,7 +2811,7 @@
       {
         "item": {
           "type": "uri",
-          "value": "https://base.transformap.co/entity/Q21003"
+          "value": "https://base.transformap.co/entity/Q19003"
         },
         "itemLabel": {
           "xml:lang": "en",
