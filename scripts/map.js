@@ -51,7 +51,7 @@ var MapView = Backbone.View.extend({
           icon:  new L.divIcon({
             className: 'my-div-icon',
             iconSize:30,
-            html:"<div>" + feature.properties.name + "</div>"
+            html:"<div><div>" + feature.properties.name + "</div></div>"
           }),
           popup: this.livePopup,
           tags: feature.properties,
