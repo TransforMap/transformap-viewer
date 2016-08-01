@@ -1,30 +1,17 @@
 a,a:link{color:#455473;cursor:pointer}
-body{margin:0;font-family:'PT Sans',sans-serif}
-section{padding:50px 0}
-p{font-family:'PT Sans',sans-serif;font-size:16px;text-align:center}
+body{margin:0;font-family:'PT Sans',sans-serif;background:#1f3050}
+p{font-family:'Open Sans',sans-serif;font-size:16px}
 li{list-style-type:none}
 h1,h2,h3,h4,h5,h6{text-align:center}
-hr{border-color:#6374a6}
-table{width:90%;margin:auto}
-table thead{font-size:120%}
-table td,table th{padding-bottom:.5em}
-table td{vertical-align:top;padding-right:1em}
-#map-tiles{height:100vh;position:absolute;top:0;bottom:0;right:0;left:20em}
-.attribution{font-size:11px;margin-top:20px}
-#map p{font-family:'Open Sans',sans-serif}
-#map-tiles .leaflet-popup .leaflet-popup-close-button{font-size:23px;width:35px;height:35px;padding:8px 0 0 0;vertical-align:center}
+#map-tiles{height:100vh;position:absolute;top:0;bottom:0;right:0;left:20em}#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;text-align:left !important}#map-tiles .leaflet-popup .leaflet-popup-close-button{font-size:23px;width:35px;height:35px;padding:8px 0 0 0;vertical-align:center}
 #map-tiles .leaflet-popup .leaflet-popup-close-button:hover{background:#c3c3c3}
-#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;text-align:left !important}
-#map-tiles .leaflet-popup p{font-size:12px;text-align:left;padding:5px}
-#map-tiles .leaflet-popup img{display:block;margin:auto;width:100%;max-width:270px}
-#map-tiles .leaflet-popup-content-wrapper{border-radius:0;padding:0 2px 0 0;margin:0;max-width:300px;max-height:90vh;overflow:auto}
-#map-tiles .leaflet-popup-content{padding-bottom:15px;margin:0}
-#map-tiles .leaflet-popup-content h1{text-align:left;padding:15px;padding-right:30px;border-bottom:1px solid #eee;margin-bottom:15px;margin-top:0;color:#1f3050;font-weight:700;font-size:16px}
-#map-tiles .leaflet-popup-content a{text-align:left !important;color:#000}
-#map-tiles .leaflet-popup-content p{margin:0;padding:5px 15px}
-body{background:#1f3050}
-[class*="col-"]{margin:0;padding:0}
-.list-group-item:first-child,.list-group-item:last-child{border-top-right-radius:0 !important;border-top-left-radius:0 !important;border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important}
+#map-tiles .leaflet-popup .leaflet-popup-content-wrapper{border-radius:0;padding:0 2px 0 0;margin:0;max-width:300px;max-height:90vh;overflow:auto}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content{padding-bottom:15px;margin:0}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content h1{text-align:left;padding:15px;padding-right:30px;border-bottom:1px solid #eee;margin-bottom:15px;margin-top:0;color:#1f3050;font-weight:700;font-size:16px}
+#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p{font-size:12px;text-align:left;padding:5px 15px;margin:0}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p img{display:block;margin:auto;width:100%;max-width:270px}
+#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p a{text-align:left !important;color:#000}
+#map-tiles .my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px;margin-top:-15px}#map-tiles .my-div-icon div{display:none}
+#map-tiles .my-div-icon:before{width:20px;height:20px;content:"";display:block;background:#1f3050;position:relative;border-radius:10px;top:5px;left:5px}
+#map-tiles .my-div-icon:hover>div{display:block;width:200px;z-index:15000;margin-left:-85px;position:absolute;bottom:35px}#map-tiles .my-div-icon:hover>div div{display:block;margin:0 auto;background:rgba(255,255,255,0.8);text-align:center;width:fit-content;border:1px solid #1f3050;border-radius:5px;padding:5px 8px}
+#showfilters{display:none;position:absolute;top:50px;left:10px;border-radius:4px;width:26px;height:26px;background:#fff url(../../assets/icon-filter-24.png) 50% 50% no-repeat;box-shadow:0 1px 5px rgba(0,0,0,0.65);cursor:pointer}
 #map-menu-container{background:#1f3050;height:100vh;overflow:auto;width:20em;}#map-menu-container .list-group{border:none}
 #map-menu-container .list-group-item{padding:0;background:#1f3050;color:#fff;font-size:12px;border:none;border-radius:none}
 #map-menu-container li.list-group-item.category{border-left:0;border-right:0;border-radius:0;border-top:1px solid #aaa}
@@ -42,8 +29,4 @@ body{background:#1f3050}
 #map-menu-container ul.type-of-initiative .list-group-item:first-child{border-top:0}
 #map-menu-container ul.type-of-initiative .list-group-item.selected{background:#f2bd0b;font-style:italic}
 #map-menu-container ul.type-of-initiative .list-group-item.empty{color:#808080}
-.my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px;margin-top:-15px}.my-div-icon div{display:none}
-.my-div-icon:before{width:20px;height:20px;content:"";display:block;background:#1f3050;position:relative;border-radius:10px;top:5px;left:5px}
-.my-div-icon:hover>div{display:block;width:200px;z-index:15000;margin-left:-85px;position:absolute;bottom:35px}.my-div-icon:hover>div div{display:block;margin:0 auto;background:rgba(255,255,255,0.8);text-align:center;width:fit-content;border:1px solid #1f3050;border-radius:5px;padding:5px 8px}
-#backtotop{display:none;position:absolute;top:50px;left:10px;border-radius:4px;width:26px;height:26px;background:#fff url(../../assets/icon-filter-24.png) 50% 50% no-repeat;box-shadow:0 1px 5px rgba(0,0,0,0.65);cursor:pointer}
-@media screen and (max-width:768px){#map-menu-container{position:absolute;top:0;left:0;width:100%}#map-menu-container ul.type-of-initiative{position:static} #map-menu-container div#mobileShowMap{display:block} #map-tiles .leaflet-popup-pane{bottom:0;right:0} #map-tiles{left:0;} #backtotop{display:block} .leaflet-top{top:40px}}
+@media screen and (max-width:768px){#map-menu-container{position:absolute;top:0;left:0;width:100%}#map-menu-container ul.type-of-initiative{position:static} #map-menu-container div#mobileShowMap{display:block} #map-tiles .leaflet-popup-pane{bottom:0;right:0} #map-tiles{left:0;} #showfilters{display:block} .leaflet-top{top:40px}}
