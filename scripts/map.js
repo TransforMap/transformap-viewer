@@ -208,8 +208,17 @@ function buildTreeMenu(tree_json) {
 function clickOnCat(id) {
   console.log("clickOnCat: "+ id);
 
+  //if is already selected AND no sub-catd/tois are selected
+  if($("#map-menu ." + id + " > span").hasClass("selected")
+      && $("#map-menu ." + id + " ul .selected").length == 0) {
+    if(onMobile())
+      switchToMap()
+    return;
+  }
+
   //close all other cats on the same level
   $("#map-menu ." + id).parent("ul").children("li").children("ul").hide();
+  $("#map-menu ul.type-of-initiative li.selected").removeClass("selected");
   $("ul.type-of-initiative").hide();
 
   //toggle "selected" on the current level
@@ -217,9 +226,6 @@ function clickOnCat(id) {
 
   //remove all "selected" on all child levels
   $("#map-menu ." + id + " .selected").removeClass("selected");
-
-  //remove "selected" on the parent level
-  $("#map-menu ." + id).parent("ul").parent("li").children("span").removeClass("selected");
 
   $("#map-menu ." + id + " > span").addClass("selected");
 
@@ -229,7 +235,7 @@ function clickOnCat(id) {
   updateToiEmptyStatusInFilterMenu();
 }
 
-function resetFilter () {
+function resetFilter() {
   $("#map-menu li").removeClass("selected");
   $("#map-menu li > span").removeClass("selected");
   $("ul.type-of-initiative").hide();
@@ -240,7 +246,13 @@ function resetFilter () {
 
 function clickOnInitiative(id) {
   console.log("clickOnInitiative: "+ id);
-  $("#map-menu ." + id).parent("ul").children("li").removeClass("selected");
+  if($("#map-menu ." + id).hasClass("selected")) {
+    if(onMobile())
+      switchToMap()
+    return;
+  }
+
+  $("#map-menu ul.type-of-initiative li.selected").removeClass("selected");
   $("#map-menu ." + id).addClass("selected");
   trigger_Filter(id);
 }
@@ -424,4 +436,17 @@ function checkForMWimages(image_uri) {
   }
 
   return retval;
+}
+
+/* intended for mobile view */
+function onMobile() {
+  return (window.innerWidth <= 768);
+}
+function switchToMap() {
+  $('#map-menu-container').hide();
+  $('#map-template').show();
+}
+function switchToMenu() {
+  $('#map-menu-container').show();
+  $('#map-template').hide();
 }

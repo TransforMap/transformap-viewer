@@ -121,13 +121,13 @@
 
     </ul>
     <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
-    <div id=mobileShowMap onClick="$('#map-menu-container').hide();$('#map-template').show();" title="back to map">Show Map</div>
+    <div id=mobileShowMap onClick="switchToMap();" title="back to map">Show Map</div>
   </div>
 
   <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
     <div id='map-template'>
       <div id="map-tiles"></div>
-      <div id="showfilters" title="show filters" onClick="$('#map-menu-container').show();$('#map-template').hide();"></div>
+      <div id="showfilters" title="show filters" onClick="switchToMenu();"></div>
     </div>
   </div>
 
