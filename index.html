@@ -73,16 +73,15 @@
     <p>
       <%- properties.description  %>
     </p>
-    <p>
 
-      <strong>Address</strong>
-      <br>
+      <h3>Address</h3>
+    <p>
       <%- properties['addr:housenumber'] %> <%- properties['addr:street'] %><br><%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
     </p>
 
-    <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone'])) { %>
+    <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone']) || (properties['website'])) { %>
+    <h3>Contact</h3>
     <p>
-      <strong>Contact</strong><br>
        <% if (properties['contact:email']) { %>
       <a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
       <br>
@@ -91,21 +90,25 @@
       <a href="<%- properties['contact:website'] %>"><%- properties['contact:website'] %></a>
       <br>
       <% } %>
+       <% if (properties['website']) { %>
+      <a href="<%- properties['website'] %>"><%- properties['website'] %></a>
+      <br>
+      <% } %>
        <% if (properties['contact:phone']) { %>
-      <%- properties['contact:phone'] %>
+      <a href="tel:<%- properties['contact:phone'] %>"><%- properties['contact:phone'] %></a>
       <% } %>
     </p>
     <% } %>
 
 
     <% if (properties['opening_hours:url']) { %>
+      <h3>Opening hours</h3>
       <p>
-        <strong>Opening hours</strong><br>
         <a href="<%- properties['opening_hours:url'] %>"><%- properties['opening_hours:url'] %></a>
       </p>
     <% } %>
+        <h3>Type Of Initiative</h3>
       <p>
-        <strong>Type Of Initiative</strong><br>
         <% var tois_array = createToiArray(properties['type_of_initiative']);
            var trans_array = tois_array.map(function(obj){
              var qnr = tax_hashtable.toistr_to_qnr[obj];
