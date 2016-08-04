@@ -257,8 +257,9 @@ function clickOnInitiative(id) {
   trigger_Filter(id);
 }
 
-var flat_taxonomy_array;
 
+/* get taxonomy stuff */
+var flat_taxonomy_array;
 $.getJSON(taxonomy_url, function(returned_data){
 
   flat_taxonomy_array = returned_data.results.bindings;
@@ -360,12 +361,18 @@ var tax_hashtable = {
   root_qnr: undefined
 }
 
+var tax_elements = {
+  type_of_initiative: "https://base.transformap.co/entity/Q6",
+  category: "https://base.transformap.co/entity/Q5",
+  taxonomy: "https://base.transformap.co/entity/Q3"
+}
+
 function fill_tax_hashtable() {
   flat_taxonomy_array.forEach(function(entry){
 
     var qnr = getQNR(entry.item.value);
 
-    if (entry["instance_of"].value == "https://base.transformap.co/entity/Q6") { //type of initiative
+    if (entry["instance_of"].value == tax_elements.type_of_initiative ) {
       tax_hashtable.toistr_to_qnr[entry.type_of_initiative_tag.value] = qnr;
       tax_hashtable.qnr_to_toistr[qnr] = entry.type_of_initiative_tag.value;
       if(!tax_hashtable.toi_qindex[qnr]) {
@@ -385,11 +392,11 @@ function fill_tax_hashtable() {
         }
       }
 
-    } else if (entry["instance_of"].value == "https://base.transformap.co/entity/Q5") { //category
+    } else if (entry["instance_of"].value == tax_elements.category ) {
       tax_hashtable.all_qindex[qnr] = entry;
       tax_hashtable.cat_qindex[qnr] = entry;
 
-    } else if(entry["instance_of"].value == "https://base.transformap.co/entity/Q3") {
+    } else if(entry["instance_of"].value == tax_elements.taxonomy) {
       tax_hashtable.root_qnr = qnr;
     }
   })
@@ -450,3 +457,34 @@ function switchToMenu() {
   $('#map-menu-container').show();
   $('#map-template').hide();
 }
+
+/* translation stuff */
+
+function getLangs () {
+  var language = window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
+
+  if(typeof language === 'string')
+      language = [ language ];
+
+  // we need to have the following languages:
+  // browserlang
+  // a short one (de instead of de-AT) if not present
+  // en as fallback if not present
+
+  if(language.indexOf("en") == -1)
+      language.push("en");
+
+  for(var i = 0; i < language.length; i++) {
+      if(language[i].match(/-/)) {
+          var short_lang = language[i].match(/^([a-zA-Z]*)-/)[1];
+          if(language.indexOf(short_lang) == -1) {
+              language.push(short_lang);
+              continue;
+          }
+      }
+  }
+  //console.log(language);
+  return language;
+}
+
+var languages = getLangs();
