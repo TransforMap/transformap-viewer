@@ -39,7 +39,7 @@ Basic map and pop up styles
   top:0;
   bottom:0;
   right:0;
-  left:20em;
+  left:240px;
 
   .leaflet-popup {
     font-family: 'Open Sans', sans-serif;
@@ -172,59 +172,124 @@ Map menu styling
     background: #1F3050;
     height: 100vh;
     overflow:auto;
-    width:20em;
+    width:240px;
+    font-size: 0.8em;
     /* Main categories */
-    .list-group {
-        border: none;
-    }
-    .list-group-item {
-        padding:0;
-        background: #1F3050;
-        color: #fff;
-        font-size: 12px;
-        border: none;
-        border-radius: none;
-    }
-
-    li.list-group-item.category {
-        border-left: 0px;
-        border-right: 0px;
-        border-radius: 0;
-        border-top: 1px solid #aaa;
-    }
-    li.list-group-item:first-child {
-        border-top: 0;
-    }
-    /* These elements are spans inside list group items, to toggle subcategories */
-    span.toggle {
-        padding: 5px 0 5px 10px;
-        padding-left: 10px;
-        display:block;
-        width:100%;
-        height:100%;
-    }
-    span.toggle:hover {
-        cursor: pointer;
-    }
-    span.toggle.selected {
-        background:#95D5D2;
-        font-style:italic;
-    }
-    .toggle-subcategories {
-        padding-left: 20px;
-    }
-    .category ul {
-        display: none;
-    }
-    ul.subcategories {
-        padding-left: 10px;
-    }
     ul#map-menu {
         border-top: 1px solid #aaa;
         border-bottom: 1px solid #aaa;
         padding:0;
         margin:0;
+        border: none;
+        .list-group-item {
+            padding:0;
+            background: #1F3050;
+            color: #fff;
+            border: none;
+            border-radius: none;
+        }
+        li.list-group-item.category {
+            border-left: 0px;
+            border-right: 0px;
+            border-radius: 0;
+            border-bottom: 1px solid #aaa;
+        }
+        /* These elements are spans inside list group items, to toggle subcategories */
+        span.toggle {
+            padding: 5px 0 5px 10px;
+            display:block;
+            width:100%;
+            height:100%;
+        }
+        span.toggle:hover {
+            cursor: pointer;
+        }
+        span.toggle.selected {
+            background:#95D5D2;
+            font-style:italic;
+        }
+        .toggle-subcategories {
+            padding-left: 20px;
+        }
+        .category ul {
+            display: none;
+        }
+        ul.subcategories {
+            padding-left: 10px;
+            li.list-group-item:last-child {
+                border-bottom: 0;
+            }
+        }
+        ul.type-of-initiative {
+            text-align: left;
+            display: none;
+            background: #fcec74;
+            position: fixed;
+            left: 240px;
+            top: 0;
+            z-index: 10;
+            -webkit-padding-start: 0px;
+            padding: 0px 15px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            .list-group-item {
+                background: #fcec74;
+                padding: 5px 0 5px 10px;
+                color: #000;
+                border-top:1px solid white;
+            }
+            .list-group-item:hover {
+                cursor: pointer;
+            }
+            .list-group-item:first-child {
+              border-top:0;
+            }
+            .list-group-item.selected {
+                background:#F2BD0B;
+                font-style:italic;
+            }
+            .list-group-item.empty {
+                color:gray;
+            }
+
+        }
     }
+    #activefilters {
+      padding:0 0 0 10px;
+      color:white;
+      h2 {
+        text-align:left;
+      }
+      ul {
+        padding:0;
+        li {
+          width:12em;
+          border-radius:5px;
+          padding:3px 0 3px 5px;
+          margin:5px;
+          background:#F2BD0B;
+          color:black;
+          .close {
+            font-weight:bold;
+            background: #fcec74;
+            text-align:center;
+            display:block;
+            padding:3px;
+            margin-top:-3px;
+            border-top-right-radius:5px;
+            border-bottom-right-radius:5px;
+            width:1em;
+            float:right;
+            border-left:1px solid #fcec74;
+          }
+          .close:hover {
+            background:#F2BD0B;
+            cursor:pointer;
+          }
+        }
+      }
+    }
+
     div#resetfilters,
     div#mobileShowMap{
       display:none;
@@ -234,39 +299,6 @@ Map menu styling
       margin:10px;
       border:1px solid white;
       cursor:pointer;
-    }
-    ul.type-of-initiative {
-        text-align: left;
-        display: none;
-        background: #fcec74;
-        position: fixed;
-        left: 20em;
-        top: 0;
-        z-index: 10;
-        -webkit-padding-start: 0px;
-        padding: 0px 15px;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        .list-group-item {
-            background: #fcec74;
-            padding: 5px 0 5px 10px;
-            color: #000;
-            border-top:1px solid white;
-        }
-        .list-group-item:hover {
-            cursor: pointer;
-        }
-        .list-group-item:first-child {
-          border-top:0;
-        }
-        .list-group-item.selected {
-            background:#F2BD0B;
-            font-style:italic;
-        }
-        .list-group-item.empty {
-            color:gray;
-        }
-
     }
 }
 
