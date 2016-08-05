@@ -259,13 +259,14 @@ function clickOnInitiative(id) {
 
 
 /* get taxonomy stuff */
-var flat_taxonomy_array;
+var flat_taxonomy_array,
+    tree_menu_json;
 $.getJSON(taxonomy_url, function(returned_data){
 
   flat_taxonomy_array = returned_data.results.bindings;
 
   fill_tax_hashtable();
-  var tree_menu_json = convert_tax_to_tree();
+  tree_menu_json = convert_tax_to_tree();
 
   buildTreeMenu(tree_menu_json);
 
@@ -288,6 +289,83 @@ function trigger_Filter(filter_UUID) {
   }
   pruneClusterLayer.ProcessView();
   $('#resetfilters').show();
+}
+
+function toggleAdvancedFilterMode() {
+  var current_mode = $("#toggleAdvancedFilters").attr('mode');
+  if(current_mode == "off") {
+    $("#toggleAdvancedFilters").attr('mode',"on");
+    $('.expert_mode').removeClass('off')
+      .addClass('on');
+  } else {
+    $("#toggleAdvancedFilters").attr('mode',"off");
+    $('.expert_mode').removeClass('on')
+      .addClass('off');
+  }
+}
+
+function addToAdvFilter(id) {
+  if(tax_hashtable.toi_qindex[id]) { // is a toi
+    if($("#activefilters ul ."+id).length == 0) { // not already there
+      var name = tax_hashtable.toi_qindex[id].itemLabel.value;
+      $("#activefilters ul").append("<li class="+id+" >"+name+"<div class=close onClick=\"removeFromAdvFilter('"+id+"')\">×</div></li>");
+      $("#map-menu li."+id+" span.expert_mode .add").addClass("inactive");
+      $("#map-menu li."+id+" span.expert_mode .remove").removeClass("inactive");
+    }
+    return;
+  }
+  //if is a cat, add all TOIs
+  if(tax_hashtable.cat_qindex[id]) {
+    var array = getTOIsOfCat(id);
+    array.forEach(function(toi) {
+      addToAdvFilter(toi);
+    });
+  }
+}
+
+function removeFromAdvFilter(id) {
+  if(tax_hashtable.toi_qindex[id]) { // is a toi
+    $("#activefilters ul ."+id).remove();
+    $("#map-menu li."+id+" span.expert_mode .add").removeClass("inactive");
+    $("#map-menu li."+id+" span.expert_mode .remove").addClass("inactive");
+    return;
+  }
+  //if is a cat, remove all TOIs
+  if(tax_hashtable.cat_qindex[id]) {
+    var array = getTOIsOfCat(id);
+    array.forEach(function(toi) {
+      removeFromAdvFilter(toi);
+    });
+  }
+}
+
+/*
+ * returns array of all tois (Q-Nrs) a cat or subcat has
+ */
+function getTOIsOfCat(id) {
+  var array = [];
+
+  //recursive function
+  function dig_deeper_into_taxtree(array_position_object,do_output) {
+
+    if(array_position_object.type != "type_of_initiative" && array_position_object.elements && array_position_object.elements.length) {
+      for(var i=0;i<array_position_object.elements.length;i++) {
+        if(getQNR(array_position_object.elements[i].UUID) == id || do_output) {
+          dig_deeper_into_taxtree(array_position_object.elements[i],true);
+        }
+        else {
+          dig_deeper_into_taxtree(array_position_object.elements[i],false);
+        }
+      }
+    }
+    else
+      if(do_output) {
+        array.push(getQNR(array_position_object.UUID));
+      }
+  }
+  dig_deeper_into_taxtree(tree_menu_json,false);
+
+  return array;
 }
 
 function createToiArray(toi_string) {
@@ -488,3 +566,5 @@ function getLangs () {
 }
 
 var languages = getLangs();
+
+

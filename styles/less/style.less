@@ -1,3 +1,8 @@
+@yellow-bright: #fcec74;
+@yellow-dark: #F2BD0B;
+@blue-bright: #95D5D2;
+@blue-dark: #1F3050;
+
 a,
 a:link {
     color: #455473;
@@ -7,7 +12,7 @@ a:link {
 body {
   margin:0;
   font-family: 'PT Sans', sans-serif;
-  background: #1F3050;
+  background: @blue-dark;
 }
 
 p {
@@ -95,7 +100,7 @@ Basic map and pop up styles
 
           a {
             text-align: left !important;
-            color: #000;
+            color: black;
           }
         }
         h3 {
@@ -124,7 +129,7 @@ Basic map and pop up styles
     height:20px;
     content:"";
     display:block;
-    background:#1F3050;
+    background:@blue-dark;
     position:relative;
     border-radius:10px;
     top:5px;
@@ -143,7 +148,7 @@ Basic map and pop up styles
       background:rgba(255,255,255,0.8);
       text-align:center;
       width:fit-content;
-      border:1px solid #1F3050;
+      border:1px solid @blue-dark;
       border-radius:5px;
       padding:5px 8px;
     }
@@ -169,7 +174,7 @@ Map menu styling
 
 /* Menu styles */
 #map-menu-container {
-    background: #1F3050;
+    background: @blue-dark;
     height: 100vh;
     overflow:auto;
     width:240px;
@@ -183,10 +188,44 @@ Map menu styling
         border: none;
         .list-group-item {
             padding:0;
-            background: #1F3050;
+            background: @blue-dark;
             color: #fff;
             border: none;
             border-radius: none;
+            span.expert_mode.off {
+                display:none;
+            }
+            span.expert_mode.on {
+                display:block;
+                float:right;
+                margin-right:3px;
+                margin-left:6px;
+                font-style:normal;
+                color:black;
+                span {
+                  text-align:center;
+                  margin:0;
+                  float:none;
+                  font-weight:bold;
+                  background:@yellow-bright;
+                  border:1px solid @yellow-dark;
+                  border-top-left-radius: 4px;
+                  border-bottom-left-radius: 4px;
+                  padding:2px 4px;
+                }
+                span:hover {
+                  background:@yellow-dark;
+                }
+                span + span {
+                  border-top-left-radius: 0;
+                  border-bottom-left-radius: 0;
+                  border-top-right-radius: 4px;
+                  border-bottom-right-radius: 4px;
+                }
+                span.inactive {
+                  color:gray;
+                }
+            }
         }
         li.list-group-item.category {
             border-left: 0px;
@@ -198,14 +237,11 @@ Map menu styling
         span.toggle {
             padding: 5px 0 5px 10px;
             display:block;
-            width:100%;
             height:100%;
-        }
-        span.toggle:hover {
             cursor: pointer;
         }
         span.toggle.selected {
-            background:#95D5D2;
+            background:@blue-bright;
             font-style:italic;
         }
         .toggle-subcategories {
@@ -223,7 +259,7 @@ Map menu styling
         ul.type-of-initiative {
             text-align: left;
             display: none;
-            background: #fcec74;
+            background: @yellow-bright;
             position: fixed;
             left: 240px;
             top: 0;
@@ -233,7 +269,7 @@ Map menu styling
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
             .list-group-item {
-                background: #fcec74;
+                background: @yellow-bright;
                 padding: 5px 0 5px 10px;
                 color: #000;
                 border-top:1px solid white;
@@ -245,7 +281,7 @@ Map menu styling
               border-top:0;
             }
             .list-group-item.selected {
-                background:#F2BD0B;
+                background:@yellow-dark;
                 font-style:italic;
             }
             .list-group-item.empty {
@@ -267,11 +303,11 @@ Map menu styling
           border-radius:5px;
           padding:3px 0 3px 5px;
           margin:5px;
-          background:#F2BD0B;
+          background:@yellow-dark;
           color:black;
           .close {
             font-weight:bold;
-            background: #fcec74;
+            background: @yellow-bright;
             text-align:center;
             display:block;
             padding:3px;
@@ -280,10 +316,10 @@ Map menu styling
             border-bottom-right-radius:5px;
             width:1em;
             float:right;
-            border-left:1px solid #fcec74;
+            border-left:1px solid @yellow-bright;
           }
           .close:hover {
-            background:#F2BD0B;
+            background:@yellow-dark;
             cursor:pointer;
           }
         }
@@ -291,6 +327,7 @@ Map menu styling
     }
 
     div#resetfilters,
+    div#toggleAdvancedFilters,
     div#mobileShowMap{
       display:none;
       width:fit-content;
@@ -299,6 +336,9 @@ Map menu styling
       margin:10px;
       border:1px solid white;
       cursor:pointer;
+    }
+    div#toggleAdvancedFilters {
+      display:block;
     }
 }
 

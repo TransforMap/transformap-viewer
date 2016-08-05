@@ -45,7 +45,11 @@
 
   <script type='template' id='menuCategoryTemplate'>
     <li class="list-group-item category <%- id %>">
-      <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %></span>
+      <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %>
+        <span class="expert_mode off">
+          <span onClick="addToAdvFilter('<%- id %>')" class="add">+</span><span onClick="removeFromAdvFilter('<%- id %>')" class="remove inactive">-</span>
+        </span>
+      </span>
       <ul class="subcategories"></ul>
       <ul class="type-of-initiative"></ul>
     </li>
@@ -54,6 +58,9 @@
   <script type='template' id='menuTypeOfInitiativeTemplate'>
     <li class="list-group-item empty <%- id %>" onClick="clickOnInitiative('<%- id %>')">
       <%- itemLabel %>
+        <span class="expert_mode off">
+          <span onClick="addToAdvFilter('<%- id %>')" class="add">+</span><span onClick="removeFromAdvFilter('<%- id %>')" class="remove inactive">-</span>
+        </span>
     </li>
   </script>
 
@@ -123,8 +130,14 @@
     <ul id="map-menu" class="list-group">
 
     </ul>
-    <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
+    <div id=activefilters class="expert_mode off">
+      <h2>Active Filters</h2>
+      <ul>
+      </ul>
+      <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
+    </div>
     <div id=mobileShowMap onClick="switchToMap();" title="back to map">Show Map</div>
+    <div id=toggleAdvancedFilters onClick="toggleAdvancedFilterMode();" title="Switch to Advanced Mode for filters" mode="off">Advanced Filter Mode</div>
   </div>
 
   <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
