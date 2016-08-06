@@ -230,9 +230,14 @@ function clickOnCat(id) {
   $("#map-menu ." + id + " > span").addClass("selected");
 
   $("#map-menu ." + id + " > ul").show();
-  trigger_Filter(id);
 
-  updateToiEmptyStatusInFilterMenu();
+  if(getFilterMode() == "simple") {
+    removeFromFilter("*");
+    addToFilter(id);
+    trigger_Filter();
+  }
+
+  updateToiEmptyStatusInFilterMenu(); // has internal check to only execute when needed
 }
 
 function resetFilter() {
@@ -240,7 +245,9 @@ function resetFilter() {
   $("#map-menu li > span").removeClass("selected");
   $("ul.type-of-initiative").hide();
   $("ul.subcategories").hide();
-  trigger_Filter("*");
+  removeFromFilter("*");
+  trigger_Filter();
+  $("#activefilters ul").append("<li class=hint>Click any [+] to add a filter<div class=close onClick=\"clickMinus('hint')\">×</div></li>");
   $('#resetfilters').hide();
 }
 
@@ -252,9 +259,22 @@ function clickOnInitiative(id) {
     return;
   }
 
-  $("#map-menu ul.type-of-initiative li.selected").removeClass("selected");
-  $("#map-menu ." + id).addClass("selected");
-  trigger_Filter(id);
+  if(getFilterMode() == "simple") {
+    $("#map-menu ul.type-of-initiative li.selected").removeClass("selected");
+    $("#map-menu ." + id).addClass("selected");
+    removeFromFilter("*");
+    addToFilter(id);
+    trigger_Filter();
+  }
+}
+
+function clickPlus(item) {
+  addToFilter(item);
+  trigger_Filter();
+}
+function clickMinus(item) {
+  removeFromFilter(item);
+  trigger_Filter();
 }
 
 
@@ -279,63 +299,171 @@ $.getJSON(taxonomy_url, function(returned_data){
  * @param filter_UUID  string  "Q-Nr" of filter object, e.g. a cat or type of initative.
  */
 
-function trigger_Filter(filter_UUID) {
+var current_filter_tois = []; // array of q-nrs
+
+function trigger_Filter() {
+  //console.log(current_filter_tois);
 
   var marker_array = pruneClusterLayer.GetMarkers();
   for(var i = 0; i < marker_array.length; i++) {
     var marker = marker_array[i];
     var attributes = marker.data.tags;
-    marker.filtered = ! filterMatches(attributes,filter_UUID);
+    marker.filtered = ! filterMatches(attributes);
   }
   pruneClusterLayer.ProcessView();
-  $('#resetfilters').show();
+
+  if(current_filter_tois.length)
+    $('#resetfilters').show();
+  else
+    $('#resetfilters').hide();
+}
+
+function getFilterMode() {
+  return $("#toggleAdvancedFilters").attr('mode');
 }
 
 function toggleAdvancedFilterMode() {
-  var current_mode = $("#toggleAdvancedFilters").attr('mode');
-  if(current_mode == "off") {
-    $("#toggleAdvancedFilters").attr('mode',"on");
+  resetFilter();
+  if(getFilterMode() == "simple") {
+    $("#toggleAdvancedFilters").attr('mode',"advanced");
+    $("#toggleAdvancedFilters").text("Disable Advanced Filter Mode");
     $('.expert_mode').removeClass('off')
       .addClass('on');
   } else {
-    $("#toggleAdvancedFilters").attr('mode',"off");
+    $("#toggleAdvancedFilters").attr('mode',"simple");
+    $("#toggleAdvancedFilters").text("Enable Advanced Filter Mode");
     $('.expert_mode').removeClass('on')
       .addClass('off');
   }
 }
 
-function addToAdvFilter(id) {
+function addToFilter(id) {
+  $("#activefilters ul .hint").remove();
+
   if(tax_hashtable.toi_qindex[id]) { // is a toi
     if($("#activefilters ul ."+id).length == 0) { // not already there
-      var name = tax_hashtable.toi_qindex[id].itemLabel.value;
-      $("#activefilters ul").append("<li class="+id+" >"+name+"<div class=close onClick=\"removeFromAdvFilter('"+id+"')\">×</div></li>");
+      current_filter_tois.push(id);
+      var item = tax_hashtable.toi_qindex[id];
+      var name = item.itemLabel.value;
+      $("#activefilters ul").append("<li class="+id+">"+name+"<div class=close onClick=\"clickMinus('"+id+"')\">×</div></li>");
       $("#map-menu li."+id+" span.expert_mode .add").addClass("inactive");
       $("#map-menu li."+id+" span.expert_mode .remove").removeClass("inactive");
+
+      //for parent cats, set -/+ button color:
+      //recursive!
+      function checkButtonsOfParents(parents_string) {
+        var parent_cats = parents_string.split(";");
+        parent_cats.forEach(function (parent_cat) {
+          var parent_qnr = getQNR(parent_cat);
+          //[-] has to be active, as we just added an item...
+          $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .remove").removeClass("inactive");
+          //if all sub-items are in filter list, we can grey out the [+] - button:
+          var siblings = getTOIsOfCat(parent_qnr);
+          var plus_active = false;
+          for(var i=0; i < siblings.length; i++) {
+            if(current_filter_tois.indexOf(siblings[i]) == -1) {
+              plus_active = true;
+              break;
+            }
+          }
+          if(plus_active == false)
+            $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .add").addClass("inactive");
+
+          var new_parent = tax_hashtable.cat_qindex[parent_qnr];
+          //we hope categories have only 1 parent
+          if(new_parent //it could be that this is the highest cat, which's parent is not in cat_qindex
+            && new_parent.subclass_of.value
+            && tax_hashtable.cat_qindex[getQNR(new_parent.subclass_of.value)]){
+              checkButtonsOfParents(new_parent.subclass_of.value);
+          }
+        });
+      }
+      checkButtonsOfParents(item.subclass_of.value);
+      return;
     }
-    return;
   }
   //if is a cat, add all TOIs
   if(tax_hashtable.cat_qindex[id]) {
     var array = getTOIsOfCat(id);
     array.forEach(function(toi) {
-      addToAdvFilter(toi);
+      addToFilter(toi);
     });
   }
 }
 
-function removeFromAdvFilter(id) {
+/* delete an object from an array. 
+ * Returns true if object found and deleted 
+ * only the first object is deleted
+ */
+Array.prototype.deleteInArray = function (deletion_canditate) {
+  var position = this.indexOf(deletion_canditate);
+  if(position > -1) {
+    this.splice(position,1);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function removeFromFilter(id) {
+  if(id == "hint") {
+    $("#activefilters ul .hint").remove();
+    return;
+  }
+
   if(tax_hashtable.toi_qindex[id]) { // is a toi
     $("#activefilters ul ."+id).remove();
     $("#map-menu li."+id+" span.expert_mode .add").removeClass("inactive");
     $("#map-menu li."+id+" span.expert_mode .remove").addClass("inactive");
+    current_filter_tois.deleteInArray(id);
+
+    //for parent cats, set -/+ button color:
+    var item = tax_hashtable.toi_qindex[id];
+
+    //recursive!
+    function checkButtonsOfParents(parents_string) {
+      var parent_cats = parents_string.split(";");
+      parent_cats.forEach(function (parent_cat) {
+        var parent_qnr = getQNR(parent_cat);
+        //[+] has to be active, as we just removed an item...
+        $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .add").removeClass("inactive");
+
+        //if none of the sub-items are in filter list, we can grey out the [-] - button:
+        var siblings = getTOIsOfCat(parent_qnr);
+        var minus_active = false;
+        for(var i=0; i < siblings.length; i++) {
+          if(current_filter_tois.indexOf(siblings[i]) > -1) {
+            var minus_active = true;
+            break;
+          }
+        }
+        if(minus_active == false)
+          $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .remove").addClass("inactive");
+        var new_parent = tax_hashtable.cat_qindex[parent_qnr];
+        //we hope categories have only 1 parent
+        if(new_parent //it could be that this is the highest cat, which's parent is not in cat_qindex
+          && new_parent.subclass_of.value
+          && tax_hashtable.cat_qindex[getQNR(new_parent.subclass_of.value)]){
+            console.log("new parent: " + getQNR(new_parent.subclass_of.value) + "for " + id);
+            checkButtonsOfParents(new_parent.subclass_of.value);
+        }
+      });
+    }
+    checkButtonsOfParents(item.subclass_of.value);
     return;
   }
   //if is a cat, remove all TOIs
   if(tax_hashtable.cat_qindex[id]) {
     var array = getTOIsOfCat(id);
     array.forEach(function(toi) {
-      removeFromAdvFilter(toi);
+      removeFromFilter(toi);
     });
+  }
+  if(id == "*") {
+    $("#activefilters ul li").remove();
+    $("#map-menu li span.expert_mode .add").removeClass("inactive");
+    $("#map-menu li span.expert_mode .remove").addClass("inactive");
+    current_filter_tois = [];
   }
 }
 
@@ -393,7 +521,7 @@ function filterMatches(attributes, filter_UUID) {
     console.log("error in filter, no type_of_initiative attribute");
     return false;
   }
-  if(filter_UUID == "*")
+  if(current_filter_tois.length == 0)
     return true;
 
   //console.log("filter called with filter: " + filter_UUID + " and toi: " + attributes.type_of_initiative);
@@ -404,26 +532,8 @@ function filterMatches(attributes, filter_UUID) {
   for(var i=0;i<toi_array.length;i++){
     var type_of_initiative_QNR = tax_hashtable.toistr_to_qnr[toi_array[i]];
 
-    if(type_of_initiative_QNR == filter_UUID)
+    if(current_filter_tois.indexOf(type_of_initiative_QNR) > -1)
       return true;
-
-    //if attribute == subclass of (and subclass of...) true
-    //get next higher element
-
-    //recursive!!
-    var parent_cat_qnr = false;
-    var to_check_qnr = type_of_initiative_QNR;
-    while(tax_hashtable.all_qindex[to_check_qnr] && tax_hashtable.all_qindex[to_check_qnr].subclass_of) {
-      var parent_cat_qnrs = tax_hashtable.all_qindex[to_check_qnr].subclass_of.value.split(";");
-
-      for(var j=0; j < parent_cat_qnrs.length; j++) {
-        parent_cat_qnr = getQNR(parent_cat_qnrs[j]);
-        if(parent_cat_qnr == filter_UUID)
-          return true;
-        to_check_qnr = parent_cat_qnr;
-      }
-    }
-
   }
 
   return false;

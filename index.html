@@ -47,7 +47,7 @@
     <li class="list-group-item category <%- id %>">
       <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %>
         <span class="expert_mode off">
-          <span onClick="addToAdvFilter('<%- id %>')" class="add">+</span><span onClick="removeFromAdvFilter('<%- id %>')" class="remove inactive">-</span>
+          <span onClick="clickPlus('<%- id %>')" class="add">+</span><span onClick="clickMinus('<%- id %>')" class="remove inactive">-</span>
         </span>
       </span>
       <ul class="subcategories"></ul>
@@ -59,7 +59,7 @@
     <li class="list-group-item empty <%- id %>" onClick="clickOnInitiative('<%- id %>')">
       <%- itemLabel %>
         <span class="expert_mode off">
-          <span onClick="addToAdvFilter('<%- id %>')" class="add">+</span><span onClick="removeFromAdvFilter('<%- id %>')" class="remove inactive">-</span>
+          <span onClick="clickPlus('<%- id %>')" class="add">+</span><span onClick="clickMinus('<%- id %>')" class="remove inactive">-</span>
         </span>
     </li>
   </script>
@@ -130,14 +130,16 @@
     <ul id="map-menu" class="list-group">
 
     </ul>
-    <div id=activefilters class="expert_mode off">
-      <h2>Active Filters</h2>
-      <ul>
-      </ul>
-      <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
-    </div>
+
+    <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
     <div id=mobileShowMap onClick="switchToMap();" title="back to map">Show Map</div>
-    <div id=toggleAdvancedFilters onClick="toggleAdvancedFilterMode();" title="Switch to Advanced Mode for filters" mode="off">Advanced Filter Mode</div>
+    <div id=toggleAdvancedFilters onClick="toggleAdvancedFilterMode();" title="Switch to Advanced Mode for filters" mode="simple">Enable Advanced Filter Mode</div>
+
+    <div id=activefilters>
+      <h2 class="expert_mode off">Active Filters:</h2>
+      <ul class="expert_mode off">
+      </ul>
+    </div>
   </div>
 
   <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
