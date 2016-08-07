@@ -642,7 +642,11 @@ function switchToMenu() {
   $('#map-template').hide();
 }
 
-/* translation stuff */
+/*
+ * translation stuff
+ *
+ * On load, everything is in English. When dictionaries are fetched, everything is translated into user's language.
+ */
 
 function getLangs () {
   var language = window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
@@ -655,9 +659,6 @@ function getLangs () {
   // a short one (de instead of de-AT) if not present
   // en as fallback if not present
 
-  if(language.indexOf("en") == -1)
-      language.push("en");
-
   for(var i = 0; i < language.length; i++) {
       if(language[i].match(/-/)) {
           var short_lang = language[i].match(/^([a-zA-Z]*)-/)[1];
@@ -667,10 +668,121 @@ function getLangs () {
           }
       }
   }
+
+  if(language.indexOf("en") == -1)
+      language.push("en");
+
   //console.log(language);
   return language;
 }
 
-var languages = getLangs();
+var browser_languages = getLangs(),
+    current_lang = "en",
+    fallback_langs = [];
 
+var supported_languages = [],
+    langnames = [],
+    abbr_langnames = {},
+    langnames_abbr = {};
 
+function setFallbackLangs() {
+  fallback_langs = [];
+  if(current_lang != "en") {
+    for(var i=0; i < browser_languages.length; i++) {
+      var abbr = browser_languages[i];
+      if(current_lang != abbr)
+        fallback_langs.push(abbr);
+    }
+  }
+  console.log("new fallback langs: " + fallback_langs.join(",") + ".");
+}
+
+$.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", function (returned_data){
+  for(lang in returned_data.entities.Q5.labels) { //Q5 is arbitraty. Choose one that gets translated for sure.
+    supported_languages.push(lang);
+  }
+  var langstr = supported_languages.join("|");
+
+  var langstr_query =
+    'SELECT ?lang ?langLabel ?abbr ' +
+    'WHERE' +
+    '{' +
+      '?lang wdt:P218 ?abbr;' +
+      'FILTER regex (?abbr, "^('+langstr+')$").' +
+      'SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }' +
+    '}';
+
+  langstr_query = 'https://query.wikidata.org/bigdata/namespace/wdq/sparql?query=' +encodeURIComponent(langstr_query) + "&format=json";
+  $.getJSON(langstr_query, function (langstrings){
+
+    langstrings.results.bindings.forEach(function (item) {
+      abbr_langnames[item.abbr.value] = item.langLabel.value;
+      langnames_abbr[item.langLabel.value] = item.abbr.value;
+      langnames.push(item.langLabel.value);
+    });
+    langnames.sort();
+
+    for(var i=0; i < browser_languages.length; i++) {
+      var abbr = browser_languages[i];
+      if(abbr_langnames[abbr]) {
+        current_lang = abbr;
+        break;
+      }
+    }
+    setFallbackLangs();
+
+    langnames.forEach(function (item) {
+      var langcode = langnames_abbr[item];
+      var is_default = (langcode == current_lang) ? " class=default" : "";
+      $("#languageSelector ul").append("<li targetlang=" + langcode + is_default + " onClick='switchToLang(\""+langcode+"\");'>"+item+"</li>");
+    });
+  });
+});
+
+function switchToLang(lang) {
+  $("#languageSelector li.default").removeClass("default");
+  $("#languageSelector li[targetlang="+lang+"]").addClass("default");
+  current_lang = lang;
+  setFallbackLangs();
+  console.log("new lang:" +lang);
+}
+
+var dictionary = {
+  en: {
+    "en_adv_filters" : "Enable Advanced Filter Mode",
+    "address" : "Address",
+    "contact" : "Contact",
+    "opening_hours" : "Opening hours",
+    "type_of_initiative" : "Type Of Initiative"
+  },
+  de: {
+    "en_adv_filters" : "Erweiterte Filter einschalten",
+    "address" : "Adresse",
+    "contact" : "Kontaktdaten",
+    "opening_hours" : "Öffnungszeiten",
+    "type_of_initiative" : "Typ der Initiative"
+
+  }
+}
+
+/* returns the string accoring to id in the following preferred order:
+ * 1. current_lang
+ * 2-n fallback languages
+ */
+function T(id) {
+  var native_dict = dictionary[current_lang];
+  if(native_dict) {
+    var retval = native_dict[id];
+    if(retval)
+      return retval;
+  }
+  for(var i=0; i < fallback_langs.length; i++) {
+    var fb_dict = dictionary[fallback_langs[i]];
+    if(fb_dict) {
+      var retval = fb_dict[id];
+      if(retval)
+        return retval;
+    }
+  }
+  return "Translation Missing for: '" + id + "'";
+}

@@ -348,6 +348,7 @@ Map menu styling
 
     div#resetfilters,
     div#toggleAdvancedFilters,
+    div#languageSelector,
     div#mobileShowMap{
       display:none;
       width:fit-content;
@@ -359,6 +360,41 @@ Map menu styling
     }
     div#toggleAdvancedFilters {
       display:block;
+    }
+    div#languageSelector{
+      display:block;
+      ul {
+        float:right;
+        margin:0 0 0 5px;
+        padding:0;
+        li {
+          display:none;
+          background:@blue-dark;
+        }
+        li:hover {
+        }
+        li.default {
+          display:block;
+        }
+      }
+      ul.open {
+        margin-top:-5px;
+        margin-right:-6px;/*5 padding + 1 border*/
+        li {
+          display:block;
+          border:1px solid white;
+          border-top:0;
+          padding:5px;
+        }
+        li:hover {
+          color:black;
+        }
+        li.default {
+          background:@blue-bright;
+          font-style:italic;
+        }
+      }
+
     }
 }
 

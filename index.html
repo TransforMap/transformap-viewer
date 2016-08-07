@@ -81,13 +81,13 @@
       <%- properties.description  %>
     </p>
 
-      <h3>Address</h3>
+      <h3><%- T("address") %></h3>
     <p>
       <%- properties['addr:housenumber'] %> <%- (properties['addr:housename']) ? properties['addr:housename'] + "," : "" %> <%- properties['addr:street'] %><br><%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
     </p>
 
     <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone']) || (properties['website'])) { %>
-    <h3>Contact</h3>
+    <h3><%- T("contact") %></h3>
     <p>
        <% if (properties['contact:email']) { %>
       <a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
@@ -109,12 +109,12 @@
 
 
     <% if (properties['opening_hours:url']) { %>
-      <h3>Opening hours</h3>
+      <h3><%- T("opening_hours") %></h3>
       <p>
         <a href="<%- properties['opening_hours:url'] %>"><%- properties['opening_hours:url'] %></a>
       </p>
     <% } %>
-        <h3>Type Of Initiative</h3>
+        <h3><%- T("type_of_initiative") %></h3>
       <p>
         <% var tois_array = createToiArray(properties['type_of_initiative']);
            var trans_array = tois_array.map(function(obj){
@@ -140,6 +140,12 @@
       <ul class="expert_mode off">
       </ul>
     </div>
+
+    <div id=languageSelector onClick="$('#languageSelector ul').toggleClass('open');">
+      <span lang=en>Choose Language:</span>
+      <ul></ul>
+    </div>
+
   </div>
 
   <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
