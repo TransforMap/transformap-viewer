@@ -126,29 +126,13 @@
       </p>
   </script>
 
-  <div id="map-menu-container" class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+  <div id="map-menu-container">
     <ul id="map-menu" class="list-group">
-
     </ul>
-
-    <div id=resetfilters onClick="resetFilter();" title="click to reset filters">Reset filters</div>
-    <div id=mobileShowMap onClick="switchToMap();" title="back to map">Show Map</div>
-    <div id=toggleAdvancedFilters onClick="toggleAdvancedFilterMode();" title="Switch to Advanced Mode for filters" mode="simple">Enable Advanced Filter Mode</div>
-
-    <div id=activefilters>
-      <h2 class="expert_mode off">Active Filters:</h2>
-      <ul class="expert_mode off">
-      </ul>
-    </div>
-
-    <div id=languageSelector onClick="$('#languageSelector ul').toggleClass('open');">
-      <span lang=en>Choose Language:</span>
-      <ul></ul>
-    </div>
 
   </div>
 
-  <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+  <div>
     <div id='map-template'>
       <div id="map-tiles"></div>
       <div id="showfilters" title="show filters" onClick="switchToMenu();"></div>

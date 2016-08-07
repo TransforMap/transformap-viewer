@@ -78,6 +78,25 @@ $.getJSON(taxonomy_url, function(returned_data){
 
   buildTreeMenu(tree_menu_json);
 
+  $("#map-menu-container").append(
+      "<div id=resetfilters onClick='resetFilter();' trn=reset_filters>"+T("reset_filters")+"</div>"
+      );
+
+  $("#map-menu-container").append(
+      "<div id=mobileShowMap onClick='switchToMap();' trn=show_map>"+T("show_map")+"</div>"
+      );
+
+  $("#map-menu-container").append(
+      "<div id=toggleAdvancedFilters onClick='toggleAdvancedFilterMode();' mode='simple' trn=en_adv_filters>"+T("en_adv_filters")+"</div>"
+      );
+
+  $("#map-menu-container").append(
+      "<div id=activefilters>" +
+        "<h2 class='expert_mode off' trn=active_filters>" + T("active_filters") + "</h2>" +
+        "<ul class='expert_mode off'></ul>" +
+      "</div>"
+      );
+
 });
 
 // note: can only handle 3 tiers (cats, subcats, toi) at the moment.
@@ -195,14 +214,14 @@ function buildTreeMenu(tree_json) {
   }
 
   var menu_root = $('#map-menu');
+  menu_root.empty();
+
   var catTemplate = _.template($('#menuCategoryTemplate').html());
   var toiTemplate = _.template($('#menuTypeOfInitiativeTemplate').html());
 
   tree_json.elements.forEach(function(cat){
     appendCategory(cat,menu_root);
-
   });
-
 }
 
 var toi_count_out_of_date = 1;
@@ -429,7 +448,7 @@ function resetFilter() {
   $("ul.subcategories").hide();
   removeFromFilter("*");
   trigger_Filter();
-  $("#activefilters ul").append("<li class=hint>Click any [+] to add a filter<div class=close onClick=\"clickMinus('hint')\">×</div></li>");
+  $("#activefilters ul").append("<li class=hint><span trn=clickanyfilterhint>"+T("clickanyfilterhint")+"</span><div class=close onClick=\"clickMinus('hint')\">×</div></li>");
   $('#resetfilters').hide();
 }
 
@@ -441,12 +460,16 @@ function toggleAdvancedFilterMode() {
   resetFilter();
   if(getFilterMode() == "simple") {
     $("#toggleAdvancedFilters").attr('mode',"advanced");
-    $("#toggleAdvancedFilters").text("Disable Advanced Filter Mode");
+    $("#toggleAdvancedFilters").text(T('dis_adv_filters'));
+    $("#toggleAdvancedFilters").attr('trn',"dis_adv_filters");
+
     $('.expert_mode').removeClass('off')
       .addClass('on');
   } else {
     $("#toggleAdvancedFilters").attr('mode',"simple");
-    $("#toggleAdvancedFilters").text("Enable Advanced Filter Mode");
+    $("#toggleAdvancedFilters").text(T('en_adv_filters'));
+    $("#toggleAdvancedFilters").attr('trn',"en_adv_filters");
+
     $('.expert_mode').removeClass('on')
       .addClass('off');
   }
@@ -677,13 +700,24 @@ function getLangs () {
 }
 
 var browser_languages = getLangs(),
-    current_lang = "en",
+    current_lang = browser_languages[0],
     fallback_langs = [];
 
 var supported_languages = [],
     langnames = [],
     abbr_langnames = {},
     langnames_abbr = {};
+
+function resetLang() {
+  current_lang = "en";
+  for(var i=0; i < browser_languages.length; i++) {
+    var abbr = browser_languages[i];
+    if(abbr_langnames[abbr]) {
+      current_lang = abbr;
+      break;
+    }
+  }
+}
 
 function setFallbackLangs() {
   fallback_langs = [];
@@ -696,6 +730,8 @@ function setFallbackLangs() {
   }
   console.log("new fallback langs: " + fallback_langs.join(",") + ".");
 }
+setFallbackLangs();
+
 
 $.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", function (returned_data){
   for(lang in returned_data.entities.Q5.labels) { //Q5 is arbitraty. Choose one that gets translated for sure.
@@ -722,14 +758,14 @@ $.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", functio
     });
     langnames.sort();
 
-    for(var i=0; i < browser_languages.length; i++) {
-      var abbr = browser_languages[i];
-      if(abbr_langnames[abbr]) {
-        current_lang = abbr;
-        break;
-      }
-    }
+    resetLang();
     setFallbackLangs();
+
+    $("#map-menu-container").append(
+        "<div id=languageSelector onClick=\"$('#languageSelector ul').toggleClass('open');\">" +
+          "<span lang=en>Choose Language:</span>" +
+          "<ul></ul>" +
+        "</div>");
 
     langnames.forEach(function (item) {
       var langcode = langnames_abbr[item];
@@ -744,24 +780,40 @@ function switchToLang(lang) {
   $("#languageSelector li[targetlang="+lang+"]").addClass("default");
   current_lang = lang;
   setFallbackLangs();
+
+  $("#map-menu-container [trn]").each(function(){
+    var trans_id = $(this).attr("trn");
+    $(this).text(T(trans_id));
+  });
+
   console.log("new lang:" +lang);
 }
 
 var dictionary = {
   en: {
     "en_adv_filters" : "Enable Advanced Filter Mode",
+    "dis_adv_filters" : "Disable Advanced Filter Mode",
     "address" : "Address",
     "contact" : "Contact",
     "opening_hours" : "Opening hours",
-    "type_of_initiative" : "Type Of Initiative"
+    "type_of_initiative" : "Type Of Initiative",
+    "reset_filters" : "Reset filters",
+    "active_filters" : "Active Filters:",
+    "show_map" : "Show map",
+    "clickanyfilterhint" : "Click any [+] to add a filter"
+
   },
   de: {
     "en_adv_filters" : "Erweiterte Filter einschalten",
+    "dis_adv_filters" : "Erweiterte Filter ausschalten",
     "address" : "Adresse",
     "contact" : "Kontaktdaten",
     "opening_hours" : "Öffnungszeiten",
-    "type_of_initiative" : "Typ der Initiative"
-
+    "type_of_initiative" : "Typ der Initiative",
+    "reset_filters" : "Filter zurücksetzen",
+    "active_filters" : "Aktive Filter:",
+    "show_map" : "Zurück zur Karte",
+    "clickanyfilterhint" : "Auf [+] klicken um Filter hinzuzufügen"
   }
 }
 
