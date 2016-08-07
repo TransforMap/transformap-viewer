@@ -1,5 +1,3 @@
-var theme_colors = ["#fcec74", "#f7df05", "#f2bd0b", "#fff030", "#95D5D2", "#1F3050"];
-
 var MapModel = Backbone.Model.extend({});
 
 var MapData = Backbone.Collection.extend({
@@ -66,6 +64,21 @@ var MapView = Backbone.View.extend({
 /* Initialises map */
 var mapData = new MapData();
 var mapView = new MapView({ collection: mapData });
+
+/* get taxonomy stuff */
+var taxonomy_url = "http://transformap.co/transformap-viewer/taxonomy.json";
+var flat_taxonomy_array,
+    tree_menu_json;
+$.getJSON(taxonomy_url, function(returned_data){
+
+  flat_taxonomy_array = returned_data.results.bindings;
+
+  fill_tax_hashtable();
+  tree_menu_json = convert_tax_to_tree();
+
+  buildTreeMenu(tree_menu_json);
+
+});
 
 // note: can only handle 3 tiers (cats, subcats, toi) at the moment.
 function convert_tax_to_tree() {
@@ -149,19 +162,6 @@ function convert_tax_to_tree() {
   return treejson;
 }
 
-
-var taxonomy_url = "http://transformap.co/transformap-viewer/taxonomy.json"
-
-// returns "Q12" of https://base.transformap.co/entity/Q12#taxonomy
-function getQNR(uri_string) {
-  if(typeof(uri_string) !== 'string')
-    return false;
-  var slashsplit_array = uri_string.split('/');
-  var after_last_slash = slashsplit_array[slashsplit_array.length -1];
-  var before_hash = after_last_slash.split('#')[0];
-  return before_hash;
-}
-
 function buildTreeMenu(tree_json) {
 
   function appendTypeOfInitiative(toi,parent_element) {
@@ -205,6 +205,30 @@ function buildTreeMenu(tree_json) {
 
 }
 
+var toi_count_out_of_date = 1;
+function updateToiEmptyStatusInFilterMenu () {
+  if(! toi_count_out_of_date)
+    return;
+
+  var marker_array = pruneClusterLayer.GetMarkers();
+  for(var i = 0; i < marker_array.length; i++) {
+    var marker = marker_array[i];
+
+    var toi_array = createToiArray(marker.data.tags.type_of_initiative);
+    toi_array.forEach(function(e) {
+      if(! tax_hashtable.toi_count[e]) {
+        tax_hashtable.toi_count[e]=1;
+        var qnr = tax_hashtable.toistr_to_qnr[e];
+        if(qnr) // only works lateron when menu is loaded
+          $('#map-menu .' + qnr).removeClass('empty');
+      } else {
+        tax_hashtable.toi_count[e]++
+      }
+    });
+  }
+  toi_count_out_of_date = 0;
+}
+
 function clickOnCat(id) {
   console.log("clickOnCat: "+ id);
 
@@ -240,17 +264,6 @@ function clickOnCat(id) {
   updateToiEmptyStatusInFilterMenu(); // has internal check to only execute when needed
 }
 
-function resetFilter() {
-  $("#map-menu li").removeClass("selected");
-  $("#map-menu li > span").removeClass("selected");
-  $("ul.type-of-initiative").hide();
-  $("ul.subcategories").hide();
-  removeFromFilter("*");
-  trigger_Filter();
-  $("#activefilters ul").append("<li class=hint>Click any [+] to add a filter<div class=close onClick=\"clickMinus('hint')\">×</div></li>");
-  $('#resetfilters').hide();
-}
-
 function clickOnInitiative(id) {
   console.log("clickOnInitiative: "+ id);
   if($("#map-menu ." + id).hasClass("selected")) {
@@ -268,35 +281,126 @@ function clickOnInitiative(id) {
   }
 }
 
-function clickPlus(item) {
-  addToFilter(item);
-  trigger_Filter();
+/*
+ * helper functions
+ */
+
+/* delete an object from an array.
+ * Returns true if object found and deleted
+ * only the first object is deleted
+ */
+Array.prototype.deleteInArray = function (deletion_canditate) {
+  var position = this.indexOf(deletion_canditate);
+  if(position > -1) {
+    this.splice(position,1);
+    return true;
+  } else {
+    return false;
+  }
 }
-function clickMinus(item) {
-  removeFromFilter(item);
-  trigger_Filter();
+
+// returns "Q12" of https://base.transformap.co/entity/Q12#taxonomy
+function getQNR(uri_string) {
+  if(typeof(uri_string) !== 'string')
+    return false;
+  var slashsplit_array = uri_string.split('/');
+  var after_last_slash = slashsplit_array[slashsplit_array.length -1];
+  var before_hash = after_last_slash.split('#')[0];
+  return before_hash;
 }
 
+/*
+ * returns array of all tois (Q-Nrs) a cat or subcat has
+ */
+function getTOIsOfCat(id) {
+  var array = [];
 
-/* get taxonomy stuff */
-var flat_taxonomy_array,
-    tree_menu_json;
-$.getJSON(taxonomy_url, function(returned_data){
+  //recursive function
+  function dig_deeper_into_taxtree(array_position_object,do_output) {
 
-  flat_taxonomy_array = returned_data.results.bindings;
+    if(array_position_object.type != "type_of_initiative" && array_position_object.elements && array_position_object.elements.length) {
+      for(var i=0;i<array_position_object.elements.length;i++) {
+        if(getQNR(array_position_object.elements[i].UUID) == id || do_output) {
+          dig_deeper_into_taxtree(array_position_object.elements[i],true);
+        }
+        else {
+          dig_deeper_into_taxtree(array_position_object.elements[i],false);
+        }
+      }
+    }
+    else
+      if(do_output) {
+        array.push(getQNR(array_position_object.UUID));
+      }
+  }
+  dig_deeper_into_taxtree(tree_menu_json,false);
 
-  fill_tax_hashtable();
-  tree_menu_json = convert_tax_to_tree();
+  return array;
+}
 
-  buildTreeMenu(tree_menu_json);
+function createToiArray(toi_string) {
+  if(typeof(toi_string) !== 'string')
+    return [];
+  var toi_array = toi_string.split(';');
+  for(var i=0;i<toi_array.length;i++){
+    toi_array[i] = toi_array[i].trim();
+  }
+  return toi_array;
+}
 
-});
+var tax_hashtable = {
+  toistr_to_qnr: {},
+  qnr_to_toistr: {},
+  toi_qindex: {},
+  cat_qindex: {},
+  all_qindex: {},
+  toi_count: {},
+  root_qnr: undefined
+}
+
+var tax_elements = {
+  type_of_initiative: "https://base.transformap.co/entity/Q6",
+  category: "https://base.transformap.co/entity/Q5",
+  taxonomy: "https://base.transformap.co/entity/Q3"
+}
+
+function fill_tax_hashtable() {
+  flat_taxonomy_array.forEach(function(entry){
+
+    var qnr = getQNR(entry.item.value);
+
+    if (entry["instance_of"].value == tax_elements.type_of_initiative ) {
+      tax_hashtable.toistr_to_qnr[entry.type_of_initiative_tag.value] = qnr;
+      tax_hashtable.qnr_to_toistr[qnr] = entry.type_of_initiative_tag.value;
+      if(!tax_hashtable.toi_qindex[qnr]) {
+        tax_hashtable.toi_qindex[qnr] = entry;
+        tax_hashtable.all_qindex[qnr] = entry;
+      } else { // being a member of multiple categories is represented by multiple identical objects being subclass of different categories
+        if(-1 == $.inArray( entry.subclass_of.value, tax_hashtable.toi_qindex[qnr].subclass_of.value.split(";") ) ) { //just a precaution to have no dups
+
+          //if it is the original, make a deep copy we can alter
+          if( ! tax_hashtable.toi_qindex[qnr].subclass_of.value.match(/;/)) {
+            var copy = JSON.parse(JSON.stringify(tax_hashtable.toi_qindex[qnr]));
+            tax_hashtable.toi_qindex[qnr] = copy;
+            tax_hashtable.all_qindex[qnr] = copy;
+          }
+
+          tax_hashtable.all_qindex[qnr].subclass_of.value += ";" + entry.subclass_of.value;
+        }
+      }
+
+    } else if (entry["instance_of"].value == tax_elements.category ) {
+      tax_hashtable.all_qindex[qnr] = entry;
+      tax_hashtable.cat_qindex[qnr] = entry;
+
+    } else if(entry["instance_of"].value == tax_elements.taxonomy) {
+      tax_hashtable.root_qnr = qnr;
+    }
+  })
+}
 
 /*
  * filters
- *
- * user clicks on a cat/subcat/toi - all others not matching should be hidden.
- * @param filter_UUID  string  "Q-Nr" of filter object, e.g. a cat or type of initative.
  */
 
 var current_filter_tois = []; // array of q-nrs
@@ -316,6 +420,17 @@ function trigger_Filter() {
     $('#resetfilters').show();
   else
     $('#resetfilters').hide();
+}
+
+function resetFilter() {
+  $("#map-menu li").removeClass("selected");
+  $("#map-menu li > span").removeClass("selected");
+  $("ul.type-of-initiative").hide();
+  $("ul.subcategories").hide();
+  removeFromFilter("*");
+  trigger_Filter();
+  $("#activefilters ul").append("<li class=hint>Click any [+] to add a filter<div class=close onClick=\"clickMinus('hint')\">×</div></li>");
+  $('#resetfilters').hide();
 }
 
 function getFilterMode() {
@@ -391,18 +506,13 @@ function addToFilter(id) {
   }
 }
 
-/* delete an object from an array. 
- * Returns true if object found and deleted 
- * only the first object is deleted
- */
-Array.prototype.deleteInArray = function (deletion_canditate) {
-  var position = this.indexOf(deletion_canditate);
-  if(position > -1) {
-    this.splice(position,1);
-    return true;
-  } else {
-    return false;
-  }
+function clickPlus(item) {
+  addToFilter(item);
+  trigger_Filter();
+}
+function clickMinus(item) {
+  removeFromFilter(item);
+  trigger_Filter();
 }
 
 function removeFromFilter(id) {
@@ -467,45 +577,6 @@ function removeFromFilter(id) {
   }
 }
 
-/*
- * returns array of all tois (Q-Nrs) a cat or subcat has
- */
-function getTOIsOfCat(id) {
-  var array = [];
-
-  //recursive function
-  function dig_deeper_into_taxtree(array_position_object,do_output) {
-
-    if(array_position_object.type != "type_of_initiative" && array_position_object.elements && array_position_object.elements.length) {
-      for(var i=0;i<array_position_object.elements.length;i++) {
-        if(getQNR(array_position_object.elements[i].UUID) == id || do_output) {
-          dig_deeper_into_taxtree(array_position_object.elements[i],true);
-        }
-        else {
-          dig_deeper_into_taxtree(array_position_object.elements[i],false);
-        }
-      }
-    }
-    else
-      if(do_output) {
-        array.push(getQNR(array_position_object.UUID));
-      }
-  }
-  dig_deeper_into_taxtree(tree_menu_json,false);
-
-  return array;
-}
-
-function createToiArray(toi_string) {
-  if(typeof(toi_string) !== 'string')
-    return [];
-  var toi_array = toi_string.split(';');
-  for(var i=0;i<toi_array.length;i++){
-    toi_array[i] = toi_array[i].trim();
-  }
-  return toi_array;
-}
-
 /**
   * attributes:  ;-separated toi-attributes of POI
   * filter_UUID: Q-Nr of filter that should be matched against
@@ -537,81 +608,6 @@ function filterMatches(attributes, filter_UUID) {
   }
 
   return false;
-}
-
-var tax_hashtable = {
-  toistr_to_qnr: {},
-  qnr_to_toistr: {},
-  toi_qindex: {},
-  cat_qindex: {},
-  all_qindex: {},
-  toi_count: {},
-  root_qnr: undefined
-}
-
-var tax_elements = {
-  type_of_initiative: "https://base.transformap.co/entity/Q6",
-  category: "https://base.transformap.co/entity/Q5",
-  taxonomy: "https://base.transformap.co/entity/Q3"
-}
-
-function fill_tax_hashtable() {
-  flat_taxonomy_array.forEach(function(entry){
-
-    var qnr = getQNR(entry.item.value);
-
-    if (entry["instance_of"].value == tax_elements.type_of_initiative ) {
-      tax_hashtable.toistr_to_qnr[entry.type_of_initiative_tag.value] = qnr;
-      tax_hashtable.qnr_to_toistr[qnr] = entry.type_of_initiative_tag.value;
-      if(!tax_hashtable.toi_qindex[qnr]) {
-        tax_hashtable.toi_qindex[qnr] = entry;
-        tax_hashtable.all_qindex[qnr] = entry;
-      } else { // being a member of multiple categories is represented by multiple identical objects being subclass of different categories
-        if(-1 == $.inArray( entry.subclass_of.value, tax_hashtable.toi_qindex[qnr].subclass_of.value.split(";") ) ) { //just a precaution to have no dups
-
-          //if it is the original, make a deep copy we can alter
-          if( ! tax_hashtable.toi_qindex[qnr].subclass_of.value.match(/;/)) {
-            var copy = JSON.parse(JSON.stringify(tax_hashtable.toi_qindex[qnr]));
-            tax_hashtable.toi_qindex[qnr] = copy;
-            tax_hashtable.all_qindex[qnr] = copy;
-          }
-
-          tax_hashtable.all_qindex[qnr].subclass_of.value += ";" + entry.subclass_of.value;
-        }
-      }
-
-    } else if (entry["instance_of"].value == tax_elements.category ) {
-      tax_hashtable.all_qindex[qnr] = entry;
-      tax_hashtable.cat_qindex[qnr] = entry;
-
-    } else if(entry["instance_of"].value == tax_elements.taxonomy) {
-      tax_hashtable.root_qnr = qnr;
-    }
-  })
-}
-
-var toi_count_out_of_date = 1;
-function updateToiEmptyStatusInFilterMenu () {
-  if(! toi_count_out_of_date)
-    return;
-
-  var marker_array = pruneClusterLayer.GetMarkers();
-  for(var i = 0; i < marker_array.length; i++) {
-    var marker = marker_array[i];
-
-    var toi_array = createToiArray(marker.data.tags.type_of_initiative);
-    toi_array.forEach(function(e) {
-      if(! tax_hashtable.toi_count[e]) {
-        tax_hashtable.toi_count[e]=1;
-        var qnr = tax_hashtable.toistr_to_qnr[e];
-        if(qnr) // only works lateron when menu is loaded
-          $('#map-menu .' + qnr).removeClass('empty');
-      } else {
-        tax_hashtable.toi_count[e]++
-      }
-    });
-  }
-  toi_count_out_of_date = 0;
 }
 
 var popup_image_width = "270px";
