@@ -40,7 +40,7 @@ Fetch external dependencies:
 
 ## Deployment
 
-The site http://transformap.co/transformap-viewer/ is actually hosted at github.io. Just push the branch gh-pages to update the site.
+The site http://viewer.transformap.co/ is actually hosted at github.io. Just push the branch gh-pages to update the site.
 
 Notes: for libraries used with bower, add a static copy of the files to the gh-pages branch to its location in bower_components/ (and add an exception to the .gitignore-file).
 
