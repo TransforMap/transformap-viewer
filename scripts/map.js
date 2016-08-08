@@ -10,25 +10,79 @@ var MapData = Backbone.Collection.extend({
     }
  });
 
-var map = L.map('map-tiles',{ zoomControl: false }).setView ([51.1657, 10.4515], 5);
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-}).addTo(map);
-new L.Control.Zoom({ position: 'topright' }).addTo(map);
-var pruneClusterLayer = new PruneClusterForLeaflet(60,20);
-pruneClusterLayer.PrepareLeafletMarker = function(leafletMarker, data) {
-  leafletMarker.setIcon(data.icon);
-  //listeners can be applied to markers in this function
-  leafletMarker.on('click', function(e){
-    // bind popup and open immediately
-    if (!leafletMarker.getPopup()) {
-      leafletMarker.bindPopup(data.popup(data));
-      leafletMarker.openPopup();
-    }
+var map,
+    center,
+    zoom,
+    defaultlayer,
+    base_maps,
+    pruneClusterLayer;
+function initMap() {
+
+  osm = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.',
+      maxZoom : 19,
+      noWrap: true
   });
-};
-map.addLayer(pruneClusterLayer);
-var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+  terrain = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
+      attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, '+
+        'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
+        'Data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
+  });
+  terrain_bg = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png', {
+      attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, '+
+        'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
+        'Data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
+  });
+  hot = new L.tileLayer('http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution: 'Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>. '+
+        'Data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
+  });
+
+  if(!base_maps)
+    base_maps = {
+      'Stamen - Terrain': terrain,
+      'Stamen - Terrain Background': terrain_bg,
+      'OpenSteetMap - Mapnik': osm,
+      'Humanitarian OpenSteetMap ': hot
+    };
+  if(!defaultlayer)
+    defaultlayer = terrain_bg;
+
+  if(!center)
+    center = new L.LatLng(51.1657, 10.4515);
+
+  map = L.map('map-tiles', {
+    zoomControl: false,
+    center: center,
+    zoom: zoom ? zoom : 5,
+    layers: defaultlayer,
+  });
+
+  new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
+  pruneClusterLayer = new PruneClusterForLeaflet(60,20);
+
+  /* overwrite function to create popup on the fly */
+  pruneClusterLayer.PrepareLeafletMarker = function(leafletMarker, data) {
+    leafletMarker.setIcon(data.icon);
+    //listeners can be applied to markers in this function
+    leafletMarker.on('click', function(e){
+      // bind popup and open immediately
+      if (!leafletMarker.getPopup()) {
+        leafletMarker.bindPopup(data.popup(data));
+        leafletMarker.openPopup();
+      }
+    });
+  };
+
+  map.addLayer(pruneClusterLayer);
+
+  var ctrl = new L.Control.Layers(base_maps);
+  map.addControl(ctrl);
+
+  var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+}
+initMap();
 
 /* Creates map and popup template */
 var MapView = Backbone.View.extend({
