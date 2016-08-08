@@ -66,7 +66,7 @@ var mapData = new MapData();
 var mapView = new MapView({ collection: mapData });
 
 /* get taxonomy stuff */
-var taxonomy_url = "http://transformap.co/transformap-viewer/taxonomy.json";
+var taxonomy_url = "taxonomy.json";
 var flat_taxonomy_array,
     tree_menu_json;
 $.getJSON(taxonomy_url, function(returned_data){
