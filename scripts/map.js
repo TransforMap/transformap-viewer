@@ -78,12 +78,12 @@ $.getJSON(taxonomy_url, function(returned_data){
 
   buildTreeMenu(tree_menu_json);
 
-  $("#map-menu-container").append(
-      "<div id=resetfilters onClick='resetFilter();' trn=reset_filters>"+T("reset_filters")+"</div>"
+  $("#map-menu-container").prepend(
+      "<div id=mobileShowMap><div onClick='switchToMap();' trn=show_map>"+T("show_map")+"</div></div>"
       );
 
   $("#map-menu-container").append(
-      "<div id=mobileShowMap onClick='switchToMap();' trn=show_map>"+T("show_map")+"</div>"
+      "<div id=resetfilters onClick='resetFilter();' trn=reset_filters>"+T("reset_filters")+"</div>"
       );
 
   $("#map-menu-container").append(
