@@ -7,6 +7,10 @@ bower_components/leaflet/*
 bower_components/leaflet/dist/*
 !bower_components/leaflet/dist/leaflet.css
 !bower_components/leaflet/dist/leaflet.js
+!bower_components/leaflet/dist/images
+bower_components/leaflet/dist/images/*
+!bower_components/leaflet/dist/images/layers.png
+!bower_components/leaflet/dist/images/layers-2x.png
 
 !bower_components/PruneCluster
 bower_components/PruneCluster/*
