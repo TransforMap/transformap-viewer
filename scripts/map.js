@@ -729,7 +729,7 @@ function getDescriptionText(attributes) {
       return attributes[attr_key];
   }
 
-  return false;
+  return "";
 }
 
 /* intended for mobile view */
