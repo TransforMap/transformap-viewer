@@ -705,6 +705,32 @@ function checkForMWimages(image_uri) {
 
   return retval;
 }
+/*
+ * returns the description text (attributes[description:*]) in the users lang or a fallback
+ * description:$lang -> description:$fallbacks -> description -> description:$?
+ */
+function getDescriptionText(attributes) {
+  var best_hit = attributes["description:" + current_lang];
+  if(best_hit)
+    return best_hit;
+
+  for(var i=0; i < fallback_langs.length; i++) {
+    var fallback_desc = attributes["description:" + fallback_langs[i]];
+    if(fallback_desc)
+      return fallback_desc;
+  }
+
+  var standard_descr = attributes["description"];
+  if(standard_descr)
+    return standard_descr;
+
+  for (attr_key in attributes) {
+    if(attr_key.match(/^description:/))
+      return attributes[attr_key];
+  }
+
+  return false;
+}
 
 /* intended for mobile view */
 function onMobile() {
