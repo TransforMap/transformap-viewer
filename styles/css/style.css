@@ -7,7 +7,7 @@ h1,h2,h3,h4,h5,h6{text-align:center}
 #map-tiles .leaflet-popup .leaflet-popup-close-button:hover{background:#c3c3c3}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper{border-radius:0;padding:0 2px 0 0;margin:0;max-width:300px;max-height:90vh;overflow:auto}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content{padding-bottom:15px;margin:0}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content h1{text-align:left;padding:15px;padding-right:30px;border-bottom:1px solid #eee;margin-bottom:15px;margin-top:0;color:#1f3050;font-weight:700;font-size:16px}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p{font-size:12px;text-align:left;padding:5px 15px;margin:0}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p img{display:block;margin:auto;width:100%;max-width:270px}
-#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p a{text-align:left !important;color:#000}
+#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p a{text-align:left !important;color:#1f3050}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content h3{margin:0;padding:5px 15px 0;text-align:left;font-size:12px;font-weight:bold}
 #map-tiles .my-div-icon{width:30px;height:30px;background:rgba(31,48,80,0.5);border-radius:15px;margin-top:-15px}#map-tiles .my-div-icon div{display:none}
 #map-tiles .my-div-icon:before{width:20px;height:20px;content:"";display:block;background:#1f3050;position:relative;border-radius:10px;top:5px;left:5px}
