@@ -3,14 +3,13 @@ body{margin:0;font-family:'PT Sans',sans-serif;background:#1f3050}
 p{font-family:'Open Sans',sans-serif;font-size:16px}
 li{list-style-type:none}
 h1,h2,h3,h4,h5,h6{text-align:center}
-#map-tiles{height:100vh;position:absolute;top:0;bottom:0;right:0;left:240px}#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;text-align:left !important}#map-tiles .leaflet-popup .leaflet-popup-close-button{font-size:23px;width:35px;height:35px;padding:8px 0 0 0;vertical-align:center}
+#map-tiles{height:100vh;position:absolute;top:0;bottom:0;right:0;left:240px;}#map-tiles .leaflet-popup{font-family:'Open Sans',sans-serif;text-align:left !important}#map-tiles .leaflet-popup .leaflet-popup-close-button{font-size:23px;width:35px;height:35px;padding:8px 0 0 0;vertical-align:center}
 #map-tiles .leaflet-popup .leaflet-popup-close-button:hover{background:#c3c3c3}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper{border-radius:0;padding:0 2px 0 0;margin:0;max-width:300px;max-height:90vh;overflow:auto}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content{padding-bottom:15px;margin:0}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content h1{text-align:left;padding:15px;padding-right:30px;border-bottom:1px solid #eee;margin-bottom:15px;margin-top:0;color:#1f3050;font-weight:700;font-size:16px}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p{font-size:12px;text-align:left;padding:5px 15px;margin:0}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p img{display:block;margin:auto;width:100%;max-width:270px}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p a{text-align:left !important;color:#1f3050}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content h3{margin:0;padding:5px 15px 0;text-align:left;font-size:12px;font-weight:bold}
-#map-tiles .my-div-icon{width:30px;height:30px;background:rgba(110,204,57,0.5);border-radius:15px;margin-top:-15px}#map-tiles .my-div-icon div{display:none}
-#map-tiles .my-div-icon:before{width:20px;height:20px;content:"";display:block;background:#6ecc39;position:relative;border-radius:10px;top:5px;left:5px}
+#map-tiles .my-div-icon{width:25px !important;height:40px;background-image:url("../../bower_components/leaflet/dist/images/marker-green.png");margin-top:-40px}#map-tiles .my-div-icon div{display:none}
 #map-tiles .my-div-icon:hover>div{display:block;width:200px;z-index:15000;margin-left:-85px;position:absolute;bottom:35px}#map-tiles .my-div-icon:hover>div div{display:block;margin:0 auto;background:rgba(255,255,255,0.8);text-align:center;width:fit-content;border:1px solid #1f3050;border-radius:5px;padding:5px 8px}
 #map-tiles .leaflet-control-layers-toggle{width:26px;height:26px;background-size:22px 22px}
 #map-tiles.leaflet-touch .leaflet-control-layers-toggle{width:30px;height:30px;background-size:26px 26px}
