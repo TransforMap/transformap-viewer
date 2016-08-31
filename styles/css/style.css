@@ -34,7 +34,7 @@ h1,h2,h3,h4,h5,h6{text-align:center}
 #map-menu-container ul#map-menu ul.type-of-initiative .list-group-item.empty{color:#808080}
 #map-menu-container #activefilters{padding:0 0 0 10px;color:#fff}#map-menu-container #activefilters h2{text-align:left}
 #map-menu-container #activefilters .expert_mode.off{display:none}
-#map-menu-container #activefilters ul{padding:0;margin:0}#map-menu-container #activefilters ul li{border-radius:5px;padding:3px 22px 3px 5px;margin:5px 5px 5px 0;background:#f2bd0b;color:#000}#map-menu-container #activefilters ul li .close{font-weight:bold;background:#fcec74;text-align:center;display:block;padding:3px;margin-top:-3px;margin-right:-22px;border-top-right-radius:5px;border-bottom-right-radius:5px;height:100%;width:12px;float:right;border-left:1px solid #fcec74}
+#map-menu-container #activefilters ul{font-weight:normal;padding:0;margin:0}#map-menu-container #activefilters ul li{border-radius:5px;padding:3px 22px 3px 5px;margin:5px 5px 5px 0;background:#f2bd0b;color:#000}#map-menu-container #activefilters ul li .close{font-weight:bold;background:#fcec74;text-align:center;display:block;padding:3px;margin-top:-3px;margin-right:-22px;border-top-right-radius:5px;border-bottom-right-radius:5px;height:100%;width:12px;float:right;border-left:1px solid #fcec74}
 #map-menu-container #activefilters ul li .close:hover{background:#f2bd0b;cursor:pointer}
 #map-menu-container div#resetfilters,#map-menu-container div#toggleAdvancedFilters,#map-menu-container div#languageSelector,#map-menu-container div#mobileShowMap>div{width:fit-content;color:#fff;padding:5px;margin:10px;border:1px solid #fff;cursor:pointer}
 #map-menu-container div#resetfilters,#map-menu-container div#mobileShowMap{display:none}
