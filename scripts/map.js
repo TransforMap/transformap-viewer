@@ -160,8 +160,8 @@ $.getJSON(taxonomy_url, function(returned_data){
   $("#map-menu-container .bottom").append(
       "<div id=susyci>"+
         "<div class=logo> <img src='assets/susylogo.png' /><br />" +
-          "<span trn=susy_contact>" + T("susy_contact")+ "</span> | "+
-          "<span trn=imprint>" +T("imprint")+"</span>" +
+          "<a href='http://www.solidarityeconomy.eu/contact/' trn=susy_contact>" + T("susy_contact")+ "</a> | "+
+          "<a href='http://www.solidarityeconomy.eu/imprint/' trn=imprint>" +T("imprint")+"</a>" +
         "</div>"+
         "<div trn=susy_disclaimer>" +T("susy_disclaimer")+ "</div>"+
       "</div>"
