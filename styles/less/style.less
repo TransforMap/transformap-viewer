@@ -199,13 +199,25 @@ Map menu styling
 
 /* Menu styles */
 #map-menu-container {
-    background: @blue-bright;
     height: 100vh;
     overflow:auto;
     width:240px;
+
+    background: @blue-bright;
     font-size: 0.8em;
     font-weight:bold;
     letter-spacing:0.075em;
+
+    display:table;
+/*    border-collapse:collapse; */
+    .top {
+    }
+    .bottom {
+      display: table-row;
+      height : 1px;
+      vertical-align: bottom;
+    }
+
     /* Main categories */
     ul#map-menu {
         border-top: 1px solid #aaa;
@@ -292,7 +304,7 @@ Map menu styling
         }
         ul.type-of-initiative {
             font-weight:normal;
-	    letter-spacing:normal;
+	          letter-spacing:normal;
             text-align: left;
             display: none;
             background: @yellow-bright;
@@ -413,6 +425,18 @@ Map menu styling
         li.default {
           background:@blue-dark;
           font-style:italic;
+        }
+      }
+
+    }
+    div#susyci {
+      color:white;
+      padding:0.5em;
+      .logo {
+        text-align:center;
+        margin:1em 0;
+        img {
+          width:80%;
         }
       }
 

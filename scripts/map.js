@@ -138,22 +138,32 @@ $.getJSON(taxonomy_url, function(returned_data){
 
   buildTreeMenu(tree_menu_json);
 
-  $("#map-menu-container").prepend(
+  $("#map-menu-container .top").prepend(
       "<div id=mobileShowMap><div onClick='switchToMap();' trn=show_map>"+T("show_map")+"</div></div>"
       );
 
-  $("#map-menu-container").append(
+  $("#map-menu-container .top").append(
       "<div id=resetfilters onClick='resetFilter();' trn=reset_filters>"+T("reset_filters")+"</div>"
       );
 
-  $("#map-menu-container").append(
+  $("#map-menu-container .top").append(
       "<div id=toggleAdvancedFilters onClick='toggleAdvancedFilterMode();' mode='simple' trn=en_adv_filters>"+T("en_adv_filters")+"</div>"
       );
 
-  $("#map-menu-container").append(
+  $("#map-menu-container .top").append(
       "<div id=activefilters>" +
         "<h2 class='expert_mode off' trn=active_filters>" + T("active_filters") + "</h2>" +
         "<ul class='expert_mode off'></ul>" +
+      "</div>"
+      );
+
+  $("#map-menu-container .bottom").append(
+      "<div id=susyci>"+
+        "<div class=logo> <img src='assets/susylogo.png' /><br />" +
+          "<span trn=susy_contact>" + T("susy_contact")+ "</span> | "+
+          "<span trn=imprint>" +T("imprint")+"</span>" +
+        "</div>"+
+        "<div trn=susy_disclaimer>" +T("susy_disclaimer")+ "</div>"+
       "</div>"
       );
 
@@ -847,7 +857,7 @@ $.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", functio
     resetLang();
     setFallbackLangs();
 
-    $("#map-menu-container").append(
+    $("#map-menu-container .top").append(
         "<div id=languageSelector onClick=\"$('#languageSelector ul').toggleClass('open');\">" +
           "<span lang=en>Choose Language:</span>" +
           "<ul></ul>" +
@@ -886,7 +896,12 @@ var dictionary = {
     "reset_filters" : "Reset filters",
     "active_filters" : "Active Filters:",
     "show_map" : "Show map",
-    "clickanyfilterhint" : "Click any [+] to add a filter"
+    "clickanyfilterhint" : "Click any [+] to add a filter",
+    "imprint" : "Imprint",
+    "susy_contact" : "Contact",
+    "susy_disclaimer" : "This website has been produced with the financial assistance of the European Union. The contents of this website are the sole responsibility of the SUSY initiative and can under no circumstances be regarded as reflecting the position of the European Union.",
+    "" : "",
+    "LAST:":""
 
   },
   de: {
@@ -899,7 +914,11 @@ var dictionary = {
     "reset_filters" : "Filter zurücksetzen",
     "active_filters" : "Aktive Filter:",
     "show_map" : "Zurück zur Karte",
-    "clickanyfilterhint" : "Auf [+] klicken um Filter hinzuzufügen"
+    "clickanyfilterhint" : "Auf [+] klicken um Filter hinzuzufügen",
+    "imprint" : "Impressum",
+    "susy_contact" : "Kontakt",
+    "" : "",
+    "LAST:":""
   }
 }
 

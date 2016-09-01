@@ -14,7 +14,9 @@ h1,h2,h3,h4,h5,h6{text-align:center}
 #map-tiles .leaflet-control-layers-toggle{width:26px;height:26px;background-size:22px 22px}
 #map-tiles.leaflet-touch .leaflet-control-layers-toggle{width:30px;height:30px;background-size:26px 26px}
 #showfilters{display:none;position:absolute;top:50px;left:10px;border-radius:4px;width:26px;height:26px;background:#fff url(../../assets/icon-filter-24.png) 50% 50% no-repeat;box-shadow:0 1px 5px rgba(0,0,0,0.65);cursor:pointer}
-#map-menu-container{background:#95d5d2;height:100vh;overflow:auto;width:240px;font-size:.8em;font-weight:bold;letter-spacing:.075em;}#map-menu-container ul#map-menu{border-top:1px solid #aaa;border-bottom:1px solid #aaa;padding:0;margin:0;border:none;}#map-menu-container ul#map-menu .list-group-item{padding:0;background:#95d5d2;color:#fff;border:none;border-radius:none}#map-menu-container ul#map-menu .list-group-item span.expert_mode.off{display:none}
+#map-menu-container{height:100vh;overflow:auto;width:240px;background:#95d5d2;font-size:.8em;font-weight:bold;letter-spacing:.075em;display:table;}
+#map-menu-container .bottom{display:table-row;height:1px;vertical-align:bottom}
+#map-menu-container ul#map-menu{border-top:1px solid #aaa;border-bottom:1px solid #aaa;padding:0;margin:0;border:none;}#map-menu-container ul#map-menu .list-group-item{padding:0;background:#95d5d2;color:#fff;border:none;border-radius:none}#map-menu-container ul#map-menu .list-group-item span.expert_mode.off{display:none}
 #map-menu-container ul#map-menu .list-group-item span.expert_mode.on{display:block;float:right;margin-right:3px;margin-left:6px;font-style:normal;color:#000}#map-menu-container ul#map-menu .list-group-item span.expert_mode.on span{text-align:center;margin:0;float:none;font-weight:bold;background:#fcec74;border:1px solid #f2bd0b;border-top-left-radius:4px;border-bottom-left-radius:4px;padding:2px 4px}
 #map-menu-container ul#map-menu .list-group-item span.expert_mode.on span:hover{background:#f2bd0b}
 #map-menu-container ul#map-menu .list-group-item span.expert_mode.on span+span{border-top-left-radius:0;border-bottom-left-radius:0;border-top-right-radius:4px;border-bottom-right-radius:4px}
@@ -42,4 +44,5 @@ h1,h2,h3,h4,h5,h6{text-align:center}
 #map-menu-container div#languageSelector ul.open{margin-top:-5px;margin-right:-6px;}#map-menu-container div#languageSelector ul.open li{display:block;border:1px solid #fff;border-top:0;padding:5px}
 #map-menu-container div#languageSelector ul.open li:hover{color:#000}
 #map-menu-container div#languageSelector ul.open li.default{background:#1f3050;font-style:italic}
+#map-menu-container div#susyci{color:#fff;padding:.5em}#map-menu-container div#susyci .logo{text-align:center;margin:1em 0}#map-menu-container div#susyci .logo img{width:80%}
 @media screen and (max-width:768px){#map-menu-container{position:absolute;top:0;left:0;width:100%}#map-menu-container ul#map-menu ul.type-of-initiative{margin-left:10px;padding:0;position:static;border-radius:0} #map-menu-container div#mobileShowMap{display:block;width:100%;height:1em;padding:6px 0 21px 0}#map-menu-container div#mobileShowMap div{float:right;margin:0 10px} #map-tiles .leaflet-popup-pane{bottom:0;right:0} #map-tiles{left:0;} #showfilters{display:block} .leaflet-top{top:40px}}
