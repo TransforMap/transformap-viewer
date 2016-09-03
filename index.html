@@ -88,21 +88,21 @@
 
     <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone']) || (properties['website'])) { %>
     <h3><%- T("contact") %></h3>
-    <p>
-       <% if (properties['contact:email']) { %>
-      <a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
-      <br>
-      <% } %>
+    <p class=contact>
        <% if (properties['contact:website']) { %>
-      <a href="<%- properties['contact:website'] %>">Website</a>
+      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>"><%- trimWebsiteUri(properties['website']) %></a>
       <br>
       <% } %>
        <% if (properties['website']) { %>
-      <a href="<%- properties['website'] %>">Website</a>
+      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>"><%- trimWebsiteUri(properties['website']) %></a>
+      <br>
+      <% } %>
+       <% if (properties['contact:email']) { %>
+      <img src="assets/envelope64.png" alt="email:" />&nbsp;<a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
       <br>
       <% } %>
        <% if (properties['contact:phone']) { %>
-      <a href="tel:<%- properties['contact:phone'] %>"><%- properties['contact:phone'] %></a>
+      <img src="assets/phone64.png" alt="phone:" />&nbsp;<a href="tel:<%- properties['contact:phone'] %>"><%- properties['contact:phone'] %></a>
       <% } %>
     </p>
     <% } %>

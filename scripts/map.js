@@ -748,6 +748,17 @@ function getDescriptionText(attributes) {
   return "";
 }
 
+/* for nicer display of website links, shorten long uris */
+function trimWebsiteUri(uri,maxlength) {
+  var length = (maxlength) ? maxlength : 30;
+  var retval = uri.replace(/^http[s]?:\/\//,"");
+
+  if(retval.length < length)
+    return retval
+  else
+    return retval.substr(0,length) + "...";
+}
+
 /* intended for mobile view */
 function onMobile() {
   return (window.innerWidth <= 768);
