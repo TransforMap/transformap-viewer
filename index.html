@@ -90,11 +90,11 @@
     <h3><%- T("contact") %></h3>
     <p class=contact>
        <% if (properties['contact:website']) { %>
-      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>"><%- trimWebsiteUri(properties['website']) %></a>
+      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>" target=_blank><%- trimWebsiteUri(properties['website']) %></a>
       <br>
       <% } %>
        <% if (properties['website']) { %>
-      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>"><%- trimWebsiteUri(properties['website']) %></a>
+      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>" target=_blank><%- trimWebsiteUri(properties['website']) %></a>
       <br>
       <% } %>
        <% if (properties['contact:email']) { %>
@@ -111,7 +111,7 @@
     <% if (properties['opening_hours:url']) { %>
       <h3><%- T("opening_hours") %></h3>
       <p>
-        <a href="<%- properties['opening_hours:url'] %>"><%- properties['opening_hours:url'] %></a>
+        <a href="<%- properties['opening_hours:url'] %>" target=_blank><%- properties['opening_hours:url'] %></a>
       </p>
     <% } %>
         <h3><%- T("type_of_initiative") %></h3>
