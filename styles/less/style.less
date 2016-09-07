@@ -17,6 +17,7 @@
 @start5: #95D5D2; /* bright blue */
 @start6: #1F3050; /* dark blue */
 
+@menuwidth: 260px;
 
 a,
 a:link {
@@ -59,7 +60,7 @@ Basic map and pop up styles
   top:0;
   bottom:0;
   right:0;
-  left:240px;
+  left:@menuwidth;
 
   .leaflet-popup {
     font-family: 'Open Sans', sans-serif;
@@ -210,7 +211,7 @@ Map menu styling
 #map-menu-container {
     height: 100vh;
     overflow:auto;
-    width:240px;
+    width: @menuwidth;
 
     background: @blue-bright;
     font-size: 0.8em;
@@ -290,7 +291,7 @@ Map menu styling
             display: none;
             background: @yellow-bright;
             position: fixed;
-            left: 240px;
+            left: @menuwidth;
             top: 0;
             z-index: 10;
             -webkit-padding-start: 0px;

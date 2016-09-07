@@ -369,11 +369,12 @@ function clickOnInitiative(id) {
     addToFilter(id);
     trigger_Filter();
   } else {
-    if( $("#map-menu li."+id+" form.expert_mode input")[0].checked === true) {
-      removeFromFilter(id)
-    } else {
+    if( $("#activefilters ul ."+id).length == 0 ) {
       addToFilter(id)
+    } else {
+      removeFromFilter(id)
     }
+    trigger_Filter();
   }
    
 
@@ -563,8 +564,8 @@ function addToFilter(id) {
       var item = tax_hashtable.toi_qindex[id];
       var name = item.itemLabel.value;
       $("#activefilters ul").append("<li class="+id+">"+name+"<div class=close onClick=\"clickMinus('"+id+"')\">×</div></li>");
-      console.log("adding toi " + id);
-      $("#map-menu li."+id+" form.expert_mode input")[0].checked = true;
+
+      $("#map-menu li."+id+" form.expert_mode input").each(function(){ this.checked = true; });
 
       //for parent cats, checked state
       //recursive!
@@ -587,10 +588,10 @@ function addToFilter(id) {
           }
           if(a_toi_missing == false) {
             $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input")[0].checked = true;
-            $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").removeAttr("indeterminate");
+            $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input")[0].indeterminate = false;
           }
           else
-            $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").attr("indeterminate",true);
+            $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input")[0].indeterminate = true;
 
 
           var new_parent = tax_hashtable.cat_qindex[parent_qnr];
@@ -628,8 +629,6 @@ function toggleFilterItem(item,e) {
   if(e.indeterminate === true) {
     console.log("indet");
     removeFromFilter(item);
-    e.checked = false;
-    e.indeterminate = false;
   }
   else if(e.checked === false) { // changed state after click!
     console.log("was checked");
@@ -677,11 +676,11 @@ function removeFromFilter(id) {
           }
         }
         if(tois_active == false) {
-          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").removeAttr("checked");
-          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").removeAttr("indeterminate");
+          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input")[0].checked = false;
+          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input")[0].indeterminate = false;
         }
         else // has to be at least "indeterminate", because we removed one and it cannot be fully checked
-          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").attr("indeterminate", true);
+          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input")[0].indeterminate = true;
 
         var new_parent = tax_hashtable.cat_qindex[parent_qnr];
         //we hope categories have only 1 parent
