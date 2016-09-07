@@ -127,6 +127,7 @@ var mapView = new MapView({ collection: mapData });
 
 /* get taxonomy stuff */
 var taxonomy_url = "taxonomy.json";
+var taxonomy_url = "http://viewer.transformap.co/taxonomy.json";
 var flat_taxonomy_array,
     tree_menu_json;
 $.getJSON(taxonomy_url, function(returned_data){
@@ -367,7 +368,15 @@ function clickOnInitiative(id) {
     removeFromFilter("*");
     addToFilter(id);
     trigger_Filter();
+  } else {
+    if( $("#map-menu li."+id+" form.expert_mode input")[0].checked === true) {
+      removeFromFilter(id)
+    } else {
+      addToFilter(id)
+    }
   }
+   
+
 }
 
 /*
@@ -554,39 +563,46 @@ function addToFilter(id) {
       var item = tax_hashtable.toi_qindex[id];
       var name = item.itemLabel.value;
       $("#activefilters ul").append("<li class="+id+">"+name+"<div class=close onClick=\"clickMinus('"+id+"')\">×</div></li>");
-      $("#map-menu li."+id+" span.expert_mode .add").addClass("inactive");
-      $("#map-menu li."+id+" span.expert_mode .remove").removeClass("inactive");
+      console.log("adding toi " + id);
+      $("#map-menu li."+id+" form.expert_mode input")[0].checked = true;
 
-      //for parent cats, set -/+ button color:
+      //for parent cats, checked state
       //recursive!
-      function checkButtonsOfParents(parents_string) {
+      function checkStateOfParents(parents_string) {
         var parent_cats = parents_string.split(";");
         parent_cats.forEach(function (parent_cat) {
           var parent_qnr = getQNR(parent_cat);
+
           //[-] has to be active, as we just added an item...
           $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .remove").removeClass("inactive");
-          //if all sub-items are in filter list, we can grey out the [+] - button:
+
+          //if all sub-items are in filter list, we can set the 'full' checked state
           var siblings = getTOIsOfCat(parent_qnr);
-          var plus_active = false;
+          var a_toi_missing = false;
           for(var i=0; i < siblings.length; i++) {
             if(current_filter_tois.indexOf(siblings[i]) == -1) {
-              plus_active = true;
+              a_toi_missing = true;
               break;
             }
           }
-          if(plus_active == false)
-            $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .add").addClass("inactive");
+          if(a_toi_missing == false) {
+            $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input")[0].checked = true;
+            $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").removeAttr("indeterminate");
+          }
+          else
+            $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").attr("indeterminate",true);
+
 
           var new_parent = tax_hashtable.cat_qindex[parent_qnr];
           //we hope categories have only 1 parent
           if(new_parent //it could be that this is the highest cat, which's parent is not in cat_qindex
             && new_parent.subclass_of.value
             && tax_hashtable.cat_qindex[getQNR(new_parent.subclass_of.value)]){
-              checkButtonsOfParents(new_parent.subclass_of.value);
+              checkStateOfParents(new_parent.subclass_of.value);
           }
         });
       }
-      checkButtonsOfParents(item.subclass_of.value);
+      checkStateOfParents(item.subclass_of.value);
       return;
     }
   }
@@ -607,6 +623,24 @@ function clickMinus(item) {
   removeFromFilter(item);
   trigger_Filter();
 }
+function toggleFilterItem(item,e) {
+  console.log(e);
+  if(e.indeterminate === true) {
+    console.log("indet");
+    removeFromFilter(item);
+    e.checked = false;
+    e.indeterminate = false;
+  }
+  else if(e.checked === false) { // changed state after click!
+    console.log("was checked");
+    removeFromFilter(item);
+  }
+  else if(e.checked) {
+    console.log("was unchecked");
+    addToFilter(item);
+  }
+  trigger_Filter();
+}
 
 function removeFromFilter(id) {
   if(id == "hint") {
@@ -616,43 +650,50 @@ function removeFromFilter(id) {
 
   if(tax_hashtable.toi_qindex[id]) { // is a toi
     $("#activefilters ul ."+id).remove();
-    $("#map-menu li."+id+" span.expert_mode .add").removeClass("inactive");
-    $("#map-menu li."+id+" span.expert_mode .remove").addClass("inactive");
+    $("#map-menu li."+id+" form.expert_mode input").removeAttr("checked");
     current_filter_tois.deleteInArray(id);
 
     //for parent cats, set -/+ button color:
     var item = tax_hashtable.toi_qindex[id];
 
     //recursive!
-    function checkButtonsOfParents(parents_string) {
+    function checkStateOfParents(parents_string) {
       var parent_cats = parents_string.split(";");
       parent_cats.forEach(function (parent_cat) {
         var parent_qnr = getQNR(parent_cat);
-        //[+] has to be active, as we just removed an item...
-        $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .add").removeClass("inactive");
 
-        //if none of the sub-items are in filter list, we can grey out the [-] - button:
+        // //[+] has to be active, as we just removed an item...
+        // $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .add").removeClass("inactive");
+
+        //muss mindestens 'indefinite' sein
+
+        //if none of the sub-items are in filter list, we can uncheck the box
         var siblings = getTOIsOfCat(parent_qnr);
-        var minus_active = false;
+        var tois_active = false;
         for(var i=0; i < siblings.length; i++) {
           if(current_filter_tois.indexOf(siblings[i]) > -1) {
-            var minus_active = true;
+            var tois_active = true;
             break;
           }
         }
-        if(minus_active == false)
-          $("#map-menu li."+parent_qnr+" > span.toggle > span.expert_mode .remove").addClass("inactive");
+        if(tois_active == false) {
+          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").removeAttr("checked");
+          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").removeAttr("indeterminate");
+        }
+        else // has to be at least "indeterminate", because we removed one and it cannot be fully checked
+          $("#map-menu li."+parent_qnr+" > span.toggle > form.expert_mode input").attr("indeterminate", true);
+
         var new_parent = tax_hashtable.cat_qindex[parent_qnr];
         //we hope categories have only 1 parent
         if(new_parent //it could be that this is the highest cat, which's parent is not in cat_qindex
           && new_parent.subclass_of.value
           && tax_hashtable.cat_qindex[getQNR(new_parent.subclass_of.value)]){
             console.log("new parent: " + getQNR(new_parent.subclass_of.value) + "for " + id);
-            checkButtonsOfParents(new_parent.subclass_of.value);
+            checkStateOfParents(new_parent.subclass_of.value);
         }
       });
     }
-    checkButtonsOfParents(item.subclass_of.value);
+    checkStateOfParents(item.subclass_of.value);
     return;
   }
   //if is a cat, remove all TOIs
@@ -664,8 +705,7 @@ function removeFromFilter(id) {
   }
   if(id == "*") {
     $("#activefilters ul li").remove();
-    $("#map-menu li span.expert_mode .add").removeClass("inactive");
-    $("#map-menu li span.expert_mode .remove").addClass("inactive");
+    $("#map-menu li form.expert_mode input").removeAttr("checked");
     current_filter_tois = [];
   }
 }

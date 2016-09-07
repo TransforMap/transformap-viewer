@@ -46,9 +46,9 @@
   <script type='template' id='menuCategoryTemplate'>
     <li class="list-group-item category <%- id %>">
       <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %>
-        <span class="expert_mode off">
-          <span onClick="clickPlus('<%- id %>')" class="add">+</span><span onClick="clickMinus('<%- id %>')" class="remove inactive">-</span>
-        </span>
+        <form class="expert_mode off">
+          <input type=checkbox onClick="toggleFilterItem('<%- id %>',this)"/>
+        </form>
       </span>
       <ul class="subcategories"></ul>
       <ul class="type-of-initiative"></ul>
@@ -58,9 +58,9 @@
   <script type='template' id='menuTypeOfInitiativeTemplate'>
     <li class="list-group-item empty <%- id %>" onClick="clickOnInitiative('<%- id %>')">
       <%- itemLabel %>
-        <span class="expert_mode off">
-          <span onClick="clickPlus('<%- id %>')" class="add">+</span><span onClick="clickMinus('<%- id %>')" class="remove inactive">-</span>
-        </span>
+        <form class="expert_mode off">
+          <input type=checkbox onClick="toggleFilterItem('<%- id %>',this)"/>
+        </form>
     </li>
   </script>
 
