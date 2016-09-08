@@ -44,6 +44,12 @@ The site http://viewer.transformap.co/ is actually hosted at github.io. Just pus
 
 Notes: for libraries used with bower, add a static copy of the files to the gh-pages branch to its location in bower_components/ (and add an exception to the .gitignore-file).
 
+### build concatenated and minified js/css
+
+Run `npm install` once to install needed development dependencies.
+
+Then, run `npm run build` each time js and/or css has been changed to update the content in the `/dist` folder.
+
 ## Style guide
 
 We use spaces (2) instead of tabs, please also use this convention.
