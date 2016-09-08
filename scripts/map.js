@@ -158,7 +158,7 @@ $.getJSON(taxonomy_url, function(returned_data){
       "</div>"
       );
 
-  $("#map-menu-container .bottom").append(
+/*  $("#map-menu-container .bottom").append(
       "<div id=susyci>"+
         "<div class=logo> <img src='assets/susylogo.png' /><br />" +
           "<a href='http://www.solidarityeconomy.eu/contact/' trn=susy_contact>" + T("susy_contact")+ "</a> | "+
@@ -166,7 +166,7 @@ $.getJSON(taxonomy_url, function(returned_data){
         "</div>"+
         "<div trn=susy_disclaimer>" +T("susy_disclaimer")+ "</div>"+
       "</div>"
-      );
+      ); */
 
 });
 
