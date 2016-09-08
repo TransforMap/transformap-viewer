@@ -1,0 +1,22 @@
+{
+  "name": "transformap-viewer",
+  "version": "0.0.0",
+  "description": "This is a Web-Map plugin that aims at displaying data from the [TransforMap API](https://github.com/TransforMap/data.transformap.co). It offers dynamic filters, which are built from a Wikibase graph hosted on [base.transformap.co](https://base.transformap.co).",
+  "dependencies": {},
+  "devDependencies": {
+    "uglifyjs": "^2.4.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build-js",
+    "build-js": "uglifyjs bower_components/leaflet/dist/leaflet.js scripts/leaflet-hash.js bower_components/PruneCluster/dist/PruneCluster.min.js scripts/map.js > dist/site.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TransforMap/transformap-viewer.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/TransforMap/transformap-viewer/issues"
+  }
+}

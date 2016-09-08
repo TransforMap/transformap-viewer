@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+     More info: h5bp.com/i/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <!-- Our site title and description -->
+  <title>TransforMap-Viewer</title>
+  <meta name="description" content="TransforMap Viewer allows you to visualize the myriads of alternatives to the dominant economic system." />
+  <meta name="keywords" content="openstreetmap, OSM, Free Software, Open Source, mapping, leaflet, linked data, mapping taxonomy, open data, solidarity economy, alternative economy" />
+  <meta name="author" content="TransforMap Community" />
+
+  <meta property="og:title" content="TransforMap-Viewer" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="TransforMap Viewer allows you to visualize the myriads of alternatives to the dominant economic system." />
+  <meta property="og:url" content="https://github.com/TransforMap/transformap-viewer" />
+
+  <!-- Mobile viewport optimized: h5bp.com/viewport -->
+  <meta name="viewport" content="width=device-width" />
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="http://transformap.co/images/favicon.png">
+
+  <!-- Shims: IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+</head>
+
+<body id="map">
+
+  <!-- Content -->
+
+  <script type='template' id='menuCategoryTemplate'>
+    <li class="list-group-item category <%- id %>">
+      <span class="toggle" onClick="clickOnCat('<%- id %>')"><%- itemLabel %>
+        <form class="expert_mode off">
+          <input type=checkbox onClick="toggleFilterItem('<%- id %>',this)"/>
+        </form>
+      </span>
+      <ul class="subcategories"></ul>
+      <ul class="type-of-initiative"></ul>
+    </li>
+  </script>
+
+  <script type='template' id='menuTypeOfInitiativeTemplate'>
+    <li class="list-group-item empty <%- id %>" onClick="clickOnInitiative('<%- id %>')">
+      <%- itemLabel %>
+        <form class="expert_mode off">
+          <input type=checkbox />
+        </form>
+    </li>
+  </script>
+
+  <script type='template' id='popUpTemplate'>
+    <h1>
+      <%- properties.name %>
+    </h1>
+    <% if (properties['image']) { %>
+      <p>
+        <a href="<%- properties.image %>" target=_blank>
+          <img src="<%- checkForMWimages(properties.image) %>">
+        </a>
+        <br>
+        <em><%- properties['image:license'] %> <%- properties['image:credit'] %></em>
+      </p>
+    <% } %>
+    <p>
+      <%- getDescriptionText(properties)  %>
+    </p>
+
+      <h3><%- T("address") %></h3>
+    <p>
+      <%- properties['addr:housenumber'] %> <%- (properties['addr:housename']) ? properties['addr:housename'] + "," : "" %> <%- properties['addr:street'] %><br><%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
+    </p>
+
+    <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone']) || (properties['website'])) { %>
+    <h3><%- T("contact") %></h3>
+    <p class=contact>
+       <% if (properties['contact:website']) { %>
+      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>" target=_blank><%- trimWebsiteUri(properties['website']) %></a>
+      <br>
+      <% } %>
+       <% if (properties['website']) { %>
+      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>" target=_blank><%- trimWebsiteUri(properties['website']) %></a>
+      <br>
+      <% } %>
+       <% if (properties['contact:email']) { %>
+      <img src="assets/envelope64.png" alt="email:" />&nbsp;<a href="mailto:<%- properties['contact:email'] %>"><%- properties['contact:email'] %></a>
+      <br>
+      <% } %>
+       <% if (properties['contact:phone']) { %>
+      <img src="assets/phone64.png" alt="phone:" />&nbsp;<a href="tel:<%- properties['contact:phone'] %>"><%- properties['contact:phone'] %></a>
+      <% } %>
+    </p>
+    <% } %>
+
+
+    <% if (properties['opening_hours:url']) { %>
+      <h3><%- T("opening_hours") %></h3>
+      <p>
+        <a href="<%- properties['opening_hours:url'] %>" target=_blank><%- properties['opening_hours:url'] %></a>
+      </p>
+    <% } %>
+        <h3><%- T("type_of_initiative") %></h3>
+      <p>
+        <% var tois_array = createToiArray(properties['type_of_initiative']);
+           var trans_array = tois_array.map(function(obj){
+             var qnr = tax_hashtable.toistr_to_qnr[obj];
+             return (qnr) ? tax_hashtable.toi_qindex[qnr].itemLabel.value : obj;
+           });
+           var trans_str = trans_array.join(', '); %>
+        <%- trans_str %>
+      </p>
+  </script>
+
+  <div id="map-menu-container">
+    <div class=top>
+      <ul id="map-menu" class="list-group">
+      </ul>
+    </div>
+    <div class=bottom>
+    </div>
+
+  </div>
+
+  <div>
+    <div id='map-template'>
+      <div id="map-tiles"></div>
+      <div id="showfilters" title="show filters" onClick="switchToMenu();"></div>
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
+ V<script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+  <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+  <script defer="defer" src="./site.js"></script>
+</body>
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin,latin-ext" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic&subset=latin,latin-ext" />
+  <link rel="stylesheet" href="../bower_components/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../bower_components/PruneCluster/dist/LeafletStyleSheet.css" />
+  <link rel="stylesheet" href="../styles/css/style.css" />
+</html>
