@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build-js",
+    "build": "npm run build-js && npm run build-css",
+    "build-css": "cat bower_components/leaflet/dist/leaflet.css bower_components/PruneCluster/dist/LeafletStyleSheet.css styles/css/style.css > dist/site.css",
     "build-js": "uglifyjs bower_components/leaflet/dist/leaflet.js scripts/leaflet-hash.js bower_components/PruneCluster/dist/PruneCluster.min.js scripts/map.js > dist/site.js"
   },
   "repository": {
