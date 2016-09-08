@@ -4,6 +4,44 @@
      * To Public License, Version 2, as published by Sam Hocevar. See
      * http://www.wtfpl.net/ for more details. */
 
+/* fix for leaflet scroll on devices that fire scroll too fast, e.g. Macs
+   see https://github.com/Leaflet/Leaflet/issues/4410#issuecomment-234133427
+
+   */
+
+var lastScroll = new Date().getTime();
+L.Map.ScrollWheelZoom.prototype._onWheelScroll = function (e) {
+  if (new Date().getTime() - lastScroll < 400) {
+    e.preventDefault();
+    return;
+  }
+  var delta = L.DomEvent.getWheelDelta(e);
+  var debounce = this._map.options.wheelDebounceTime;
+
+  if (delta >= -0.15 && delta <= 0.15) {
+    e.preventDefault();
+    return;
+  }
+  if (delta <= -0.25) delta = -0.25;
+  if (delta >= 0.25) delta = 0.25;
+  this._delta += delta;
+  this._lastMousePos = this._map.mouseEventToContainerPoint(e);
+
+  if (!this._startTime) {
+      this._startTime = +new Date();
+  }
+
+  var left = Math.max(debounce - (+new Date() - this._startTime), 0);
+
+  clearTimeout(this._timer);
+  lastScroll = new Date().getTime();
+  this._timer = setTimeout(L.bind(this._performZoom, this), left);
+
+  L.DomEvent.stop(e);
+}
+
+
+
 var MapModel = Backbone.Model.extend({});
 
 var MapData = Backbone.Collection.extend({
