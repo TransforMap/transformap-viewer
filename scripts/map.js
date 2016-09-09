@@ -4,6 +4,9 @@
      * To Public License, Version 2, as published by Sam Hocevar. See
      * http://www.wtfpl.net/ for more details. */
 
+var data_url = "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3";
+var fallback_data_url = "susydata-fallback.json";
+
 /* fix for leaflet scroll on devices that fire scroll too fast, e.g. Macs
    see https://github.com/Leaflet/Leaflet/issues/4410#issuecomment-234133427
 
@@ -41,18 +44,6 @@ L.Map.ScrollWheelZoom.prototype._onWheelScroll = function (e) {
 }
 
 
-
-var MapModel = Backbone.Model.extend({});
-
-var MapData = Backbone.Collection.extend({
-    url:"https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3",
-    parse: function(response){
-        return response.features;
-    },
-    toJSON : function() {
-      return this.map(function(model){ return model.toJSON(); });
-    }
- });
 
 var map,
     center,
@@ -128,40 +119,187 @@ function initMap() {
 }
 initMap();
 
-/* Creates map and popup template */
-var MapView = Backbone.View.extend({
-    el: '#map-template',
-    livePopup: function(data) { // gets popup content for a marker
+function addPOIsToMap(geoJSONfeatureCollection) {
+  if(geoJSONfeatureCollection.type != "FeatureCollection") {
+    console.error("not a featureCollection");
+    return false;
+  }
+
+  var POIcollection = geoJSONfeatureCollection.features;
+  for(var i=0; i < POIcollection.length; i++) {
+    var feature = POIcollection[i];
+
+    var livePopup = function(data) { // gets popup content for a marker
       var templatePopUpFunction = _.template($('#popUpTemplate').html());
       return templatePopUpFunction(data);
-    },
-    initialize: function(){
+    }
 
-        this.listenTo(this.collection, 'reset add change remove', this.renderItem);
-        this.collection.fetch();
-    },
-    renderItem: function (model) {
-        var feature = model.toJSON();
+    var pdata = {
+      icon:  new L.divIcon({
+        className: 'my-div-icon',
+        iconSize:30,
+        html:"<div><div>" + feature.properties.name + "</div></div>"
+      }),
+      popup: livePopup,
+      tags: feature.properties,
+      properties: feature.properties // is used by _ template
+    }
 
-        var pdata = {
-          icon:  new L.divIcon({
-            className: 'my-div-icon',
-            iconSize:30,
-            html:"<div><div>" + feature.properties.name + "</div></div>"
-          }),
-          popup: this.livePopup,
-          tags: feature.properties,
-          properties: feature.properties // is used by _ template
-        }
-        var pmarker = new PruneCluster.Marker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], pdata);
-        pruneClusterLayer.RegisterMarker(pmarker);
-        pruneClusterLayer.ProcessView();
-    },
-});
+    var pmarker = new PruneCluster.Marker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], pdata);
+    pruneClusterLayer.RegisterMarker(pmarker);
+  }
 
-/* Initialises map */
-var mapData = new MapData();
-var mapView = new MapView({ collection: mapData });
+  pruneClusterLayer.ProcessView();
+  return true;
+}
+
+/* new version of getting map data with promises 
+  should fetch data_url, and in case it doesn't respond in a timeout, fetch fallback_data_url
+
+  taken from https://blog.hospodarets.com/fetch_in_action
+*/
+
+var processStatus = function (response) {
+    // status "0" to handle local files fetching (e.g. Cordova/Phonegap etc.)
+    if (response.status === 200 || response.status === 0) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    }
+};
+
+var parseJson = function (response) {
+    return response.json();
+};
+
+/* @returns {wrapped Promise} with .resolve/.reject/.catch methods */
+// It goes against Promise concept to not have external access to .resolve/.reject methods, but provides more flexibility
+var getWrappedPromise = function () {
+    var wrappedPromise = {},
+            promise = new Promise(function (resolve, reject) {
+                wrappedPromise.resolve = resolve;
+                wrappedPromise.reject = reject;
+            });
+    wrappedPromise.then = promise.then.bind(promise);
+    wrappedPromise.catch = promise.catch.bind(promise);
+    wrappedPromise.promise = promise;// e.g. if you want to provide somewhere only promise, without .resolve/.reject/.catch methods
+    return wrappedPromise;
+};
+
+/* @returns {wrapped Promise} with .resolve/.reject/.catch methods */
+var getWrappedFetch = function () {
+    var wrappedPromise = getWrappedPromise();
+    var args = Array.prototype.slice.call(arguments);// arguments to Array
+
+    fetch.apply(null, args)// calling original fetch() method
+        .then(function (response) {
+            wrappedPromise.resolve(response);
+        }, function (error) {
+            wrappedPromise.reject(error);
+        })
+        .catch(function (error) {
+            wrappedPromise.catch(error);
+        });
+    return wrappedPromise;
+};
+
+/**
+ * Fetch JSON by url
+ * @param { {
+ *  url: {String},
+ *  [cacheBusting]: {Boolean}
+ * } } params
+ * @returns {Promise}
+ */
+
+var MAX_WAITING_TIME = 5000;// in ms
+
+var getJSON = function (params) {
+    var wrappedFetch = getWrappedFetch(
+        params.cacheBusting ? params.url + '?' + new Date().getTime() : params.url,
+        {
+            method: 'get',// optional, "GET" is default value
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+    var timeoutId = setTimeout(function () {
+        wrappedFetch.reject(new Error('Load timeout for resource: ' + params.url));// reject on timeout
+    }, MAX_WAITING_TIME);
+
+    return wrappedFetch.promise// getting clear promise from wrapped
+        .then(function (response) {
+            clearTimeout(timeoutId);
+            return response;
+        })
+        .then(processStatus)
+        .then(parseJson);
+};
+
+/*--- TEST  --*/
+var onComplete = function () {
+    console.log('I\'m invoked in any case after success/error');
+};
+
+/*
+getJSON({
+    url: data_url,
+    cacheBusting: true
+}).then(function (data) {// on success
+    console.log('JSON parsed successfully!');
+    console.log(data);
+    addPOIsToMap(data);
+//    onComplete(data);
+}, function (error) {// on reject
+    console.error('An error occured!');
+    console.error(error.message ? error.message : error);
+//    onComplete(error);
+});*/
+
+function myGetJSON(url,success_function,error_function) {
+  var getJSONparams = { url: url, cacheBusting: true };
+
+  getJSON(getJSONparams).then( 
+    function (data) { success_function(data) },
+    function (error) { error_function(error) }
+  );
+}
+
+myGetJSON( data_url, 
+  function(data) { 
+    var adding_pois_successful = addPOIsToMap(data);
+    if(adding_pois_successful) {
+      console.log("1st try to fetch POI data from API ("+data_url+") was successful");
+      return;
+    }
+    console.log("API didn't return useful data from "+data_url+", try static file");
+    myGetJSON( fallback_data_url,
+      function(data) {
+        if(!addPOIsToMap(data))
+          console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too");
+      },
+      function (error) { 
+        console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too"); 
+        console.error(error.message ? error.message : error);
+      });
+    },
+  function(error) {
+    console.log("1st try to fetch POI data from API ("+data_url+") failed, try fallback");
+    myGetJSON( fallback_data_url,
+      function(data) {
+        var adding_pois_successful = addPOIsToMap(data);
+        if(adding_pois_successful)
+          console.log("2nd try to fetch POI data from " + fallback_data_url + " successful.");
+        else
+          console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too");
+      },
+      function (error) { 
+        console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too");
+        console.error(error.message ? error.message : error);
+      });
+  });
+    
 
 /* get taxonomy stuff */
 var taxonomy_url = "taxonomy.json";
