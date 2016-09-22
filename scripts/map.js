@@ -77,8 +77,8 @@ function initMap() {
     base_maps = {
       'Stamen - Terrain': terrain,
       'Stamen - Terrain Background': terrain_bg,
-      'OpenSteetMap - Mapnik': osm,
-      'Humanitarian OpenSteetMap ': hot
+      'OpenStreetMap - Mapnik': osm,
+      'Humanitarian OpenStreetMap ': hot
     };
   if(!defaultlayer)
     defaultlayer = terrain_bg;
