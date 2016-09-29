@@ -53,3 +53,11 @@ Then, run `npm run build` each time js and/or css has been changed to update the
 ## Style guide
 
 We use spaces (2) instead of tabs, please also use this convention.
+
+## Translations
+
+Translation for the filter-menu are directly fetched from Wikibase. All other strings are  are handled via [weblate.transformap.co](https://weblate.transformap.co/projects/transformap-viewer/transformap-viewer-textsnipplets/). You can help translating, just sign up! It stores its translations here: https://github.com/TransforMap/transformap-viewer-translations.
+
+Note: The English translations are handled in the source repository directly.
+
+To add new strings, you have to add them currently manually to scripts/map.js and in the translation repository, to each of the language files in json/*.json.
