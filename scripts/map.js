@@ -52,25 +52,27 @@ var map,
     base_maps,
     pruneClusterLayer;
 function initMap() {
+  var attr_osm = 'Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>. ',
+      attr_pois = 'POIs by <a href="http://solidariteconomy.eu">SUSY</a>, <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC-0</a>. '
 
   osm = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.',
+      attribution: attr_osm + attr_pois,
       maxZoom : 19,
       noWrap: true
   });
   terrain = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
       attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, '+
-        'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
-        'Data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
+        'under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
+        attr_osm  + attr_pois
   });
   terrain_bg = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png', {
       attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, '+
-        'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
-        'Data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
+        'under <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. '+
+        attr_osm + attr_pois
   });
   hot = new L.tileLayer('http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: 'Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>. '+
-        'Data by <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
+        attr_osm + attr_pois
   });
 
   if(!base_maps)
