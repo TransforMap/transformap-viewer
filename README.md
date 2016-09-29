@@ -61,3 +61,11 @@ Translation for the filter-menu are directly fetched from Wikibase. All other st
 Note: The English translations are handled in the source repository directly.
 
 To add new strings, you have to add them currently manually to scripts/map.js and in the translation repository, to each of the language files in json/*.json.
+
+## Forks
+
+Currently, there are 3 "branches" of development:
+
+* http://viewer.transformap.co/ - "master" branch, [this](https://github.com/TransforMap/transformap-viewer) repo.
+* https://susy-mapviewer.github.io/transformap-viewer/ for embedding into the [solidarityeconomy.eu](http://solidarityeconomy.eu) site. Repo see [here](https://github.com/susy-mapviewer/transformap-viewer).
+* https://susy-partners.github.io/transformap-viewer/ for embedding into the websites of SUSY-partners. Repo see [here](https://github.com/susy-partners/transformap-viewer).
