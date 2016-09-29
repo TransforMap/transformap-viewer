@@ -18,6 +18,16 @@ Weblate
         Failed to fetch repository: Could not create directory '/home/weblate/.ssh
 
     difference bilingual/monolingual?
+      only monolingual supported with JSON
+
+  format
+
+filename called json/$LANGCODE.json, e.g. de.json
+  content:
+    {
+      "English Text %d" : "Deutscher Text",
+      "stuff" : ""
+    }
       
 
 We need a language switcher -OK

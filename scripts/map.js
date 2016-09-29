@@ -1055,8 +1055,9 @@ function setFallbackLangs() {
 setFallbackLangs();
 
 
+/* get languages for UI from our Wikibase, and pick languages that are translated there */
 $.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", function (returned_data){
-  for(lang in returned_data.entities.Q5.labels) { //Q5 is arbitraty. Choose one that gets translated for sure.
+  for(lang in returned_data.entities.Q5.labels) { //Q5 is arbitrary. Choose one that gets translated for sure.
     supported_languages.push(lang);
   }
   var langstr = supported_languages.join("|");
@@ -1092,6 +1093,7 @@ $.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", functio
     langnames.forEach(function (item) {
       var langcode = langnames_abbr[item];
       var is_default = (langcode == current_lang) ? " class=default" : "";
+      console.log("adding lang '" + langcode + "' (" + item + ")");
       $("#languageSelector ul").append("<li targetlang=" + langcode + is_default + " onClick='switchToLang(\""+langcode+"\");'>"+item+"</li>");
     });
   });
@@ -1103,14 +1105,47 @@ function switchToLang(lang) {
   current_lang = lang;
   setFallbackLangs();
 
-  $("#map-menu-container [trn]").each(function(){
-    var trans_id = $(this).attr("trn");
-    $(this).text(T(trans_id));
-  });
+  updateTranslatedTexts();
+
+  if(! dictionary[lang]) {
+    var dict_uri = "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/json/"+lang+".json";
+
+    $.ajax({
+      url: dict_uri,
+      context: { lang: current_lang },
+      success: function(returned_data) {
+        var trans_jsonobj = JSON.parse(returned_data);
+
+        if(! dictionary[this.lang])
+          dictionary[this.lang] = {};
+        for (item in trans_jsonobj) {
+          var index = reverse_dic[item];
+          dictionary[this.lang][index] = trans_jsonobj[item];
+        }
+
+        console.log("successfully fetched " + this.lang);
+        updateTranslatedTexts();
+
+      }
+    });
+
+  }
 
   console.log("new lang:" +lang);
 }
 
+function updateTranslatedTexts() {
+  $("#map-menu-container [trn]").each(function(){
+    var trans_id = $(this).attr("trn");
+    $(this).text(T(trans_id));
+  });
+}
+
+/*
+ * The English translations are held here for ease of use and faster loading times
+ * all other Translations are managed via Weblate in this repo:
+ * https://github.com/TransforMap/transformap-viewer-translations
+ */
 var dictionary = {
   en: {
     "en_adv_filters" : "Enable Advanced Filter Mode",
@@ -1118,37 +1153,23 @@ var dictionary = {
     "address" : "Address",
     "contact" : "Contact",
     "opening_hours" : "Opening hours",
-    "type_of_initiative" : "Type Of Initiative",
+    "type_of_initiative" : "Type of Initiative",
     "reset_filters" : "Reset filters",
     "active_filters" : "Active Filters:",
     "show_map" : "Show map",
     "clickanyfilterhint" : "Click any [+] to add a filter",
     "imprint" : "Imprint",
-    "susy_contact" : "Contact",
     "susy_disclaimer" : "This website has been produced with the financial assistance of the European Union. The contents of this website are the sole responsibility of the SUSY initiative and can under no circumstances be regarded as reflecting the position of the European Union.",
-    "" : "",
-    "LAST:":""
-
-  },
-  de: {
-    "en_adv_filters" : "Erweiterte Filter einschalten",
-    "dis_adv_filters" : "Erweiterte Filter ausschalten",
-    "address" : "Adresse",
-    "contact" : "Kontaktdaten",
-    "opening_hours" : "Öffnungszeiten",
-    "type_of_initiative" : "Typ der Initiative",
-    "reset_filters" : "Filter zurücksetzen",
-    "active_filters" : "Aktive Filter:",
-    "show_map" : "Zurück zur Karte",
-    "clickanyfilterhint" : "Auf [+] klicken um Filter hinzuzufügen",
-    "imprint" : "Impressum",
-    "susy_contact" : "Kontakt",
     "" : "",
     "LAST:":""
   }
 }
 
-/* returns the string accoring to id in the following preferred order:
+var reverse_dic = {}; //needed for faster lookups
+for (i in dictionary.en)
+  reverse_dic[dictionary.en[i]] = i;
+
+/* returns the string according to id in the following preferred order:
  * 1. current_lang
  * 2-n fallback languages
  */
