@@ -116,6 +116,8 @@ function initMap() {
   map.addControl(ctrl);
 
   var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
+  $('#map-tiles').append('<a href="https://github.com/TransforMap/transformap-viewer" title="Fork me on GitHub" id=forkme target=_blank><img src="assets/forkme-on-github.png" alt="Fork me on GitHub" /></a>');
 }
 initMap();
 
