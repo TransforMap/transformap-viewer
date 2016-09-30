@@ -1,4 +1,4 @@
-# transformap-viewer
+# TransforMap-Viewer
 
 This is a Web-Map plugin that aims at displaying data from the [TransforMap API](https://github.com/TransforMap/data.transformap.co). It offers dynamic filters, which are built from a Wikibase graph hosted on [base.transformap.co](https://base.transformap.co).
 
@@ -9,6 +9,23 @@ This is a Web-Map plugin that aims at displaying data from the [TransforMap API]
 * Popup with image display, special support for Mediawiki storage
 * Filtering system, builds filter menu out of RDF graph provided by Wikibase
 
+## Embedding
+
+To embed the TransforMap-Viewer into your own website, the simplest way is via an iframe;
+
+    <iframe width="1200" height="500" src="http://viewer.transformap.co/#5/51.166/10.451"></iframe>
+
+If you want to change anything, e.g. style or the displayed data, fork it and embed it from your fork's gh-pages.
+
+## Translations
+
+Translation for the filter-menu are directly fetched from Wikibase. All other strings are  are handled via [weblate.transformap.co](https://weblate.transformap.co/projects/transformap-viewer/transformap-viewer-textsnipplets/). You can help translating, just sign up! It stores its translations here: https://github.com/TransforMap/transformap-viewer-translations.
+
+Note: The English translations are handled in the source repository directly.
+
+To add new strings, you have to add them currently manually to scripts/map.js and in the translation repository, to each of the language files in json/*.json.
+
+# Development
 
 ## CSS
 
@@ -50,17 +67,9 @@ Run `npm install` once to install needed development dependencies.
 
 Then, run `npm run build` each time js and/or css has been changed to update the content in the `/dist` folder.
 
-## Style guide
+## Coding Style guide
 
 We use spaces (2) instead of tabs, please also use this convention.
-
-## Translations
-
-Translation for the filter-menu are directly fetched from Wikibase. All other strings are  are handled via [weblate.transformap.co](https://weblate.transformap.co/projects/transformap-viewer/transformap-viewer-textsnipplets/). You can help translating, just sign up! It stores its translations here: https://github.com/TransforMap/transformap-viewer-translations.
-
-Note: The English translations are handled in the source repository directly.
-
-To add new strings, you have to add them currently manually to scripts/map.js and in the translation repository, to each of the language files in json/*.json.
 
 ## Forks
 
