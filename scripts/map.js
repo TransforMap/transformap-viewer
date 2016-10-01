@@ -707,6 +707,7 @@ function fill_tax_hashtable() {
   flat_taxonomy_array.forEach(function(entry){
 
     var qnr = getQNR(entry.item.value);
+    var root_qnr = "";
 
     if(!entry["instance_of"])
       return; //continue: ignore erroneous entries
@@ -737,7 +738,30 @@ function fill_tax_hashtable() {
 
     } else if(entry["instance_of"].value == tax_elements.taxonomy) {
       tax_hashtable.root_qnr = qnr;
+      root_qnr = qnr;
     }
+
+    // add root entry, if not delivered in RDF file
+    if(!root_qnr) {
+        var root = {
+        "item": {
+          "type": "uri",
+          "value": "http://base.transformap.co/entity/Q8"
+        },
+        "itemLabel": {
+          "xml:lang": "en",
+          "type": "literal",
+          "value": "SSEDAS Taxonomy"
+        },
+        "instance_of": {
+          "type": "uri",
+          "value": "http://base.transformap.co/entity/Q3"
+        }
+      }
+      flat_taxonomy_array.push(root);
+      tax_hashtable.all_qindex["Q8"] = root
+    }
+
   })
   //console.log("tax_hashtable after fill: ");
   //console.log(tax_hashtable);
