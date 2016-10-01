@@ -344,8 +344,6 @@ function setTaxonomy(rdf_data) {
   buildTreeMenu(tree_menu_json);
 }
 
-$.getJSON(taxonomy_url, setTaxonomy);
-
 function getLangTaxURL(lang) {
   if(!lang) {
     console.error("setFilterLang: no lang given");
@@ -403,7 +401,7 @@ function applyOrAddTaxonomyLang(returned_data) {
         return;
       }
     }
-    console.error("setFilterLang: no taxonomy in any of the user's langs available");
+    console.error("applyOrAddTaxonomyLang: no taxonomy in any of the user's langs available");
   }
 }
 
@@ -741,8 +739,8 @@ function fill_tax_hashtable() {
       tax_hashtable.root_qnr = qnr;
     }
   })
-  console.log("tax_hashtable after fill: ");
-  console.log(tax_hashtable);
+  //console.log("tax_hashtable after fill: ");
+  //console.log(tax_hashtable);
 }
 
 /*
@@ -1110,6 +1108,7 @@ function resetLang() {
       break;
     }
   }
+  switchToLang(current_lang);
 }
 
 function setFallbackLangs() {
