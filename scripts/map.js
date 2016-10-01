@@ -120,8 +120,27 @@ function initMap() {
   var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
   $('#map-tiles').append('<a href="https://github.com/TransforMap/transformap-viewer" title="Fork me on GitHub" id=forkme target=_blank><img src="assets/forkme-on-github.png" alt="Fork me on GitHub" /></a>');
+
+  $("#map-menu-container .top").prepend(
+      "<div id=mobileShowMap><div onClick='switchToMap();' trn=show_map>"+T("show_map")+"</div></div>"
+      );
+
+  $("#map-menu-container .top").append(
+      "<div id=resetfilters onClick='resetFilter();' trn=reset_filters>"+T("reset_filters")+"</div>"
+      );
+
+  $("#map-menu-container .top").append(
+      "<div id=toggleAdvancedFilters onClick='toggleAdvancedFilterMode();' mode='simple' trn=en_adv_filters>"+T("en_adv_filters")+"</div>"
+      );
+
+  $("#map-menu-container .top").append(
+      "<div id=activefilters>" +
+        "<h2 class='expert_mode off' trn=active_filters>" + T("active_filters") + "</h2>" +
+        "<ul class='expert_mode off'></ul>" +
+      "</div>"
+      );
+
 }
-initMap();
 
 function addPOIsToMap(geoJSONfeatureCollection) {
   if(geoJSONfeatureCollection.type != "FeatureCollection") {
@@ -306,52 +325,87 @@ myGetJSON( data_url,
     
 
 /* get taxonomy stuff */
-var taxonomy_url = "taxonomy.json";
 var taxonomy_url = "http://viewer.transformap.co/taxonomy.json";
+var taxonomy_url = "taxonomy.de.json";
+
+var multilang_taxonomies = {};
+
+//current ones
 var flat_taxonomy_array,
     tree_menu_json;
-$.getJSON(taxonomy_url, function(returned_data){
 
-  flat_taxonomy_array = returned_data.results.bindings;
+function setTaxonomy(rdf_data) {
+
+  flat_taxonomy_array = rdf_data.results.bindings;
 
   fill_tax_hashtable();
-  tree_menu_json = convert_tax_to_tree();
+  tree_menu_json = convertFlattaxToTree();
 
   buildTreeMenu(tree_menu_json);
+}
 
-  $("#map-menu-container .top").prepend(
-      "<div id=mobileShowMap><div onClick='switchToMap();' trn=show_map>"+T("show_map")+"</div></div>"
-      );
+$.getJSON(taxonomy_url, setTaxonomy);
 
-  $("#map-menu-container .top").append(
-      "<div id=resetfilters onClick='resetFilter();' trn=reset_filters>"+T("reset_filters")+"</div>"
-      );
+function getLangTaxURL(lang) {
+  if(!lang) {
+    console.error("setFilterLang: no lang given");
+    return false;
+  }
+  
+  var tax_query =
+    'prefix bd: <http://www.bigdata.com/rdf#> ' +
+    'prefix wikibase: <http://wikiba.se/ontology#> ' +
+    'prefix wdt: <http://base.transformap.co/prop/direct/>' +
+    'prefix wd: <http://base.transformap.co/entity/>' +
+    'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag' +
+    'WHERE {' +
+      '?item wdt:P8* wd:Q8 .' +
+      '?item wdt:P8 ?subclass_of .' +
+      'OPTIONAL { ?item wdt:P4 ?instance_of . }' +
+      'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' +
+      'SERVICE wikibase:label {bd:serviceParam wikibase:language "'+lang+'" }' +
+    '}';
 
-  $("#map-menu-container .top").append(
-      "<div id=toggleAdvancedFilters onClick='toggleAdvancedFilterMode();' mode='simple' trn=en_adv_filters>"+T("en_adv_filters")+"</div>"
-      );
+  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' +encodeURIComponent(tax_query);
+}
 
-  $("#map-menu-container .top").append(
-      "<div id=activefilters>" +
-        "<h2 class='expert_mode off' trn=active_filters>" + T("active_filters") + "</h2>" +
-        "<ul class='expert_mode off'></ul>" +
-      "</div>"
-      );
+function setFilterLang(lang) {
+  if(!lang) {
+    console.error("setFilterLang: no lang given");
+    return false;
+  }
 
-/*  $("#map-menu-container .bottom").append(
-      "<div id=susyci>"+
-        "<div class=logo> <img src='assets/susylogo.png' /><br />" +
-          "<a href='http://www.solidarityeconomy.eu/contact/' trn=susy_contact>" + T("susy_contact")+ "</a> | "+
-          "<a href='http://www.solidarityeconomy.eu/imprint/' trn=imprint>" +T("imprint")+"</a>" +
-        "</div>"+
-        "<div trn=susy_disclaimer>" +T("susy_disclaimer")+ "</div>"+
-      "</div>"
-      ); */
+  if(multilang_taxonomies[lang]) {
+    setTaxonomy(multilang_taxonomies[lang]);
+  } else {
+    $.ajax({
+      url: getLangTaxURL(lang),
+      dataType: "json",
+   //   jsonp: false,
+      xhrFields: {  withCredentials: true  }, //CORS FIXME CORS not working - serverside?
+      context: { "lang": lang },
+      success: function(returned_data) {
+        multilang_taxonomies[this.lang] = returned_data;
 
-});
+        if(multilang_taxonomies[current_lang])
+          setTaxonomy(multilang_taxonomies[current_lang]);
+        else {
+          for(var i=0; i < fallback_langs.length; i++) {
+            var fb_tax = multilang_taxonomies[fallback_langs[i]];
+            if(fb_tax) {
+              setTaxonomy(fb_tax);
+              return;
+            }
+          }
+          console.error("setFilterLang: no taxonomy in any of the user's langs available");
+        }
+      }
+    });
+  }
+}
 
 // note: can only handle 3 tiers (cats, subcats, toi) at the moment.
-function convert_tax_to_tree() {
+function convertFlattaxToTree() {
   var treejson = {
     "xml:lang": "en",
     "elements": []
@@ -634,19 +688,24 @@ var tax_hashtable = {
   cat_qindex: {},
   all_qindex: {},
   toi_count: {},
-  root_qnr: undefined
+  root_qnr: "Q8"
 }
 
+var item_domain = "http://base.transformap.co" //http for now, because SPARQL doesn't know about https
 var tax_elements = {
-  type_of_initiative: "https://base.transformap.co/entity/Q6",
-  category: "https://base.transformap.co/entity/Q5",
-  taxonomy: "https://base.transformap.co/entity/Q3"
+  type_of_initiative: item_domain + "/entity/Q6",
+  category: item_domain + "/entity/Q5",
+  taxonomy: item_domain + "/entity/Q3"
 }
 
 function fill_tax_hashtable() {
+  console.log(flat_taxonomy_array);
   flat_taxonomy_array.forEach(function(entry){
 
     var qnr = getQNR(entry.item.value);
+
+    if(!entry["instance_of"])
+      return; //continue: ignore erroneous entries
 
     if (entry["instance_of"].value == tax_elements.type_of_initiative ) {
       tax_hashtable.toistr_to_qnr[entry.type_of_initiative_tag.value] = qnr;
@@ -676,6 +735,8 @@ function fill_tax_hashtable() {
       tax_hashtable.root_qnr = qnr;
     }
   })
+  console.log("tax_hashtable after fill: ");
+  console.log(tax_hashtable);
 }
 
 /*
@@ -1134,6 +1195,7 @@ function switchToLang(lang) {
     });
 
   }
+  setFilterLang(lang);
 
   console.log("new lang:" +lang);
 }
@@ -1194,3 +1256,5 @@ function T(id) {
   }
   return "Translation Missing for: '" + id + "'";
 }
+
+initMap();
