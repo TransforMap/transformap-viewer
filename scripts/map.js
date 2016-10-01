@@ -357,7 +357,7 @@ function getLangTaxURL(lang) {
     'prefix wikibase: <http://wikiba.se/ontology#> ' +
     'prefix wdt: <http://base.transformap.co/prop/direct/>' +
     'prefix wd: <http://base.transformap.co/entity/>' +
-    'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag' +
+    'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ' +
     'WHERE {' +
       '?item wdt:P8* wd:Q8 .' +
       '?item wdt:P8 ?subclass_of .' +
@@ -366,7 +366,8 @@ function getLangTaxURL(lang) {
       'SERVICE wikibase:label {bd:serviceParam wikibase:language "'+lang+'" }' +
     '}';
 
-  return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' +encodeURIComponent(tax_query);
+//   return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' +encodeURIComponent(tax_query) + "&format=json"; // server not CORS ready yet
+  return "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+lang+".json";
 }
 
 function setFilterLang(lang) {
@@ -381,26 +382,28 @@ function setFilterLang(lang) {
     $.ajax({
       url: getLangTaxURL(lang),
       dataType: "json",
-   //   jsonp: false,
-      xhrFields: {  withCredentials: true  }, //CORS FIXME CORS not working - serverside?
-      context: { "lang": lang },
-      success: function(returned_data) {
-        multilang_taxonomies[this.lang] = returned_data;
-
-        if(multilang_taxonomies[current_lang])
-          setTaxonomy(multilang_taxonomies[current_lang]);
-        else {
-          for(var i=0; i < fallback_langs.length; i++) {
-            var fb_tax = multilang_taxonomies[fallback_langs[i]];
-            if(fb_tax) {
-              setTaxonomy(fb_tax);
-              return;
-            }
-          }
-          console.error("setFilterLang: no taxonomy in any of the user's langs available");
-        }
-      }
+      success: applyOrAddTaxonomyLang,
     });
+  }
+}
+
+function applyOrAddTaxonomyLang(returned_data) {
+  //console.log("callback for tax called");
+  //console.log(returned_data);
+  var lang = returned_data.results.bindings[0].itemLabel["xml:lang"];
+  multilang_taxonomies[lang] = returned_data;
+
+  if(multilang_taxonomies[current_lang])
+    setTaxonomy(multilang_taxonomies[current_lang]);
+  else {
+    for(var i=0; i < fallback_langs.length; i++) {
+      var fb_tax = multilang_taxonomies[fallback_langs[i]];
+      if(fb_tax) {
+        setTaxonomy(fb_tax);
+        return;
+      }
+    }
+    console.error("setFilterLang: no taxonomy in any of the user's langs available");
   }
 }
 
@@ -699,7 +702,10 @@ var tax_elements = {
 }
 
 function fill_tax_hashtable() {
-  console.log(flat_taxonomy_array);
+  tax_hashtable.toi_qindex = {};
+  tax_hashtable.cat_qindex = {};
+  tax_hashtable.all_qindex = {};
+
   flat_taxonomy_array.forEach(function(entry){
 
     var qnr = getQNR(entry.item.value);
