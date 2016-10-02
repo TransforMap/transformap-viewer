@@ -425,6 +425,7 @@ function convertFlattaxToTree() {
               "UUID": entry.item.value,
               "itemLabel": entry.itemLabel.value,
               "description": entry.description ? entry.description.value : "",
+              "wikipedia": entry.wikipedia ? entry.wikipedia.value : "",
               "elements" : []
             }
         );
@@ -450,6 +451,7 @@ function convertFlattaxToTree() {
               "UUID": entry.item.value,
               "itemLabel": entry.itemLabel.value,
               "description": entry.description ? entry.description.value : "",
+              "wikipedia": entry.wikipedia ? entry.wikipedia.value : "",
               "elements" : []
             }
           category_item.elements.push(new_subcat);
@@ -479,6 +481,7 @@ function convertFlattaxToTree() {
               "UUID": flat_type_of_initiative.item.value,
               "itemLabel": flat_type_of_initiative.itemLabel.value,
               "description": flat_type_of_initiative.description ? flat_type_of_initiative.description.value : "",
+              "wikipedia": flat_type_of_initiative.wikipedia ? flat_type_of_initiative.wikipedia.value : "",
               "type_of_initiative_tag": flat_type_of_initiative.type_of_initiative_tag.value
             }
           cat.elements.push(type_of_initiative);
@@ -497,7 +500,8 @@ function buildTreeMenu(tree_json) {
         {
           id: getQNR(toi.UUID),
           itemLabel: toi.itemLabel,
-          description: toi.description
+          description: toi.description,
+          wikipedia: toi.wikipedia
         }
     parent_element.append( toiTemplate( toi_data  ) );
   }
@@ -508,7 +512,8 @@ function buildTreeMenu(tree_json) {
         {
           id: getQNR(cat.UUID),
           itemLabel: cat.itemLabel,
-          description: cat.description
+          description: cat.description,
+          wikipedia: cat.wikipedia
         }
     parent_element.append( catTemplate( cat_data  ) );
 
