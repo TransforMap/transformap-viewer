@@ -27,7 +27,7 @@ To add new strings, you have to add them currently manually to scripts/map.js an
 
 # Development
 
-## Dat flows
+## Data flows
 
 This service relies heavily on different linked data backends, see flowchart:
 
