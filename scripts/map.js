@@ -646,29 +646,38 @@ function getQNR(uri_string) {
 /*
  * returns array of all tois (Q-Nrs) a cat or subcat has
  */
+var tois_of_cat_cache = {};
 function getTOIsOfCat(id) {
+  if(tois_of_cat_cache[id])
+    return tois_of_cat_cache[id];
+
   var array = [];
 
   //recursive function
-  function dig_deeper_into_taxtree(array_position_object,do_output) {
+  function dig_deeper_into_taxtree(array_position_object,do_output,id) {
+    if(tois_of_cat_cache[id]) {
+      array.push(tois_of_cat_cache[id]);
+      return;
+    }
 
-    if(array_position_object.type != "type_of_initiative" && array_position_object.elements && array_position_object.elements.length) {
-      for(var i=0;i<array_position_object.elements.length;i++) {
+    if(array_position_object.elements && array_position_object.elements.length) { //cat or root
+      for(var i=0; i < array_position_object.elements.length; i++) {
         if(getQNR(array_position_object.elements[i].UUID) == id || do_output) {
-          dig_deeper_into_taxtree(array_position_object.elements[i],true);
+          dig_deeper_into_taxtree(array_position_object.elements[i],true,id);
         }
         else {
-          dig_deeper_into_taxtree(array_position_object.elements[i],false);
+          dig_deeper_into_taxtree(array_position_object.elements[i],false,id);
         }
       }
     }
-    else
+    else if (array_position_object.type == "type_of_initiative") //toi
       if(do_output) {
         array.push(getQNR(array_position_object.UUID));
       }
   }
-  dig_deeper_into_taxtree(tree_menu_json,false);
+  dig_deeper_into_taxtree(tree_menu_json,false,id);
 
+  tois_of_cat_cache[id] = array;
   return array;
 }
 
