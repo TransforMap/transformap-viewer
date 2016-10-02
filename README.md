@@ -27,6 +27,12 @@ To add new strings, you have to add them currently manually to scripts/map.js an
 
 # Development
 
+## Dat flows
+
+This service relies heavily on different linked data backends, see flowchart:
+
+![Flowchart showing the services involved](TM-Viewer-dataflow.png)
+
 ## CSS
 
 Is created via [less](http://lesscss.org/).
