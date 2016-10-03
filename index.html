@@ -133,10 +133,8 @@
         %>
 
         <%  for (var i = 0; i < trans_array.length; i++) { %>
-           <%- i ? ',' : '' %> <span title='<%- desc_array[i] %>' > <%- trans_array[i] %>
-          <% if(wikipedia_array[i]) { %>
-            (<a href='<%- wikipedia_array[i] %>' target=_blank title='View Wikipedia article for this type of initiative'><img src='assets/wikipedia-48.png' class=wp alt='View Wikipedia article for this type of initiative' /></a>)
-          <% } %>
+            <span title='<%- desc_array[i] %>' > <%- trans_array[i] %><% if(wikipedia_array[i]) { %>
+            (<a href='<%- wikipedia_array[i] %>' target=_blank title='View Wikipedia article for this type of initiative'><img src='assets/wikipedia-48.png' class=wp alt='View Wikipedia article for this type of initiative' /></a>)<% } %><%- (i < trans_array.length - 1 ) ? ',' : '' %>
     </span> <% } %>
 
       </p>
