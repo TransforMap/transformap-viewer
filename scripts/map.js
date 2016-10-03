@@ -7,6 +7,8 @@
 var data_url = "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3";
 var fallback_data_url = "susydata-fallback.json";
 
+var redundant_data_urls = [ "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3", "susydata-fallback.json" ];
+
 /* fix for leaflet scroll on devices that fire scroll too fast, e.g. Macs
    see https://github.com/Leaflet/Leaflet/issues/4410#issuecomment-234133427
 
@@ -176,153 +178,7 @@ function addPOIsToMap(geoJSONfeatureCollection) {
   return true;
 }
 
-/* new version of getting map data with promises 
-  should fetch data_url, and in case it doesn't respond in a timeout, fetch fallback_data_url
-
-  taken from https://blog.hospodarets.com/fetch_in_action
-*/
-
-var processStatus = function (response) {
-    // status "0" to handle local files fetching (e.g. Cordova/Phonegap etc.)
-    if (response.status === 200 || response.status === 0) {
-        return Promise.resolve(response)
-    } else {
-        return Promise.reject(new Error(response.statusText))
-    }
-};
-
-var parseJson = function (response) {
-    return response.json();
-};
-
-/* @returns {wrapped Promise} with .resolve/.reject/.catch methods */
-// It goes against Promise concept to not have external access to .resolve/.reject methods, but provides more flexibility
-var getWrappedPromise = function () {
-    var wrappedPromise = {},
-            promise = new Promise(function (resolve, reject) {
-                wrappedPromise.resolve = resolve;
-                wrappedPromise.reject = reject;
-            });
-    wrappedPromise.then = promise.then.bind(promise);
-    wrappedPromise.catch = promise.catch.bind(promise);
-    wrappedPromise.promise = promise;// e.g. if you want to provide somewhere only promise, without .resolve/.reject/.catch methods
-    return wrappedPromise;
-};
-
-/* @returns {wrapped Promise} with .resolve/.reject/.catch methods */
-var getWrappedFetch = function () {
-    var wrappedPromise = getWrappedPromise();
-    var args = Array.prototype.slice.call(arguments);// arguments to Array
-
-    fetch.apply(null, args)// calling original fetch() method
-        .then(function (response) {
-            wrappedPromise.resolve(response);
-        }, function (error) {
-            wrappedPromise.reject(error);
-        })
-        .catch(function (error) {
-            wrappedPromise.catch(error);
-        });
-    return wrappedPromise;
-};
-
-/**
- * Fetch JSON by url
- * @param { {
- *  url: {String},
- *  [cacheBusting]: {Boolean}
- * } } params
- * @returns {Promise}
- */
-
-var MAX_WAITING_TIME = 5000;// in ms
-
-var getJSON = function (params) {
-    var wrappedFetch = getWrappedFetch(
-        params.cacheBusting ? params.url + '?' + new Date().getTime() : params.url,
-        {
-            method: 'get',// optional, "GET" is default value
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-    var timeoutId = setTimeout(function () {
-        wrappedFetch.reject(new Error('Load timeout for resource: ' + params.url));// reject on timeout
-    }, MAX_WAITING_TIME);
-
-    return wrappedFetch.promise// getting clear promise from wrapped
-        .then(function (response) {
-            clearTimeout(timeoutId);
-            return response;
-        })
-        .then(processStatus)
-        .then(parseJson);
-};
-
-/*--- TEST  --*/
-var onComplete = function () {
-    console.log('I\'m invoked in any case after success/error');
-};
-
-/*
-getJSON({
-    url: data_url,
-    cacheBusting: true
-}).then(function (data) {// on success
-    console.log('JSON parsed successfully!');
-    console.log(data);
-    addPOIsToMap(data);
-//    onComplete(data);
-}, function (error) {// on reject
-    console.error('An error occured!');
-    console.error(error.message ? error.message : error);
-//    onComplete(error);
-});*/
-
-function myGetJSON(url,success_function,error_function) {
-  var getJSONparams = { url: url, cacheBusting: true };
-
-  getJSON(getJSONparams).then( 
-    function (data) { success_function(data) },
-    function (error) { error_function(error) }
-  );
-}
-
-myGetJSON( data_url, 
-  function(data) { 
-    var adding_pois_successful = addPOIsToMap(data);
-    if(adding_pois_successful) {
-      console.log("1st try to fetch POI data from API ("+data_url+") was successful");
-      return;
-    }
-    console.log("API didn't return useful data from "+data_url+", try static file");
-    myGetJSON( fallback_data_url,
-      function(data) {
-        if(!addPOIsToMap(data))
-          console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too");
-      },
-      function (error) { 
-        console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too"); 
-        console.error(error.message ? error.message : error);
-      });
-    },
-  function(error) {
-    console.log("1st try to fetch POI data from API ("+data_url+") failed, try fallback");
-    myGetJSON( fallback_data_url,
-      function(data) {
-        var adding_pois_successful = addPOIsToMap(data);
-        if(adding_pois_successful)
-          console.log("2nd try to fetch POI data from " + fallback_data_url + " successful.");
-        else
-          console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too");
-      },
-      function (error) { 
-        console.error("2nd try to fetch POI data from " + fallback_data_url + " failed too");
-        console.error(error.message ? error.message : error);
-      });
-  });
-    
+redundantFetch( redundant_data_urls ,addPOIsToMap, function(error) { console.error("none of the POI data urls available"); } );
 
 /* get taxonomy stuff */
 var taxonomy_url = "http://viewer.transformap.co/taxonomy.json";
@@ -364,8 +220,7 @@ function getLangTaxURL(lang) {
       'SERVICE wikibase:label {bd:serviceParam wikibase:language "'+lang+'" }' +
     '}';
 
-//   return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' +encodeURIComponent(tax_query) + "&format=json"; // server not CORS ready yet
-  return "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+lang+".json";
+   return 'https://query.base.transformap.co/bigdata/namespace/transformap/sparql?query=' +encodeURIComponent(tax_query) + "&format=json"; // server not CORS ready yet
 }
 
 function setFilterLang(lang) {
@@ -377,11 +232,9 @@ function setFilterLang(lang) {
   if(multilang_taxonomies[lang]) {
     setTaxonomy(multilang_taxonomies[lang]);
   } else {
-    $.ajax({
-      url: getLangTaxURL(lang),
-      dataType: "json",
-      success: applyOrAddTaxonomyLang,
-    });
+    redundantFetch( [ getLangTaxURL(lang), "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+lang+".json" ],
+      applyOrAddTaxonomyLang,
+      function(error) { console.error("none of the taxonomy data urls available") } );
   }
 }
 
@@ -1169,7 +1022,8 @@ setFallbackLangs();
 
 
 /* get languages for UI from our Wikibase, and pick languages that are translated there */
-$.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", function (returned_data){
+
+function initializeLanguageSwitcher(returned_data){
   for(lang in returned_data.entities.Q5.labels) { //Q5 is arbitrary. Choose one that gets translated for sure.
     supported_languages.push(lang);
   }
@@ -1210,7 +1064,11 @@ $.getJSON("https://base.transformap.co/wiki/Special:EntityData/Q5.json", functio
       $("#languageSelector ul").append("<li targetlang=" + langcode + is_default + " onClick='switchToLang(\""+langcode+"\");'>"+item+"</li>");
     });
   });
-});
+}
+redundantFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json", "Q5-fallback.json" ],
+  initializeLanguageSwitcher,
+  function(error) { console.error("none of the lang init data urls available") } );
+  
 
 function switchToLang(lang) {
   $("#languageSelector li.default").removeClass("default");
