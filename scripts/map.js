@@ -4,10 +4,7 @@
      * To Public License, Version 2, as published by Sam Hocevar. See
      * http://www.wtfpl.net/ for more details. */
 
-var data_url = "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3";
-var fallback_data_url = "susydata-fallback.json";
-
-var redundant_data_urls = [ "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3", "susydata-fallback.json" ];
+var redundant_data_urls = [ "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3", "https://github.com/TransforMap/transformap-viewer/raw/gh-pages/susydata-fallback.json", "susydata-fallback.json" ];
 
 /* fix for leaflet scroll on devices that fire scroll too fast, e.g. Macs
    see https://github.com/Leaflet/Leaflet/issues/4410#issuecomment-234133427
