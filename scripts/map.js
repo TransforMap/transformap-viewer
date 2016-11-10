@@ -42,7 +42,13 @@ L.Map.ScrollWheelZoom.prototype._onWheelScroll = function (e) {
   L.DomEvent.stop(e);
 }
 
-
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value.replace(/#.*$/,'');
+    });
+    return vars;
+}
 
 var map,
     center,
@@ -90,6 +96,11 @@ function initMap() {
     };
   if(!defaultlayer)
     defaultlayer = base_maps['stamen_terrain_bg'];
+
+  var urlparams = getUrlVars();
+  var user_bg = urlparams['background'];
+  if(user_bg && base_maps[user_bg])
+    defaultlayer = base_maps[user_bg];
 
   if(!center)
     center = new L.LatLng(51.1657, 10.4515);
