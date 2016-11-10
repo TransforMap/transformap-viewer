@@ -1098,6 +1098,13 @@ function switchToLang(lang) {
     });
 
   }
+
+  // As rebuilding the filters does not yet support advanced mode by default,
+  // we switch to simple mode, as language switching is a very rare case.
+  if(getFilterMode() == "advanced")
+    toggleAdvancedFilterMode();
+
+  resetFilter();
   setFilterLang(lang);
 
   console.log("new lang:" +lang);
