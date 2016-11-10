@@ -938,7 +938,7 @@ function trimWebsiteUri(uri,maxlength) {
 
 /* intended for mobile view */
 function onMobile() {
-  return (window.innerWidth <= 768);
+  return (window.innerWidth <= 640);
 }
 function switchToMap() {
   $('#map-menu-container').hide();
