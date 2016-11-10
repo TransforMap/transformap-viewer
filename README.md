@@ -15,7 +15,14 @@ To embed the TransforMap-Viewer into your own website, the simplest way is via a
 
     <iframe width="1200" height="500" src="http://viewer.transformap.co/#5/51.166/10.451"></iframe>
 
-If you want to change anything, e.g. style or the displayed data, fork it and embed it from your fork's gh-pages.
+You can change the background layer via the param "background" (e.g. src="http://viewer.transformap.co/?background=mapnik#5/51.166/10.451"). Currently 4 layers are supported:
+
+* background=stamen_terrain_bg : Default, only terrain without any labels, roads or buildings.
+* background=stamen_terrain : terrain with (a few) labels, roads and buildings later
+* background=mapnik : Default OpenStreetMap 'Mapnik'/'OSM-Carto' style
+* background=hot : Humanitarian OSM style. Temperate colors, very detailed.
+
+If you want to change anything else, e.g. color scheme or the displayed data, fork it and embed it from your fork's gh-pages.
 
 ## Translations
 
