@@ -226,12 +226,14 @@ function getLangTaxURL(lang) {
     'prefix wikibase: <http://wikiba.se/ontology#> ' +
     'prefix wdt: <http://base.transformap.co/prop/direct/>' +
     'prefix wd: <http://base.transformap.co/entity/>' +
-    'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ' +
+    'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?wikipedia ?description ' +
     'WHERE {' +
       '?item wdt:P8* wd:Q8 .' +
       '?item wdt:P8 ?subclass_of .' +
       'OPTIONAL { ?item wdt:P4 ?instance_of . }' +
       'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' +
+      'OPTIONAL { ?item schema:description ?description FILTER(LANG(?description) = "'+lang+'") }' +
+      'OPTIONAL { ?wikipedia schema:about ?item . ?wikipedia schema:inLanguage "en"}' +
       'SERVICE wikibase:label {bd:serviceParam wikibase:language "'+lang+'" }' +
     '}';
 
