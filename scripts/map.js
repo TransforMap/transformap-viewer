@@ -360,6 +360,36 @@ function convertFlattaxToTree() {
     });
   };
 
+  function itemLabelCompare(a,b){
+    // 'Others' cat should get sorted last
+    if(getQNR(a.UUID) == "Q20") return 1;
+    if(getQNR(b.UUID) == "Q20") return -1;
+
+    //in toi list, 'other*' should be last
+    if(a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1;
+    if(b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1;
+
+    if(a.itemLabel < b.itemLabel) 
+      return -1
+    else
+      return 1
+  }
+
+  //category sort
+  treejson.elements.sort(itemLabelCompare);
+
+  //subcat sort
+  treejson.elements.forEach(function(category) {
+    if(category.elements && category.elements.length) {
+      category.elements.sort(itemLabelCompare);
+      category.elements.forEach(function(subcategory) {
+        if(subcategory.elements && subcategory.elements.length) {
+          subcategory.elements.sort(itemLabelCompare);
+        }
+      });
+    }
+  });
+
   return treejson;
 }
 
