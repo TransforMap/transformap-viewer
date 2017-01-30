@@ -99,7 +99,7 @@
     <h3><%- T("contact") %></h3>
     <p class=contact>
        <% if (properties['contact:website']) { %>
-      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['website'] %>" target=_blank><%- trimWebsiteUri(properties['website']) %></a>
+      <img src="assets/globe64.png" alt="website:" />&nbsp;<a href="<%- properties['contact:website'] %>" target=_blank><%- trimWebsiteUri(properties['contact:website']) %></a>
       <br>
       <% } %>
        <% if (properties['website']) { %>
