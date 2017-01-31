@@ -157,6 +157,7 @@ function initMap() {
       "</div>"
       );
 
+  console.log("START mapjs");
 }
 
 function addPOIsToMap(geoJSONfeatureCollection) {
@@ -206,6 +207,8 @@ var flat_taxonomy_array,
     tree_menu_json;
 
 function setTaxonomy(rdf_data) {
+  console.log("setTaxonomy called, data:")
+  console.log(rdf_data);
 
   flat_taxonomy_array = rdf_data.results.bindings;
 
@@ -217,7 +220,7 @@ function setTaxonomy(rdf_data) {
 
 function getLangTaxURL(lang) {
   if(!lang) {
-    console.error("setFilterLang: no lang given");
+    console.error("getLangTaxURL: no lang given");
     return false;
   }
   
@@ -245,6 +248,7 @@ function setFilterLang(lang) {
     console.error("setFilterLang: no lang given");
     return false;
   }
+  console.log('setFilterLang: ' + lang);
 
   if(multilang_taxonomies[lang]) {
     setTaxonomy(multilang_taxonomies[lang]);
@@ -256,9 +260,10 @@ function setFilterLang(lang) {
 }
 
 function applyOrAddTaxonomyLang(returned_data) {
-  //console.log("callback for tax called");
-  //console.log(returned_data);
+  console.log("callback for tax called");
+  console.log(returned_data);
   var lang = returned_data.results.bindings[0].itemLabel["xml:lang"];
+  console.log("found lang: " + lang);
   multilang_taxonomies[lang] = returned_data;
 
   if(multilang_taxonomies[current_lang])
@@ -277,6 +282,7 @@ function applyOrAddTaxonomyLang(returned_data) {
 
 // note: can only handle 3 tiers (cats, subcats, toi) at the moment.
 function convertFlattaxToTree() {
+  console.log("convertFlattaxToTree called");
   var treejson = {
     "xml:lang": "en",
     "elements": []
@@ -390,6 +396,8 @@ function convertFlattaxToTree() {
     }
   });
 
+  console.log("treejson: ");
+  console.log(treejson);
   return treejson;
 }
 
@@ -611,7 +619,7 @@ var tax_hashtable = {
   root_qnr: "Q8"
 }
 
-var item_domain = "http://base.transformap.co" //http for now, because SPARQL doesn't know about https
+var item_domain = "https://base.transformap.co" //http for now, because SPARQL doesn't know about https
 var tax_elements = {
   type_of_initiative: item_domain + "/entity/Q6",
   category: item_domain + "/entity/Q5",
@@ -619,6 +627,7 @@ var tax_elements = {
 }
 
 function fill_tax_hashtable() {
+  console.log("fill_tax_hashtable called");
   tax_hashtable.toi_qindex = {};
   tax_hashtable.cat_qindex = {};
   tax_hashtable.all_qindex = {};
@@ -665,7 +674,7 @@ function fill_tax_hashtable() {
         var root = {
         "item": {
           "type": "uri",
-          "value": "http://base.transformap.co/entity/Q8"
+          "value": "https://base.transformap.co/entity/Q8"
         },
         "itemLabel": {
           "xml:lang": "en",
@@ -674,7 +683,7 @@ function fill_tax_hashtable() {
         },
         "instance_of": {
           "type": "uri",
-          "value": "http://base.transformap.co/entity/Q3"
+          "value": "https://base.transformap.co/entity/Q3"
         }
       }
       flat_taxonomy_array.push(root);
