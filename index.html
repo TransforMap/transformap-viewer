@@ -92,7 +92,11 @@
 
       <h3><%- T("address") %></h3>
     <p>
-      <%- properties['addr:housenumber'] %> <%- (properties['addr:housename']) ? properties['addr:housename'] + "," : "" %> <%- properties['addr:street'] %><br><%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
+      <span
+        <% if(properties['addr:housenumber_source'] == "osm") { %> class='osm' <% } %>
+      > <%- properties['addr:housenumber'] %> </span>
+      <%- (properties['addr:housename']) ? properties['addr:housename'] + "," : "" %> <%- properties['addr:street'] %><br>
+      <%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
     </p>
 
     <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone']) || (properties['website'])) { %>
@@ -142,7 +146,7 @@
         %>
 
         <%  for (var i = 0; i < trans_array.length; i++) { %>
-            <span title='<%- desc_array[i] %>' > <%- trans_array[i] %><% if(wikipedia_array[i]) { %>
+            <span class='wp' title='<%- desc_array[i] %>' > <%- trans_array[i] %><% if(wikipedia_array[i]) { %>
             (<a href='<%- wikipedia_array[i] %>' target=_blank title='View Wikipedia article for this type of initiative'><img src='assets/wikipedia-48.png' class=wp alt='View Wikipedia article for this type of initiative' /></a>)<% } %><%- (i < trans_array.length - 1 ) ? ',' : '' %>
     </span> <% } %>
 

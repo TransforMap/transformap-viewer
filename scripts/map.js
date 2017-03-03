@@ -161,6 +161,7 @@ function initMap() {
   console.log("START mapjs");
 }
 
+var osm_enabled_pois = [];
 function addPOIsToMap(geoJSONfeatureCollection) {
   if(geoJSONfeatureCollection.type != "FeatureCollection") {
     console.error("not a featureCollection");
@@ -195,6 +196,7 @@ function addPOIsToMap(geoJSONfeatureCollection) {
         console.log("found osm on " + feature.properties.name + ": " + feature.properties['osm']);
         osm_query_string += match[1] + "(" + match[2] + ");";
       }
+      osm_enabled_pois.push(feature);
     }
 
     var pmarker = new PruneCluster.Marker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], pdata);
@@ -220,9 +222,33 @@ redundantFetch( redundant_data_urls ,addPOIsToMap, function(error) { console.err
     as all data is by reference, pdata.properties should get updated?
 */
 
-function parseOverpassData(opdata) {
+function parseOverpassData(overpassJSON) {
   console.log("parseOverpassData called");
-  console.log(opdata);
+  if(!overpassJSON.elements) {
+    console.error("parseOverpassData: data invalid");
+    return
+  }
+  for(var i = 0; i < overpassJSON.elements.length; i++) {
+    var p = overpassJSON.elements[i];
+
+    var type = p.type;
+    var id = p.id;
+
+    for(var osm_count = 0; osm_count < osm_enabled_pois.length; osm_count++) {
+      var tm_poi = osm_enabled_pois[osm_count];
+      var osmlink = tm_poi.properties['osm'];
+      var match = osmlink.match(/(node|way|relation)\/?([0-9]+)$/);
+      if(match[1] == p.type && match[2] == p.id) {
+        console.log("found match between " + match[1] + match[2] + " and tm:" + tm_poi.properties['name'] );
+        for(key in p.tags) {
+          if(!tm_poi.properties[key]) {
+            tm_poi.properties[key] = p.tags[key];
+            tm_poi.properties[key + "_source"] = "osm";
+          }
+        }
+      }
+    }
+  }
 }
 
 /* get taxonomy stuff */
@@ -284,7 +310,9 @@ function setFilterLang(lang) {
   } else {
     redundantFetch( [ getLangTaxURL(lang), "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+lang+".json" ],
       applyOrAddTaxonomyLang,
-      function(error) { console.error("none of the taxonomy data urls available") } );
+      function(error) { console.error("none of the taxonomy data urls available") }
+     // ,{ cacheBusting: false } //FIXME disabled while server data empty
+    );
   }
 }
 
