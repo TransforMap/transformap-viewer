@@ -282,8 +282,8 @@ function getLangTaxURL(lang) {
   var tax_query =
     'prefix bd: <http://www.bigdata.com/rdf#> ' +
     'prefix wikibase: <http://wikiba.se/ontology#> ' +
-    'prefix wdt: <http://base.transformap.co/prop/direct/>' +
-    'prefix wd: <http://base.transformap.co/entity/>' +
+    'prefix wdt: <https://base.transformap.co/prop/direct/>' +
+    'prefix wd: <https://base.transformap.co/entity/>' +
     'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?wikipedia ?description ' +
     'WHERE {' +
       '?item wdt:P8* wd:Q8 .' +
@@ -310,8 +310,8 @@ function setFilterLang(lang) {
   } else {
     redundantFetch( [ getLangTaxURL(lang), "https://raw.githubusercontent.com/TransforMap/transformap-viewer-translations/master/taxonomy-backup/susy/taxonomy."+lang+".json" ],
       applyOrAddTaxonomyLang,
-      function(error) { console.error("none of the taxonomy data urls available") }
-     // ,{ cacheBusting: false } //FIXME disabled while server data empty
+      function(error) { console.error("none of the taxonomy data urls available") },
+      { cacheBusting: false }
     );
   }
 }
