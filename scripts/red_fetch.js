@@ -105,7 +105,7 @@ function myGetJSON(url,success_function,error_function) {
   );
 }
 
-function redundantFetch (data_url_array, success_function, error_function) {
+function redundantFetch (data_url_array, success_function, error_function, params) {
   if( ! (!!data_url_array && Array === data_url_array.constructor ) ) {
     console.error("redundantFetch: argument is no array");
     console.error(data_url_array);
@@ -134,7 +134,7 @@ function redundantFetch (data_url_array, success_function, error_function) {
     }
   }
   
-  var getJSONparams = { url: current_url, cacheBusting: true };
+  var getJSONparams = { url: current_url, cacheBusting: ((params && params.cacheBusting === false) ? false : true) };
   getJSON(getJSONparams).then( 
     function (data) { local_success_function(data); console.log("rfetch: success on "); console.log(data); },
     function (error) { local_error_function(error); console.log("rfetch: fail on "); console.log(error);  }
