@@ -4,7 +4,8 @@
      * To Public License, Version 2, as published by Sam Hocevar. See
      * http://www.wtfpl.net/ for more details. */
 
-var redundant_data_urls = [ "https://data.transformap.co/place/name", "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3", "https://github.com/TransforMap/transformap-viewer/raw/gh-pages/susydata-fallback.json", "susydata-fallback.json" ];
+const endpoint = "https://data.transformap.co/place/";
+var redundant_data_urls = [ endpoint + "name", "https://data.transformap.co/raw/5d6b9d3d32097fd6832200874402cfc3", "https://github.com/TransforMap/transformap-viewer/raw/gh-pages/susydata-fallback.json", "susydata-fallback.json" ];
 
 /* fix for leaflet scroll on devices that fire scroll too fast, e.g. Macs
    see https://github.com/Leaflet/Leaflet/issues/4410#issuecomment-234133427
@@ -166,6 +167,9 @@ function addPOIsToMap(geoJSONfeatureCollection) {
     return false;
   }
 
+  var op_servers = [ 'https://overpass-api.de/api/', 'http://api.openstreetmap.fr/oapi/', 'http://overpass.osm.rambler.ru/cgi/' ];
+  var osm_query_string = "interpreter?data=[out:json][timeout:180];";
+
   var POIcollection = geoJSONfeatureCollection.features;
   for(var i=0; i < POIcollection.length; i++) {
     var feature = POIcollection[i];
@@ -185,9 +189,22 @@ function addPOIsToMap(geoJSONfeatureCollection) {
       tags: feature.properties,
       properties: feature.properties // is used by _ template
     }
+    if(feature.properties['osm']) {
+      var match = feature.properties['osm'].match(/(node|way|relation)\/?([0-9]+)$/);
+      if(match) {
+        console.log("found osm on " + feature.properties.name + ": " + feature.properties['osm']);
+        osm_query_string += match[1] + "(" + match[2] + ");";
+      }
+    }
 
     var pmarker = new PruneCluster.Marker(feature.geometry.coordinates[1], feature.geometry.coordinates[0], pdata);
     pruneClusterLayer.RegisterMarker(pmarker);
+  }
+
+  if(osm_query_string.length > 42) {
+    osm_query_string += "out;"
+    console.log(osm_query_string);
+    redundantFetch([ op_servers[0] + osm_query_string, op_servers[1] + osm_query_string, op_servers[2] + osm_query_string ], parseOverpassData, function(error) { console.error("no overpass server responded"); }, { cacheBusting : false } );
   }
 
   pruneClusterLayer.ProcessView();
@@ -195,6 +212,18 @@ function addPOIsToMap(geoJSONfeatureCollection) {
 }
 
 redundantFetch( redundant_data_urls ,addPOIsToMap, function(error) { console.error("none of the POI data urls available"); } );
+
+/* OSM workflow:
+   fetch data from Overpass API
+   parse returned data
+   add osm-properties to POIcollection
+    as all data is by reference, pdata.properties should get updated?
+*/
+
+function parseOverpassData(opdata) {
+  console.log("parseOverpassData called");
+  console.log(opdata);
+}
 
 /* get taxonomy stuff */
 var taxonomy_url = "http://viewer.transformap.co/taxonomy.json";
@@ -1196,6 +1225,7 @@ var dictionary = {
     "filters" : "Filters",
     "set_filters" : "set Filters",
     "imprint" : "Imprint",
+    "linked_data" : "Linked Data",
     "susy_disclaimer" : "This website has been produced with the financial assistance of the European Union. The contents of this website are the sole responsibility of the SUSY initiative and can under no circumstances be regarded as reflecting the position of the European Union.",
     "" : "",
     "LAST:":""
