@@ -11,6 +11,7 @@ h1,h2,h3,h4,h5,h6{text-align:center}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p span.wp{display:block}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p span.osm{font-style:italic}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p img.wp{height:1.5em;width:1.5em;display:inline;margin-bottom:-0.35em}
+#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content table{font-size:12px;text-align:left;padding:5px 15px;margin:0;width:100%}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content table td+td{text-align:right}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p.contact{line-height:2em}#map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content p.contact img{width:16px;margin-bottom:-4px;margin-right:6px;display:inline}
 #map-tiles .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content h3{margin:0;padding:5px 15px 0;text-align:left;font-size:12px;font-weight:bold}
 #map-tiles .my-div-icon{width:25px !important;height:40px;background-image:url("../../bower_components/leaflet/dist/images/marker-green.png");margin-top:-40px}#map-tiles .my-div-icon div{display:none}

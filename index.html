@@ -152,12 +152,25 @@
 
       </p>
       <h3><%- T("linked_data") %></h3>
-      <p>
-      <% if (properties['osm']) { %>
-        <a href='<%- properties['osm'] %>' target='_blank'>OpenStreetMap</a><br />
-      <% } %>
-        <a href='<%- properties['_uri'] %>' target='_blank'>TransforMap</a> (JSON)
-      </p>
+      <table>
+        <% if (properties['osm']) { %>
+        <tr>
+          <td>
+            <a href='<%- properties['osm'] %>' target='_blank'>OpenStreetMap</a>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <% } %>
+        <tr>
+          <td>
+            <a href='<%- properties['_uri'] %>' target='_blank'>TransforMap</a> (JSON)
+          </td>
+          <td>
+          </td>
+        </tr>
+      </table>
+
   </script>
 
   <div id="map-menu-container">
