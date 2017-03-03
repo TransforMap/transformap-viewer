@@ -130,7 +130,7 @@ function redundantFetch (data_url_array, success_function, error_function, param
   } else {
     local_success_function = success_function;
     local_error_function = function (error) {
-      redundantFetch(data_url_array, success_function, error_function);
+      redundantFetch(data_url_array, success_function, error_function, params);
     }
   }
   
