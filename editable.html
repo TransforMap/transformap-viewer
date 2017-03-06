@@ -90,14 +90,16 @@
       <%- getDescriptionText(properties)  %>
     </p>
 
+    <% if(properties['addr:housenumber'] || properties['addr:housename'] || properties['addr:street'] || properties['addr:postcode'] || properties['addr:city']) { %>
       <h3><%- T("address") %></h3>
     <p>
       <span
         <% if(properties['addr:housenumber_source'] == "osm") { %> class='osm' <% } %>
       > <%- properties['addr:housenumber'] %> </span>
       <%- (properties['addr:housename']) ? properties['addr:housename'] + "," : "" %> <%- properties['addr:street'] %><br>
-      <%- properties['addr:postcode'] %> <%- properties['addr:city'] %>, <%- properties['addr:country'] %>
+      <%- properties['addr:postcode'] %> <%- properties['addr:city'] %> <%- (properties['addr:country']) ? "," : "" %> <%- properties['addr:country'] %>
     </p>
+    <% } %>
 
     <% if ((properties['contact:email']) || (properties['contact:website']) || (properties['contact:phone']) || (properties['website'])) { %>
     <h3><%- T("contact") %></h3>
