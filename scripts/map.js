@@ -237,8 +237,8 @@ function parseOverpassData(overpassJSON) {
     for(var osm_count = 0; osm_count < osm_enabled_pois.length; osm_count++) {
       var tm_poi = osm_enabled_pois[osm_count];
       var osmlink = tm_poi.properties['osm'];
-      var match = osmlink.match(/(node|way|relation)\/?([0-9]+)$/);
-      if(match[1] == p.type && match[2] == p.id) {
+      var match = osmlink.match(/(node|way|relation)\/?([0-9]+)/);
+      if(match && match[1] == p.type && match[2] == p.id) {
         console.log("found match between " + match[1] + match[2] + " and tm:" + tm_poi.properties['name'] );
         for(key in p.tags) {
           if(!tm_poi.properties[key]) {
