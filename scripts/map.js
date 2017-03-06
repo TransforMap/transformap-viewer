@@ -194,7 +194,7 @@ function addPOIsToMap(geoJSONfeatureCollection) {
       var match = feature.properties['osm'].match(/(node|way|relation)\/?([0-9]+)$/);
       if(match) {
         console.log("found osm on " + feature.properties.name + ": " + feature.properties['osm']);
-        osm_query_string += match[1] + "(" + match[2] + ");";
+        osm_query_string += match[1] + "(" + match[2] + ");out;";
       }
       osm_enabled_pois.push(feature);
     }
