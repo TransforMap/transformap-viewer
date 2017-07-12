@@ -1,0 +1,53 @@
+The taxonomy is created and translated at https://base.transformap.co/wiki/Special:AllPages?from=&to=&namespace=120
+
+It is then exported (currently manually) to a blazgraph RDF database, which serves the taxonomy as RDF.
+The RDF interface is here: https://query.base.transformap.co/bigdata/#namespaces
+
+How to update the taxonomy in the RDF DB:
+  ssh root@rancher (server at ecobytes) - ask Ecobytes people to execute this if you don't have access
+  cd /srv/wikibase/
+  docker run -it --rm --env-file /srv/wikibase/mediawiki.env -v /srv/docker-state/wikibase/mediawiki/rootfs/data:/data -v /srv/docker-state/wikibase/mediawiki/rootfs/conf:/conf -v /srv/wikibase/LocalSettings.php:/data/LocalSettings.php  --link="wikibase_database_1:database" --net="wikibase_backend" wikibase_mediawiki /usr/bin/php /var/www/html/extensions/Wikibase/repo/maintenance/dumpRdf.php | gzip -c > $date_wikibase_dump.ttl.gz
+
+  # copy dump to your local PC
+  scp root@rancher:/srv/wikibase/ $date_wikibase_dump.ttl.gz localhost:
+
+  # next steps to be done in the WebIf
+	We first need to delete the old DB (there would be duplicate values if we just dump in the new extract)
+	go to https://query.base.transformap.co/bigdata/#namespaces
+
+		clone the transformap namespace to a copy "tm2" or something like that
+
+		click "clone"
+
+		enter the name in the box on the bottom
+
+		click "create namespace"
+
+		delete the "transformap" namespace
+
+		clone the copy to "transformap"
+
+		for the "transformap" namespace, click "Use"
+
+	go to https://query.base.transformap.co/bigdata/#update
+
+		Choose File
+
+		Type RDF Data , Turtle
+
+		click 'update'
+
+	the taxonomy is (currently) served from this repository: https://github.com/TransforMap/transformap-viewer-translations
+	there is a folder named 'taxonomy-backup/'. In there is a folder 'susy', where the taxonomy (for each language) is stored in JSON form.
+	
+	clone this repository
+	cd taxonomy-backup/
+	# in this folder is a README.md: at the bottom is a chain of commands to download the taxonomy for each language
+	cd susy/
+	# in the susy/ - folder, execute the 'for' loop found in the README-file in taxonomy-backup/
+	git status # to see what has been updated
+	git add *
+	git commit -m "taxonomy fallback update"
+	git push
+
+	the updated taxonomy is now live on the transformap-viewer
