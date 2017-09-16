@@ -213,7 +213,7 @@ function addPOIsToMap(geoJSONfeatureCollection) {
   return true;
 }
 
-redundantFetch( redundant_data_urls ,addPOIsToMap, function(error) { console.error("none of the POI data urls available"); } );
+redundantFetch( redundant_data_urls ,addPOIsToMap, function(error) { console.error("none of the POI data urls available"); }, { cacheBusting : false } );
 
 /* OSM workflow:
    fetch data from Overpass API
@@ -278,7 +278,7 @@ function getLangTaxURL(lang) {
     console.error("getLangTaxURL: no lang given");
     return false;
   }
-  
+
   var tax_query =
     'prefix bd: <http://www.bigdata.com/rdf#> ' +
     'prefix wikibase: <http://wikiba.se/ontology#> ' +
@@ -286,7 +286,7 @@ function getLangTaxURL(lang) {
     'prefix wd: <https://base.transformap.co/entity/>' +
     'SELECT ?item ?itemLabel ?instance_of ?subclass_of ?type_of_initiative_tag ?wikipedia ?description ' +
     'WHERE {' +
-      '?item wdt:P8* wd:Q8 .' +
+      '?item wdt:P8 wd:Q4.' +
       '?item wdt:P8 ?subclass_of .' +
       'OPTIONAL { ?item wdt:P4 ?instance_of . }' +
       'OPTIONAL { ?item wdt:P15 ?type_of_initiative_tag }' +
@@ -432,7 +432,7 @@ function convertFlattaxToTree() {
     if(a.type_of_initiative_tag && a.type_of_initiative_tag.match(/^other_/)) return 1;
     if(b.type_of_initiative_tag && b.type_of_initiative_tag.match(/^other_/)) return -1;
 
-    if(a.itemLabel < b.itemLabel) 
+    if(a.itemLabel < b.itemLabel)
       return -1
     else
       return 1
@@ -586,7 +586,7 @@ function clickOnInitiative(id) {
     }
     trigger_Filter();
   }
-   
+
 
 }
 
@@ -673,7 +673,7 @@ var tax_hashtable = {
   cat_qindex: {},
   all_qindex: {},
   toi_count: {},
-  root_qnr: "Q8"
+  root_qnr: "Q4"
 }
 
 var item_domain = "https://base.transformap.co" //http for now, because SPARQL doesn't know about https
@@ -731,12 +731,12 @@ function fill_tax_hashtable() {
         var root = {
         "item": {
           "type": "uri",
-          "value": "https://base.transformap.co/entity/Q8"
+          "value": "http://base.transformap.co/entity/Q4"
         },
         "itemLabel": {
           "xml:lang": "en",
           "type": "literal",
-          "value": "SSEDAS Taxonomy"
+          "value": "Transformap Taxonomy"
         },
         "instance_of": {
           "type": "uri",
@@ -744,7 +744,7 @@ function fill_tax_hashtable() {
         }
       }
       flat_taxonomy_array.push(root);
-      tax_hashtable.all_qindex["Q8"] = root
+      tax_hashtable.all_qindex["Q4"] = root
     }
 
   })
@@ -1180,8 +1180,8 @@ function initializeLanguageSwitcher(returned_data){
 }
 redundantFetch( [ "https://base.transformap.co/wiki/Special:EntityData/Q5.json", "https://raw.githubusercontent.com/TransforMap/transformap-viewer/Q5-fallback.json", "Q5-fallback.json" ],
   initializeLanguageSwitcher,
-  function(error) { console.error("none of the lang init data urls available") } );
-  
+  function(error) { console.error("none of the lang init data urls available") }, { cacheBusting : false } );
+
 
 function switchToLang(lang) {
   $("#languageSelector li.default").removeClass("default");
