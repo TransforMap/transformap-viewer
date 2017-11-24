@@ -358,6 +358,7 @@ Map menu styling
         }
     }
     #activefilters {
+      clear: both;
       padding:0 0 0 10px;
       color:white;
       h2 {
@@ -401,18 +402,32 @@ Map menu styling
 
     div#resetfilters,
     div#toggleAdvancedFilters,
+    div#searchFilterWrapper,
     div#languageSelector,
     div#mobileShowMap > div{
       width:fit-content;
       color:white;
       padding:5px;
-      margin:10px;
+      margin:5px 10px;
       border:1px solid white;
       cursor:pointer;
     }
     div#resetfilters,
     div#mobileShowMap {
       display:none;
+    }
+    div#searchFilterWrapper {
+      float: left;
+      input {
+        padding:3px;
+        float:left;
+        width:116px;
+        margin-right:5px;
+      }
+      button {
+        padding:3px;
+        float:right;
+      }
     }
     div#languageSelector{
       ul {

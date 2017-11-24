@@ -139,19 +139,28 @@ function initMap() {
 
   $('#map-tiles').append('<a href="https://github.com/TransforMap/transformap-viewer" title="Fork me on GitHub" id=forkme target=_blank><img src="assets/forkme-on-github.png" alt="Fork me on GitHub" /></a>');
 
-  $("#map-menu-container .top").prepend(
+  var topContainer = $("#map-menu-container .top");
+  
+  topContainer.prepend(
       "<div id=mobileShowMap><div onClick='switchToMap();' trn=show_map>"+T("show_map")+"</div></div>"
       );
 
-  $("#map-menu-container .top").append(
+  topContainer.append(
       "<div id=resetfilters onClick='resetFilter();' trn=reset_filters>"+T("reset_filters")+"</div>"
       );
 
-  $("#map-menu-container .top").append(
+  topContainer.append(
       "<div id=toggleAdvancedFilters onClick='toggleAdvancedFilterMode();' mode='simple' trn=en_adv_filters>"+T("en_adv_filters")+"</div>"
       );
 
-  $("#map-menu-container .top").append(
+  var searchElements = [];
+  searchElements.push("<div id='searchFilterWrapper'>");
+	  searchElements.push("<input type='text' id='searchFilter' placeholder='"+T("search_filter_placeholder")+"' />");
+	  searchElements.push("<button type='button' onClick='applySearchFilter($(this).prev().val());'>"+T("search_filter_button")+"</button>");
+  searchElements.push("</div>");
+  topContainer.append(searchElements.join(''));
+
+  topContainer.append(
       "<div id=activefilters>" +
         "<h2 class='expert_mode off' trn=active_filters>" + T("active_filters") + "</h2>" +
         "<ul class='expert_mode off'></ul>" +
@@ -790,6 +799,10 @@ function getFilterMode() {
   return $("#toggleAdvancedFilters").attr('mode');
 }
 
+function applySearchFilter(keyword) {
+	console.log(keyword);
+}
+
 function toggleAdvancedFilterMode() {
   resetFilter();
   if(getFilterMode() == "simple") {
@@ -1242,6 +1255,8 @@ var dictionary = {
   en: {
     "en_adv_filters" : "Enable Advanced Filter Mode",
     "dis_adv_filters" : "Disable Advanced Filter Mode",
+    "search_filter_placeholder" : "Keyword",
+    "search_filter_button" : "Search",
     "address" : "Address",
     "contact" : "Contact",
     "opening_hours" : "Opening hours",
