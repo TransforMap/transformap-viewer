@@ -49,10 +49,11 @@ Do not edit the CSS file in styles/css/style.css, edit styles/less/style.less an
 Install node *less* compiler to convert the stylesheet to less css:
 
 * Debian: `aptitude install node-less`
+* Windows: `npm install less -g`
 
 Compile it via :
 
-    lessc -x styles/less/style.less styles/css/style.css
+    lessc styles/less/style.less styles/css/style.css
 
 ## Dependencies
 
