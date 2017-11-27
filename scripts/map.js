@@ -155,8 +155,8 @@ function initMap() {
 
   var searchElements = [];
   searchElements.push("<div id='searchFilterWrapper'>");
-	  searchElements.push("<input type='text' id='searchFilter' placeholder='"+T("search_filter_placeholder")+"' />");
-	  searchElements.push("<button type='button' onClick='applySearchFilter($(this).prev().val());'>"+T("search_filter_button")+"</button>");
+	  searchElements.push("<input type='text' id='searchFilter' onKeypress='applySearchFilter($(this).val(), event);' placeholder='"+T("search_filter_placeholder")+"' />");
+	  searchElements.push("<button type='button' onClick='applySearchFilter($(this).prev().val(), event);'>"+T("search_filter_button")+"</button>");
   searchElements.push("</div>");
   topContainer.append(searchElements.join(''));
 
@@ -766,6 +766,7 @@ function fill_tax_hashtable() {
  */
 
 var current_filter_tois = []; // array of q-nrs
+var current_filter_search = '';
 
 function trigger_Filter() {
   //console.log(current_filter_tois);
@@ -789,6 +790,8 @@ function resetFilter() {
   $("#map-menu li > span").removeClass("selected");
   $("ul.type-of-initiative").hide();
   $("ul.subcategories").hide();
+  $('#searchFilter').val('');
+  applySearchFilter('');
   removeFromFilter("*");
   trigger_Filter();
   $("#activefilters ul").append("<li class=hint><span trn=clickanyfilterhint>"+T("clickanyfilterhint")+"</span><div class=close onClick=\"clickMinus('hint')\">×</div></li>");
@@ -799,8 +802,12 @@ function getFilterMode() {
   return $("#toggleAdvancedFilters").attr('mode');
 }
 
-function applySearchFilter(keyword) {
-	console.log(keyword);
+function applySearchFilter(keyword, event) {
+	event = event || window.event;
+	current_filter_search = keyword;
+	if (event.keyCode == 13 || event.type == 'click') {
+		trigger_Filter();
+	}
 }
 
 function toggleAdvancedFilterMode() {
@@ -983,16 +990,17 @@ function removeFromFilter(id) {
   * checks if any attribute in attributes (=TOI) is either the filter_UUID or the TOI is any subclass of the filter_UUID
   */
 function filterMatches(attributes, filter_UUID) {
+
   if(!attributes) {
     console.log("error in filter, no attributes");
     return false;
   }
-  if(!attributes.type_of_initiative) {
-    console.log("error in filter, no type_of_initiative attribute");
-    return false;
+  
+  var poiFound = false;
+  
+  if(current_filter_tois.length == 0) {
+	  poiFound = true; 
   }
-  if(current_filter_tois.length == 0)
-    return true;
 
   //console.log("filter called with filter: " + filter_UUID + " and toi: " + attributes.type_of_initiative);
 
@@ -1002,11 +1010,37 @@ function filterMatches(attributes, filter_UUID) {
   for(var i=0;i<toi_array.length;i++){
     var type_of_initiative_QNR = tax_hashtable.toistr_to_qnr[toi_array[i]];
 
-    if(current_filter_tois.indexOf(type_of_initiative_QNR) > -1)
-      return true;
+    if(current_filter_tois.indexOf(type_of_initiative_QNR) > -1) {
+    	poiFound = true;
+    	break;
+    }
   }
-
-  return false;
+  
+  var searchRelevantPoiProperties = [
+	  'name',
+	  'addr:city',
+	  'addr:street',
+	  'addr:country',
+	  'addr.postcode',
+	  'description'
+  ];
+  
+  if (poiFound && current_filter_search != '') {
+	  var searchFilterRegExp = new RegExp(current_filter_search, 'i');
+	  for(searchProperty in searchRelevantPoiProperties) {
+		  if (attributes[searchRelevantPoiProperties[searchProperty]]) {
+			  if (attributes[searchRelevantPoiProperties[searchProperty]].match(searchFilterRegExp)) {
+//				  console.log(searchRelevantPoiProperties[searchProperty] + ': ' + attributes[searchRelevantPoiProperties[searchProperty]]);
+				  poiFound = true;
+				  break;
+			  } else {
+				  poiFound = false;
+			  }
+		  } 
+	  }
+  }
+  
+  return poiFound;
 }
 
 var popup_image_width = "270px";
