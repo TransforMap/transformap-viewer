@@ -1022,6 +1022,9 @@ function filterMatches(attributes, filter_UUID) {
 	  'addr:street',
 	  'addr:country',
 	  'addr.postcode',
+	  'website',
+	  'contact:website',
+	  'contact:email',
 	  'description'
   ];
   
