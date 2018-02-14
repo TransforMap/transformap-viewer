@@ -155,8 +155,8 @@ function initMap() {
 
   var searchElements = [];
   searchElements.push("<div id='searchFilterWrapper'>");
-	  searchElements.push("<input type='text' id='searchFilter' onKeypress='applySearchFilter($(this).val(), event);' placeholder='"+T("search_filter_placeholder")+"' />");
-	  searchElements.push("<button type='button' onClick='applySearchFilter($(this).prev().val(), event);'>"+T("search_filter_button")+"</button>");
+	  searchElements.push("<input type='text' id='searchFilter' onKeypress='applySearchFilter(event, $(this).val());' placeholder='"+T("search_filter_placeholder")+"' />");
+	  searchElements.push("<button type='button' onClick='applySearchFilter(event, $(this).prev().val());'>"+T("search_filter_button")+"</button>");
   searchElements.push("</div>");
   topContainer.append(searchElements.join(''));
 
@@ -791,7 +791,7 @@ function resetFilter() {
   $("ul.type-of-initiative").hide();
   $("ul.subcategories").hide();
   $('#searchFilter').val('');
-  applySearchFilter('');
+  applySearchFilter(new MouseEvent('click') , '');
   removeFromFilter("*");
   trigger_Filter();
   $("#activefilters ul").append("<li class=hint><span trn=clickanyfilterhint>"+T("clickanyfilterhint")+"</span><div class=close onClick=\"clickMinus('hint')\">×</div></li>");
@@ -802,7 +802,7 @@ function getFilterMode() {
   return $("#toggleAdvancedFilters").attr('mode');
 }
 
-function applySearchFilter(keyword, event) {
+function applySearchFilter(event, keyword) {
 	event = event || window.event;
 	current_filter_search = keyword;
 	if (event.keyCode == 13 || event.type == 'click') {
