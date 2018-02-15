@@ -1304,7 +1304,7 @@ var dictionary = {
     "search_filter_button" : "Search",
     "address" : "Address",
     "contact" : "Contact",
-    "opening_hours" : "OpeningChange hours",
+    "opening_hours" : "Opening hours",
     "type_of_initiative" : "Type of Initiative",
     "reset_filters" : "Reset filters",
     "active_filters" : "Active Filters:",
